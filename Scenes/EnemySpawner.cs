@@ -1,0 +1,152 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+public class EnemySpawner : MonoBehaviour
+{
+    private GameObject main_camera = null; // 메인 카메라.
+
+    public Slider enemySliderPrefab;
+    public static EnemySpawner Instance;
+    public GameObject enemyPrefab = null;
+    public static int MaxEnemyNum = 3; // 만드는 ENEMY의 수, 임시값
+    public Vector3 spawnPosition = Vector3.zero; // 스폰 위치
+    public Enemy targetEnemy = null;
+    public List<Enemy> enemies = new List<Enemy>();
+    private Canvas canvas; // 새로운 Canvas
+    public GameObject blueStatusPrefab = null;
+    public GameObject greenStatusPrefab = null;
+    public GameObject yellowStatusPrefab = null;
+    void Start()
+    {
+        canvas = FindObjectOfType<Canvas>(); // Canvas 찾기
+        Instance = this;
+        this.main_camera = GameObject.FindGameObjectWithTag("MainCamera");
+
+
+    }
+
+    void Update()
+    {
+        SpawnEnemy();
+
+        if (isAllEnemiesDestroyed())
+        {
+            // 씬 컨트롤의 보상 파트로
+        }
+
+        clickEnemy();
+
+        foreach (Enemy enemy in enemies)
+        {
+            if (enemy.enemyHP != null)
+            {
+                enemy.enemyHP.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
+            }
+            
+        }
+    }
+
+    
+
+    public int GetEnemyCount()
+    {
+        return enemies.Count;
+    }
+
+    public void SpawnEnemy()
+    {
+        if (GetEnemyCount() >= MaxEnemyNum)
+        {
+            return;
+        }
+
+        Vector3 offset = new Vector3(2.0f * GetEnemyCount() - 2.0f, 5.5f, 0);
+        GameObject newEnemyObject = Instantiate(enemyPrefab, spawnPosition + offset, Quaternion.identity);
+        Enemy enemy = newEnemyObject.GetComponent<Enemy>();
+        if (!enemies.Contains(enemy))
+        {
+            enemies.Add(enemy);
+        }
+
+        Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
+        enemy.enemyHP = enemySlider;
+
+        enemySlider.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1.0f, 0));
+    }
+
+    public void EnemyDestroyed(Enemy enemy)
+    {
+        enemies.Remove(enemy);
+        if (!enemy.isRespawned)
+        {
+            enemy.isRespawned = true;
+            MaxEnemyNum = 0;
+        }
+    }
+    private bool isAllEnemiesDestroyed()
+    {
+        return GetEnemyCount() == 0;
+    }
+
+    public void clickEnemy()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 clickPosition;
+            // 마우스 클릭 위치를 월드 좌표로 변환합니다.
+            if (unprojectMousePosition(out clickPosition, Input.mousePosition))
+            {
+                foreach (Enemy enemy in enemies)
+                {
+                    if (enemy.isContainedPosition(clickPosition))
+                    {
+                        
+                        if (targetEnemy != null)
+                        {
+                            // 이전에 선택된 적의 크기 원상복귀
+                            targetEnemy.transform.localScale /= 1.2f;
+                        }
+
+                        targetEnemy = enemy;
+                        // 선택된 적의 크기를 20% 증가
+                        targetEnemy.transform.localScale *= 1.2f;
+
+                        enemies.Remove(enemy);
+                        enemies.Insert(0, enemy);
+                        
+                        // 선택된 적에게 공격 명령을 내립니다.
+                        targetEnemy.Attack();
+
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    public bool unprojectMousePosition(	out Vector3 world_position, Vector3 mouse_position)
+    {
+        bool ret;
+        // 판을 생성. 이 판은 카메라에 대해서 뒤쪽 방향(Vector3.back)에서.
+        // 블록의 절반크기만큼 앞에 둔다.
+        Plane plane = new Plane(Vector3.back, new Vector3(
+            0.0f, 0.0f, -Block.COLLISION_SIZE / 2.0f));
+        // 카메라와 마우스를 통과하는 광선을 작성.
+        Ray ray = this.main_camera.GetComponent<Camera>().ScreenPointToRay(
+            mouse_position);
+        float depth;
+        // 광선(ray）이 판（plane）에 닿았다면.
+        if(plane.Raycast(ray, out depth)) {
+            // 인수 world_position을 마우스 위치로 덮어쓴다.
+            world_position = ray.origin + ray.direction * depth;
+            ret = true;
+            // 닿지 않았다면.
+        } else {
+            // 인수 world_position을 제로인 벡터로 덮어쓴다.
+            world_position = Vector3.zero;
+            ret = false;
+        }
+        return(ret);
+    }
+}
