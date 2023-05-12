@@ -2,50 +2,102 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class EnemySpawner : MonoBehaviour
 {
     private GameObject main_camera = null; // 메인 카메라.
-
+    public BossMonster boss;
     public Slider enemySliderPrefab;
     public static EnemySpawner Instance;
     public GameObject enemyPrefab = null;
-    public static int MaxEnemyNum = 3; // 만드는 ENEMY의 수, 임시값
+    public GameObject bossPrefab = null;
+    public static int MaxEnemyNum = 2; // 만드는 ENEMY의 수, 임시값
     public Vector3 spawnPosition = Vector3.zero; // 스폰 위치
     public Enemy targetEnemy = null;
     public List<Enemy> enemies = new List<Enemy>();
-    private Canvas canvas; // 새로운 Canvas
+    public Canvas canvas; // 새로운 Canvas
     public GameObject blueStatusPrefab = null;
     public GameObject greenStatusPrefab = null;
     public GameObject yellowStatusPrefab = null;
-    void Start()
+    private List<GameObject> statusPrefabs = new List<GameObject>();
+
+    public void Start()
     {
+
         canvas = FindObjectOfType<Canvas>(); // Canvas 찾기
         Instance = this;
         this.main_camera = GameObject.FindGameObjectWithTag("MainCamera");
 
 
+
     }
 
-    void Update()
+    public void Update()
     {
         SpawnEnemy();
-
-        if (isAllEnemiesDestroyed())
-        {
-            // 씬 컨트롤의 보상 파트로
-        }
-
         clickEnemy();
 
         foreach (Enemy enemy in enemies)
         {
             if (enemy.enemyHP != null)
             {
-                enemy.enemyHP.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
+                enemy.enemyHP.transform.position =
+                    Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
             }
-            
+
+            if (enemy.status == Enemy.Status.Bluestat)
+            {
+                // blueStatusPrefab 생성
+                GameObject blueStatus = Instantiate(blueStatusPrefab,
+                    new Vector3(enemy.transform.position.x - 1.0f, enemy.transform.position.y,
+                        enemy.transform.position.z), Quaternion.identity);
+
+                // 에너미의 자식 오브젝트로 추가
+                blueStatus.transform.parent = enemy.transform;
+
+                // 생성된 속성프리팹을 리스트에 추가
+                statusPrefabs.Add(blueStatus);
+            }
+            else if (enemy.status == Enemy.Status.Yellowstat)
+            {
+                // yellowStatusPrefab 생성
+                GameObject yellowStatus = Instantiate(yellowStatusPrefab,
+                    new Vector3(enemy.transform.position.x - 1.0f, enemy.transform.position.y,
+                        enemy.transform.position.z), Quaternion.identity);
+
+                // 에너미의 자식 오브젝트로 추가
+                yellowStatus.transform.parent = enemy.transform;
+
+                // 생성된 속성프리팹을 리스트에 추가
+                statusPrefabs.Add(yellowStatus);
+            }
+            else if (enemy.status == Enemy.Status.Greenstat)
+            {
+                // greenStatusPrefab 생성
+                GameObject greenStatus = Instantiate(greenStatusPrefab,
+                    new Vector3(enemy.transform.position.x - 1.0f, enemy.transform.position.y,
+                        enemy.transform.position.z), Quaternion.identity);
+
+                // 에너미의 자식 오브젝트로 추가
+                greenStatus.transform.parent = enemy.transform;
+
+                // 생성된 속성프리팹을 리스트에 추가
+                statusPrefabs.Add(greenStatus);
+            }
         }
-    }
+
+        // 생성된 속성프리팹 중 첫번째와 두번째를 제외한 나머지를 삭제
+        for (int i = 5; i < statusPrefabs.Count; i++)
+        {
+            Destroy(statusPrefabs[i]);
+        }
+        Destroy(statusPrefabs[0]);
+        
+    } //왜 되는건지모르겠음
+
+
+
+
 
     
 
@@ -54,14 +106,15 @@ public class EnemySpawner : MonoBehaviour
         return enemies.Count;
     }
 
-    public void SpawnEnemy()
+    public  void SpawnEnemy()
     {
-        if (GetEnemyCount() >= MaxEnemyNum)
+        if (GetEnemyCount() >= MaxEnemyNum) // * 보스전일때는 인원수 조정
         {
             return;
         }
 
-        Vector3 offset = new Vector3(2.0f * GetEnemyCount() - 2.0f, 5.5f, 0);
+        
+        Vector3 offset = new Vector3(4.0f * GetEnemyCount() - 2.0f, 5.5f, 0);
         GameObject newEnemyObject = Instantiate(enemyPrefab, spawnPosition + offset, Quaternion.identity);
         Enemy enemy = newEnemyObject.GetComponent<Enemy>();
         if (!enemies.Contains(enemy))
@@ -73,8 +126,24 @@ public class EnemySpawner : MonoBehaviour
         enemy.enemyHP = enemySlider;
 
         enemySlider.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1.0f, 0));
-    }
 
+       
+
+    }
+    public  void SpawnBoss()
+    {
+       
+        
+        Vector3 offset = new Vector3(0, 6.5f, 0);
+        GameObject newbossObject = Instantiate(bossPrefab, spawnPosition + offset, Quaternion.identity);
+        BossMonster bossMonster = newbossObject.GetComponent<BossMonster>();
+        enemies.Add(bossMonster);
+        Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
+        bossMonster.enemyHP = enemySlider;
+
+        enemySlider.transform.position = Camera.main.WorldToScreenPoint(bossMonster.transform.position + new Vector3(0, 1.0f, 0));
+        
+    }
     public void EnemyDestroyed(Enemy enemy)
     {
         enemies.Remove(enemy);
@@ -83,10 +152,6 @@ public class EnemySpawner : MonoBehaviour
             enemy.isRespawned = true;
             MaxEnemyNum = 0;
         }
-    }
-    private bool isAllEnemiesDestroyed()
-    {
-        return GetEnemyCount() == 0;
     }
 
     public void clickEnemy()
@@ -147,4 +212,6 @@ public class EnemySpawner : MonoBehaviour
         }
         return(ret);
     }
+
+    
 }

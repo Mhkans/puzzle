@@ -15,15 +15,15 @@ public class Enemy: MonoBehaviour //적을 만든다
     public int currentHp;
     public Status status;
     private float attackTime;
-    private float term;
+    public float term;
     public int damage; // 5초마다 player에게 주는 데미지
     public bool isRespawned = false; 
     public GameObject statusObject = null;
-    void Start()
+    public virtual void Start()
     {
         MaxHp = 50;
         currentHp = MaxHp;
-        status = GetRandomStatus();// *해결해야함
+        status = GetRandomStatus();
         attackTime = 0.0f;
         term = 5.0f;
         damage = 5;
@@ -45,14 +45,14 @@ public class Enemy: MonoBehaviour //적을 만든다
         }
     }
 
-    public void handleHP()
+    public virtual void handleHP()
     {
        enemyHP.value = (float)currentHp / (float)MaxHp;
     }
     Status GetRandomStatus()
     {
         //랜덤하게 Status를 선택합니다.
-        List<Status> statuses = new List<Status>() { Status.Bluestat, Status.Yellowstat, Status.Greenstat };
+        List<Status> statuses = new List<Status>() { Status.Greenstat, Status.Yellowstat, Status.Bluestat };
         int randomIndex = Random.Range(0, statuses.Count);
         return statuses[randomIndex];
     }
@@ -84,7 +84,7 @@ public class Enemy: MonoBehaviour //적을 만든다
         Destroy(enemyHP.gameObject);
         Destroy(statusObject);
     }
-    public void Attack()
+    public virtual void Attack()
     {
         StartCoroutine(AttackCoroutine());
     }

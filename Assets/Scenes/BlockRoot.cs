@@ -12,6 +12,7 @@ public class BlockRoot : MonoBehaviour {
 	protected bool is_vanishing_prev = false; // 앞에서 발화했는가?.
 	public Player player = null;
 	public Enemy enemys = null;
+	public BossMonster boss = null;
 	public EnemySpawner enemyspawner = null;
 	void Start() {
 		this.main_camera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -22,7 +23,7 @@ public class BlockRoot : MonoBehaviour {
 		
 
 		enemyspawner = gameObject.GetComponent<EnemySpawner>();
-
+		
 	}
 
 
@@ -30,6 +31,8 @@ public class BlockRoot : MonoBehaviour {
 		
 		GameObject enemyObj = GameObject.FindWithTag("Enemy");
 		enemys = enemyObj.GetComponent<Enemy>();
+		boss = enemyObj.GetComponent<BossMonster>();
+		
 		
 		Vector3 mouse_position; // 마우스의 위치.
 		this.unprojectMousePosition( // 마우스의 위치를 가져옴.
@@ -117,6 +120,7 @@ public class BlockRoot : MonoBehaviour {
 						else if (block.color == Block.COLOR.BLUE && enemys.status == Enemy.Status.Yellowstat)
 						{
 							enemys.TakeDamage(10);
+							
 						}
 						else if (block.color == Block.COLOR.YELLOW && enemys.status == Enemy.Status.Greenstat)
 						{
@@ -140,7 +144,9 @@ public class BlockRoot : MonoBehaviour {
 
 						}
 					}
+
 				}
+
 			}
 
 			if(ignite_count > 0) { // 점화 수가 0보다 크면.
