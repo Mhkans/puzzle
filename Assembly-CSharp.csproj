@@ -52,16 +52,16 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scenes\EnemySpawner.cs" />
-     <Compile Include="Assets\Scenes\BlockRoot.cs" />
-     <Compile Include="Assets\Scenes\SceneControl.cs" />
-     <Compile Include="Assets\Scenes\BossMonster.cs" />
-     <Compile Include="Assets\Scenes\Player.cs" />
-     <Compile Include="Assets\Scenes\Enemy.cs" />
-     <Compile Include="Assets\Scenes\ScoreCounter.cs" />
+     <Compile Include="Assets\STAGE01\EnemySpawner.cs" />
+     <Compile Include="Assets\STAGE01\BlockRoot.cs" />
+     <Compile Include="Assets\STAGE01\SceneControl.cs" />
+     <Compile Include="Assets\STAGE01\BossMonster.cs" />
+     <Compile Include="Assets\STAGE01\Player.cs" />
+     <Compile Include="Assets\STAGE01\Enemy.cs" />
+     <Compile Include="Assets\STAGE01\ScoreCounter.cs" />
      <Compile Include="Assets\Reward\Reward.cs" />
-     <Compile Include="Assets\Scenes\BlockControl.cs" />
-     <Compile Include="Assets\Scenes\RestartButton.cs" />
+     <Compile Include="Assets\STAGE01\BlockControl.cs" />
+     <Compile Include="Assets\STAGE01\RestartButton.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
