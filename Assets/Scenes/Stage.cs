@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Stage : MonoBehaviour
 {
+   
     public string SceneToLoad;
     
     public void LoadGame()

@@ -214,6 +214,7 @@ GameObject:
   - component: {fileID: 627374841}
   - component: {fileID: 627374840}
   - component: {fileID: 627374839}
+  - component: {fileID: 627374842}
   m_Layer: 5
   m_Name: Stage2
   m_TagString: Untagged
@@ -285,9 +286,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2074926042}
-        m_TargetAssemblyTypeName: Stage2, Assembly-CSharp
-        m_MethodName: LoadGame
+      - m_Target: {fileID: 627374842}
+        m_TargetAssemblyTypeName: STAGE02, Assembly-CSharp
+        m_MethodName: OnbuttonClick2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -335,6 +336,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 627374837}
   m_CullTransparentMesh: 1
+--- !u!114 &627374842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627374837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b55e03985ee3fea4aa6c500584fc429d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &811361133
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,6 +509,7 @@ GameObject:
   - component: {fileID: 1100906824}
   - component: {fileID: 1100906823}
   - component: {fileID: 1100906822}
+  - component: {fileID: 1100906825}
   m_Layer: 5
   m_Name: Stage3
   m_TagString: Untagged
@@ -567,9 +581,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2074926041}
-        m_TargetAssemblyTypeName: Stage3, Assembly-CSharp
-        m_MethodName: LoadGame
+      - m_Target: {fileID: 1100906825}
+        m_TargetAssemblyTypeName: STAGE03, Assembly-CSharp
+        m_MethodName: OnbuttonClick3
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -617,6 +631,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1100906820}
   m_CullTransparentMesh: 1
+--- !u!114 &1100906825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100906820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18d336b7088b4904e8abc236ec661751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1377644154
 GameObject:
   m_ObjectHideFlags: 0
@@ -983,6 +1009,7 @@ GameObject:
   - component: {fileID: 1849681934}
   - component: {fileID: 1849681933}
   - component: {fileID: 1849681932}
+  - component: {fileID: 1849681935}
   m_Layer: 5
   m_Name: Stage1
   m_TagString: Untagged
@@ -1054,9 +1081,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2074926039}
-        m_TargetAssemblyTypeName: Stage, Assembly-CSharp
-        m_MethodName: LoadGame
+      - m_Target: {fileID: 1849681935}
+        m_TargetAssemblyTypeName: STAGE01, Assembly-CSharp
+        m_MethodName: OnbuttonClick1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1104,6 +1131,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1849681930}
   m_CullTransparentMesh: 1
+--- !u!114 &1849681935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849681930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dca18bd6011d874ea4a6fef1c0fb96f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1987171514
 GameObject:
   m_ObjectHideFlags: 0
