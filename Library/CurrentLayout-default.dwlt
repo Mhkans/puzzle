@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 275, y: 271}
   m_MaxSize: {x: 4001, y: 8021}
   vertical: 1
-  controlID: 58
+  controlID: 20
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_MinSize: {x: 476, y: 271}
   m_MaxSize: {x: 8002, y: 8021}
   vertical: 0
-  controlID: 57
+  controlID: 19
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_MinSize: {x: 476, y: 542}
   m_MaxSize: {x: 10000, y: 18042}
   vertical: 0
-  controlID: 55
+  controlID: 17
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -275,7 +275,7 @@ MonoBehaviour:
   m_MinSize: {x: 476, y: 542}
   m_MaxSize: {x: 10000, y: 18042}
   vertical: 1
-  controlID: 56
+  controlID: 18
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -341,22 +341,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Reward
+    - Assets/STAGE01
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 71
   m_LastFolders:
-  - Assets/Reward
+  - Assets/STAGE01
   m_LastFoldersGridSize: 71
   m_LastProjectPath: C:\Users\Minsoo\Documents\GitHub\puzzle
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: dc3d0000
-    m_LastClickedID: 15836
-    m_ExpandedIDs: 00000000d23d000000ca9a3b
+    m_SelectedIDs: d83d0000
+    m_LastClickedID: 15832
+    m_ExpandedIDs: 00000000d23d00008c4d000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -436,7 +436,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
+    m_ScrollPosition: {x: 0, y: 18}
     m_GridSize: 71
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 207
@@ -507,7 +507,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 62b9e5ffa299e9ff5a30ecff6025eeffa225eeff6e27eeff7a27eeff5828eefff629f7ff8c9dfdff34faffffb0faffff70fbffff
+      m_ExpandedIDs: ac58efffec58efff427eefff32eaf0ff3ebff1ff0e9df2ff409df2ffacfaf2ff2a81f4ff5c81f4ffca09f7ff36b0f7fff2d4f8ff24d5f8ff0055f9ffda9cfaff0c9dfaffb425fbffe625fbff0e28fbffc0b7fcfff2b7fcff1cbafcff46bcfcff9abefcffe2bffcff284fffff70fbffff94500000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

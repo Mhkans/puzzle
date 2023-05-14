@@ -27,7 +27,7 @@ public class EnemySpawner : MonoBehaviour
         canvas = FindObjectOfType<Canvas>(); // Canvas 찾기
         Instance = this;
         this.main_camera = GameObject.FindGameObjectWithTag("MainCamera");
-        SpawnBoss();
+        
 
 
     }
@@ -86,7 +86,6 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        // 생성된 속성프리팹 중 첫번째와 두번째를 제외한 나머지를 삭제
         for (int i = 5; i < statusPrefabs.Count; i++)
         {
             Destroy(statusPrefabs[i]);
@@ -108,13 +107,13 @@ public class EnemySpawner : MonoBehaviour
 
     public  void SpawnEnemy()
     {
-        if (GetEnemyCount() >= MaxEnemyNum+1) // * 보스전일때는 인원수 조정
+        if (GetEnemyCount() >= MaxEnemyNum) // * 보스전일때는 인원수 조정
         {
             return;
         }
 
         
-        Vector3 offset = new Vector3(4.0f * GetEnemyCount() - 6.0f, 5.5f, 0);
+        Vector3 offset = new Vector3(4.0f * GetEnemyCount() - 2.0f, 5.5f, 0);
         GameObject newEnemyObject = Instantiate(enemyPrefab, spawnPosition + offset, Quaternion.identity);
         Enemy enemy = newEnemyObject.GetComponent<Enemy>();
         if (!enemies.Contains(enemy))
@@ -213,5 +212,9 @@ public class EnemySpawner : MonoBehaviour
         return(ret);
     }
 
+    private void STAGECONTROL() // 스테이지코드 스위치문
+    {
+        
+    }
     
 }
