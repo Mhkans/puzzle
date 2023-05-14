@@ -18,10 +18,9 @@ public class Enemy: MonoBehaviour //적을 만든다
     public float term;
     public int damage; // 5초마다 player에게 주는 데미지
     public GameObject statusObject = null;
-    public bool isdead = false;
     public virtual void Start()
     {
-        MaxHp = 10;
+        MaxHp = 50;
         currentHp = MaxHp;
         status = GetRandomStatus();
         attackTime = 0.0f;
@@ -87,9 +86,8 @@ public class Enemy: MonoBehaviour //적을 만든다
             }
         }
     }
-    public void Die()
+    public virtual void Die()
     {
-        isdead = true;
         Destroy(gameObject);
         EnemySpawner.Instance.EnemyDestroyed(this);
         Destroy(enemyHP.gameObject);

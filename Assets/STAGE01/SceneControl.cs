@@ -49,7 +49,7 @@ public class SceneControl : MonoBehaviour {
 			switch(this.step) {
 			case STEP.PLAY:
 				// 클리어 조건을 만족하면.
-				if (this.score_counter.isGameClear())
+				if (BossMonster.isdead == true)
 				{
 					this.next_step = STEP.CLEAR; // 클리어 상태로 이행.
 
@@ -81,8 +81,7 @@ public class SceneControl : MonoBehaviour {
 				case STEP.CLEAR:
 					// block_root를 정지.
 					this.block_root.enabled = false;
-					// 경과 시간을 클리어 시간으로 설정.
-					this.clear_time = this.step_timer;
+					SceneManager.LoadScene("Clear");
 					break;
 
 

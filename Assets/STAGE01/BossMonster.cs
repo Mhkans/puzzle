@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BossMonster : Enemy
 {
+    public static bool isdead = false;
     public override void Start()
     {
         base.Start();
@@ -64,5 +65,12 @@ public class BossMonster : Enemy
                 yield return null;
             }
         }
+    }
+
+    public override void Die()
+    {
+        isdead = true;
+        base.Die();
+        
     }
 }
