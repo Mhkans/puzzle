@@ -482,7 +482,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1364683823}
-        m_TargetAssemblyTypeName: Reward, Assembly-CSharp
+        m_TargetAssemblyTypeName: button1, Assembly-CSharp
         m_MethodName: OnButtonClick1
         m_Mode: 1
         m_Arguments:
@@ -540,12 +540,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1364683818}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7148f6ddc769ae646b268674691918bf, type: 3}
+  m_Script: {fileID: 11500000, guid: c96c59c0bce971e42a793eacb434e521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonText1: {fileID: 0}
-  buttonText2: {fileID: 0}
-  buttonText3: {fileID: 0}
 --- !u!1 &1809631795
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,6 +721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7148f6ddc769ae646b268674691918bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemList: 
   buttonText1: {fileID: 751546862}
   buttonText2: {fileID: 1965221393}
   buttonText3: {fileID: 2111772693}
@@ -905,7 +903,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2097971268}
-        m_TargetAssemblyTypeName: Reward, Assembly-CSharp
+        m_TargetAssemblyTypeName: button2, Assembly-CSharp
         m_MethodName: OnButtonClick2
         m_Mode: 1
         m_Arguments:
@@ -963,12 +961,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2097971263}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7148f6ddc769ae646b268674691918bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 1762154b5e4fb1c46a43a6e23fc2df11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonText1: {fileID: 0}
-  buttonText2: {fileID: 0}
-  buttonText3: {fileID: 0}
 --- !u!1 &2111772691
 GameObject:
   m_ObjectHideFlags: 0
@@ -1133,7 +1128,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2116189628}
-        m_TargetAssemblyTypeName: Reward, Assembly-CSharp
+        m_TargetAssemblyTypeName: button3, Assembly-CSharp
         m_MethodName: OnButtonClick3
         m_Mode: 1
         m_Arguments:
@@ -1191,9 +1186,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 2116189623}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7148f6ddc769ae646b268674691918bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ed102b066f9f6d42908f82b2ae3d63b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonText1: {fileID: 0}
-  buttonText2: {fileID: 0}
-  buttonText3: {fileID: 0}

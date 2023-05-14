@@ -6,12 +6,13 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
-    public int MaxHp;
-    public int currentHp;
+    public float MaxHp;
+    public float currentHp;
     [SerializeField] private Slider hpbar;
-    public static int attCoefficient = 1; // 공격력 계수
-    public static int healCoefficient = 1; // 회복력 계수
-    public static int hpCoefficient = 1; //체력 계수
+    public static float attCoefficient = 1.0f; // 공격력 계수
+    public static float healCoefficient = 1.0f; // 회복력 계수
+    public static float hpCoefficient = 1.0f; //체력 계수
+    public static int shield = 0;
     private bool isDead = false; 
 
     void Start()
@@ -32,9 +33,9 @@ public class Player : MonoBehaviour
             Die();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space)) //디버그용 코드 월요일전까지 삭제
         {
-            currentHp -= 10;
+            currentHp -= 100;
         }
     }
 
@@ -47,7 +48,7 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damage)
     {
         
-        currentHp -= damage * attCoefficient;
+        currentHp = currentHp - (shield - damage);
     
         if (currentHp <= 0 && !isDead)
         {

@@ -11,8 +11,8 @@ public class Enemy: MonoBehaviour //적을 만든다
     }
 
     public Slider enemyHP;
-    public int MaxHp;
-    public int currentHp;
+    public float MaxHp;
+    public float currentHp;
     public Status status;
     private float attackTime;
     public float term;
@@ -74,7 +74,17 @@ public class Enemy: MonoBehaviour //적을 만든다
                     return;
                 }
             }
-            enemy.currentHp -= att;
+            enemy.currentHp -= att * Player.attCoefficient;
+        }
+    }
+    public void TakeAll(int att)
+    {
+        foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+        {
+            if (enemy.currentHp > 0)
+            {
+                enemy.currentHp -= att * Player.attCoefficient;
+            }
         }
     }
     public void Die()
