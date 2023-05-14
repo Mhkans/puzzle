@@ -450,7 +450,7 @@ public class BlockControl : MonoBehaviour {
 		}
 		else
 		{
-					this.setColor((Block.COLOR)color_index);
+			this.setColor((Block.COLOR)color_index);
 
 		}
 	}

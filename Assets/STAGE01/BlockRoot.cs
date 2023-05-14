@@ -117,18 +117,117 @@ public class BlockRoot : MonoBehaviour {
 						{
 							player.Heal(10); // 핑크 블록이면 플레이어의 체력을 10 회복시킨다.
 						}
-						else if (block.color == Block.COLOR.BLUE && enemys.status == Enemy.Status.Yellowstat)
+						else if (block.color == Block.COLOR.BLUE && enemys.status == Enemy.Status.Greenstat)
 						{
-							enemys.TakeDamage(10);
-							
+							if (Reward.isadditionalblow == false)
+							{
+								if (Reward.ismachinegun == true)
+								{
+									enemys.TakeAll(5);
+								}
+								else
+								{
+									enemys.TakeDamage(10);
+
+								}
+							}
+							else
+							{
+								if (Reward.ismachinegun == true)
+								{
+									enemys.TakeAll(5);
+									if (UnityEngine.Random.Range(0, 10) < 3)
+									{
+										enemys.TakeAll(2.5f*Reward.additionalcount); 
+									}
+
+								}
+								else
+								{
+									enemys.TakeDamage(10);
+									if (UnityEngine.Random.Range(0, 10) < 3)
+									{
+										enemys.TakeDamage(5*Reward.additionalcount); 
+									}
+
+								}
+							}
+
+
 						}
-						else if (block.color == Block.COLOR.YELLOW && enemys.status == Enemy.Status.Greenstat)
+						else if (block.color == Block.COLOR.YELLOW && enemys.status == Enemy.Status.Bluestat)
 						{
-							enemys.TakeDamage(10);
+							if (Reward.isadditionalblow == false)
+							{
+								if (Reward.ismachinegun == true)
+								{
+									enemys.TakeAll(5);
+								}
+								else
+								{
+									enemys.TakeDamage(10);
+
+								}
+							}
+							else
+							{
+								if (Reward.ismachinegun == true)
+								{
+									enemys.TakeAll(5);
+									if (UnityEngine.Random.Range(0, 10) < 3)
+									{
+										enemys.TakeAll(2.5f*Reward.additionalcount); 
+									}
+
+								}
+								else
+								{
+									enemys.TakeDamage(10);
+									if (UnityEngine.Random.Range(0, 10) < 3)
+									{
+										enemys.TakeDamage(5*Reward.additionalcount); 
+									}
+
+								}
+							}
+
 						}
-						else if (block.color == Block.COLOR.GREEN && enemys.status == Enemy.Status.Bluestat)
+						else if (block.color == Block.COLOR.GREEN && enemys.status == Enemy.Status.Yellowstat)
 						{
-							enemys.TakeDamage(10);
+							if (Reward.isadditionalblow == false)
+							{
+								if (Reward.ismachinegun == true)
+								{
+									enemys.TakeAll(5);
+								}
+								else
+								{
+									enemys.TakeDamage(10);
+
+								}
+							}
+							else
+							{
+								if (Reward.ismachinegun == true)
+								{
+									enemys.TakeAll(5);
+									if (UnityEngine.Random.Range(0, 10) < 3)
+									{
+										enemys.TakeAll(2.5f*Reward.additionalcount); 
+									}
+
+								}
+								else
+								{
+									enemys.TakeDamage(10);
+									if (UnityEngine.Random.Range(0, 10) < 3)
+									{
+										enemys.TakeDamage(5*Reward.additionalcount); 
+									}
+
+								}
+							}
+
 
 						}
 						else if (block.color == Block.COLOR.SPBLOCK02)
@@ -140,7 +239,40 @@ public class BlockRoot : MonoBehaviour {
 						}
 						else
 						{
-							enemys.TakeDamage(5);
+							if (Reward.isadditionalblow == false)
+							{
+								if (Reward.ismachinegun == true)
+								{
+									enemys.TakeAll(2.5f);
+								}
+								else
+								{
+									enemys.TakeDamage(5);
+
+								}
+							}
+							else
+							{
+								if (Reward.ismachinegun == true)
+								{
+									enemys.TakeAll(2.5f);
+									if (UnityEngine.Random.Range(0, 10) < 3)
+									{
+										enemys.TakeAll(2.5f*Reward.additionalcount); 
+									}
+
+								}
+								else
+								{
+									enemys.TakeDamage(5);
+									if (UnityEngine.Random.Range(0, 10) < 3)
+									{
+										enemys.TakeDamage(5*Reward.additionalcount); 
+									}
+
+								}
+							}
+
 
 						}
 					}

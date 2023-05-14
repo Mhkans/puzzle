@@ -7,7 +7,7 @@ public class BossMonster : Enemy
     public override void Start()
     {
         base.Start();
-        MaxHp = 200;
+        MaxHp = 100;
         currentHp = MaxHp;
         term = 2.0f;
         damage = 5;

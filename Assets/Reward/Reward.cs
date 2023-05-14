@@ -13,9 +13,10 @@ public class Reward : MonoBehaviour
         healboost,
         Pinkboost,
         bombboost,
-        machinegun
+        machinegun,
+        additionalblow
     }
-    List<Item> allItems = new List<Item> { Item.attboost, Item.Shieldboost, Item.healboost, Item.Pinkboost, Item.bombboost, Item.machinegun };
+    List<Item> allItems = new List<Item> { Item.attboost, Item.Shieldboost, Item.healboost, Item.Pinkboost, Item.bombboost, Item.machinegun , Item.additionalblow };
     public List<Item> itemList = new List<Item>();
     public static Item[] items;
     public class ItemInfo
@@ -33,9 +34,13 @@ public class Reward : MonoBehaviour
     public Text buttonText2;
     public Text buttonText3;
     public static bool ismachinegun = false;
+    public static bool isPinkboost = false;
+    public static bool isbombboost = false;
     public static bool hasMachinegun = false;
-
-    
+    public static bool isadditionalblow = false;
+    public static int pinkcount = 0;
+    public static int bombcount = 0;
+    public static int additionalcount = 0;
     Dictionary<Item, ItemInfo> itemInfoDict = new Dictionary<Item, ItemInfo>()
     {
         { Item.attboost, new ItemInfo("attboost", "20%의 공격력 증가 효과를 받습니다.") },
@@ -44,6 +49,7 @@ public class Reward : MonoBehaviour
         { Item.Pinkboost, new ItemInfo("Pinkboost", "회복패널이 더 많이 생성됩니다.") },
         { Item.bombboost, new ItemInfo("bombboost", "폭탄패널이 더 많이 생성됩니다.") },
         { Item.machinegun, new ItemInfo("machinegun", "적에게 주는 데미지가 반으로 줄어들지만 모든 적을 공격합니다.") },
+        { Item.additionalblow, new ItemInfo("additionalblow", "30%의 확률로 무속성 공격을 추가로 가합니다.(중첩가능)") },
     };
     void Start()
     {
@@ -115,16 +121,40 @@ public class Reward : MonoBehaviour
                 Debug.Log("heal is: " + Player.healCoefficient);
                 break;
             case Item.Pinkboost:
-                // perform action for Pinkboost
+                Pinkcount();
                 break;
             case Item.bombboost:
-                // perform action for bombboost
+                BombCount();
                 break;
             case Item.machinegun:
                 ismachinegun = true;
+                break;
+            case Item.additionalblow:
+                additionalblowcount();
                 break;
             
         }
     }
 
+    public static void additionalblowcount()
+    {
+        
+        isadditionalblow = true;
+        additionalcount += 1;
+
+    }
+    public static void Pinkcount()
+    {
+        
+        isPinkboost = true;
+        pinkcount += 5;
+
+    }
+    public static void BombCount()
+    {
+        
+        isbombboost = true;
+        bombcount += 5;
+
+    }
 }

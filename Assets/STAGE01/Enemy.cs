@@ -34,7 +34,7 @@ public class Enemy: MonoBehaviour //적을 만든다
     {
         if (Time.time > attackTime + term)
         {
-            Attack();
+            Invoke("Attack",3.0f);
             attackTime = Time.time;
         }
 
@@ -57,7 +57,7 @@ public class Enemy: MonoBehaviour //적을 만든다
         return statuses[randomIndex];
     }
    
-    public void TakeDamage(int att)
+    public void TakeDamage(float att)
     {
         if (EnemySpawner.Instance.enemies.Count > 0) // 리스트에 적이 있어야 함
         {
@@ -77,7 +77,7 @@ public class Enemy: MonoBehaviour //적을 만든다
             enemy.currentHp -= att * Player.attCoefficient;
         }
     }
-    public void TakeAll(int att)
+    public void TakeAll(float att)
     {
         foreach (Enemy enemy in EnemySpawner.Instance.enemies)
         {

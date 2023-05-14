@@ -17,7 +17,7 @@ public class button1 : MonoBehaviour
         selectedItem = rewardInstance.itemList[0];
         Debug.Log("Button 1 clicked. Selected item is: " + selectedItem.ToString());
         rewardInstance.RewardSelection(selectedItem);
-        SceneManager.LoadScene("Reward");
+        SceneManager.LoadScene("STAGE01");
         if (selectedItem == Reward.Item.machinegun)
         {
             Reward.hasMachinegun = true;

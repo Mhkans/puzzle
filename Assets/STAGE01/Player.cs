@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damage)
     {
         
-        currentHp = currentHp - (shield - damage);
+        currentHp = currentHp - (damage - shield);
     
         if (currentHp <= 0 && !isDead)
         {
