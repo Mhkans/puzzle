@@ -11,7 +11,7 @@ public class EnemySpawner : MonoBehaviour
     public static EnemySpawner Instance;
     public GameObject enemyPrefab = null;
     public GameObject bossPrefab = null;
-    public static int MaxEnemyNum = 2; // 만드는 ENEMY의 수, 임시값
+    public static int MaxEnemyNum; // 만드는 ENEMY의 수, 임시값
     public Vector3 spawnPosition = Vector3.zero; // 스폰 위치
     public Enemy targetEnemy = null;
     public List<Enemy> enemies = new List<Enemy>();
@@ -95,11 +95,6 @@ public class EnemySpawner : MonoBehaviour
     } //왜 되는건지모르겠음
 
 
-
-
-
-    
-
     public int GetEnemyCount()
     {
         return enemies.Count;
@@ -113,7 +108,7 @@ public class EnemySpawner : MonoBehaviour
         }
 
         
-        Vector3 offset = new Vector3(4.0f * GetEnemyCount() - 2.0f, 5.5f, 0);
+        Vector3 offset = new Vector3(2.0f * GetEnemyCount() - 2.0f, 5.5f, 0);
         GameObject newEnemyObject = Instantiate(enemyPrefab, spawnPosition + offset, Quaternion.identity);
         Enemy enemy = newEnemyObject.GetComponent<Enemy>();
         if (!enemies.Contains(enemy))
@@ -212,9 +207,21 @@ public class EnemySpawner : MonoBehaviour
         return(ret);
     }
 
-    private void STAGECONTROL() // 스테이지코드 스위치문
+    private void STAGECONTROL(int stagecode) // 스테이지코드 스위치문
     {
-        
+        switch (stagecode)
+        {
+            case 1:
+                //튜토리얼
+                break;
+            case 2:
+                //일반적인 스테이지
+                break;
+            case 3:
+                //보스스테이지
+                break;
+        }
+
     }
     
 }
