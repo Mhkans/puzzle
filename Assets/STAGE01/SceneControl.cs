@@ -42,6 +42,7 @@ public class SceneControl : MonoBehaviour {
 
 
 	void Update() {
+		
 		this.step_timer += Time.deltaTime;
 		// 상태 변화 대기 -----.
 		if(this.next_step == STEP.NONE) {
@@ -93,7 +94,7 @@ public class SceneControl : MonoBehaviour {
 					break;
 
 			case STEP.REWARD:
-					SceneManager.LoadScene("Reward");//* 리워드 페이즈 진입 3개의 보상 선택  선택후에 다시 플레이로 복귀 or 스테이지 선택페이즈
+					SceneManager.LoadScene("Reward");
 				break;
 			}
 
