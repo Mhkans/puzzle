@@ -20,21 +20,33 @@ public class EnemySpawner : MonoBehaviour
     public GameObject greenStatusPrefab = null;
     public GameObject yellowStatusPrefab = null;
     private List<GameObject> statusPrefabs = new List<GameObject>();
-
+    public static int stagecode = 3;
     public void Start()
     {
 
         canvas = FindObjectOfType<Canvas>(); // Canvas 찾기
         Instance = this;
         this.main_camera = GameObject.FindGameObjectWithTag("MainCamera");
-        
+        switch (stagecode)
+        {
+            case 1:
+                MaxEnemyNum = 1;
+                break;
+            case 2:
+                MaxEnemyNum = 3;
+                break;
+            case 3:
+                SpawnBoss();
+                MaxEnemyNum = 3;
+                break;
+        }
 
 
     }
 
     public void Update()
     {
-        SpawnEnemy();
+        STAGECONTROL(stagecode);
         clickEnemy();
 
         foreach (Enemy enemy in enemies)
@@ -86,34 +98,30 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        for (int i = 5; i < statusPrefabs.Count; i++)
+        for (int i = 10; i < statusPrefabs.Count; i++)
         {
             Destroy(statusPrefabs[i]);
         }
         Destroy(statusPrefabs[0]);
-        
-    } //왜 되는건지모르겠음
+
+    }
 
 
-
-
-
-    
 
     public int GetEnemyCount()
     {
         return enemies.Count;
     }
 
-    public  void SpawnEnemy()
+    public void SpawnEnemy1()
     {
         if (GetEnemyCount() >= MaxEnemyNum) // * 보스전일때는 인원수 조정
         {
             return;
         }
 
-        
-        Vector3 offset = new Vector3(4.0f * GetEnemyCount() - 2.0f, 5.5f, 0);
+
+        Vector3 offset = new Vector3(0, 5.5f, 0);
         GameObject newEnemyObject = Instantiate(enemyPrefab, spawnPosition + offset, Quaternion.identity);
         Enemy enemy = newEnemyObject.GetComponent<Enemy>();
         if (!enemies.Contains(enemy))
@@ -126,13 +134,61 @@ public class EnemySpawner : MonoBehaviour
 
         enemySlider.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1.0f, 0));
 
-       
+
 
     }
-    public  void SpawnBoss()
+    public void SpawnEnemy2()
     {
-       
-        
+        if (GetEnemyCount() >= MaxEnemyNum) // * 보스전일때는 인원수 조정
+        {
+            return;
+        }
+
+
+        Vector3 offset = new Vector3(2.0f * GetEnemyCount() - 2.0f, 5.5f, 0);
+        GameObject newEnemyObject = Instantiate(enemyPrefab, spawnPosition + offset, Quaternion.identity);
+        Enemy enemy = newEnemyObject.GetComponent<Enemy>();
+        if (!enemies.Contains(enemy))
+        {
+            enemies.Add(enemy);
+        }
+
+        Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
+        enemy.enemyHP = enemySlider;
+
+        enemySlider.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1.0f, 0));
+
+
+
+    }
+    public void SpawnEnemy3()
+    {
+        if (GetEnemyCount() >= MaxEnemyNum) // * 보스전일때는 인원수 조정
+        {
+            return;
+        }
+
+
+        Vector3 offset = new Vector3(4.0f * GetEnemyCount() - 6.0f, 5.5f, 0);
+        GameObject newEnemyObject = Instantiate(enemyPrefab, spawnPosition + offset, Quaternion.identity);
+        Enemy enemy = newEnemyObject.GetComponent<Enemy>();
+        if (!enemies.Contains(enemy))
+        {
+            enemies.Add(enemy);
+        }
+
+        Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
+        enemy.enemyHP = enemySlider;
+
+        enemySlider.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1.0f, 0));
+
+
+
+    }
+    public void SpawnBoss()
+    {
+
+
         Vector3 offset = new Vector3(0, 6.5f, 0);
         GameObject newbossObject = Instantiate(bossPrefab, spawnPosition + offset, Quaternion.identity);
         BossMonster bossMonster = newbossObject.GetComponent<BossMonster>();
@@ -141,13 +197,29 @@ public class EnemySpawner : MonoBehaviour
         bossMonster.enemyHP = enemySlider;
 
         enemySlider.transform.position = Camera.main.WorldToScreenPoint(bossMonster.transform.position + new Vector3(0, 1.0f, 0));
-        
+
     }
     public void EnemyDestroyed(Enemy enemy)
     {
         enemies.Remove(enemy);
         MaxEnemyNum = 0;
-        
+        StartCoroutine(Respawn(enemy));
+    }
+
+    private IEnumerator Respawn(Enemy enemy)
+    {
+        yield return new WaitForSeconds(10.0f);
+        Vector3 offset = new Vector3(4.0f * GetEnemyCount() - 6.0f, 5.5f, 0);
+        GameObject newEnemyObject = Instantiate(enemyPrefab, spawnPosition + offset, Quaternion.identity);
+        Enemy newEnemy = newEnemyObject.GetComponent<Enemy>();
+        if (!enemies.Contains(newEnemy))
+        {
+            enemies.Add(newEnemy);
+        }
+
+        Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
+        newEnemy.enemyHP = enemySlider;
+        enemySlider.transform.position = Camera.main.WorldToScreenPoint(newEnemy.transform.position + new Vector3(0, 1.0f, 0));
     }
 
     public void clickEnemy()
@@ -162,7 +234,7 @@ public class EnemySpawner : MonoBehaviour
                 {
                     if (enemy.isContainedPosition(clickPosition))
                     {
-                        
+
                         if (targetEnemy != null)
                         {
                             // 이전에 선택된 적의 크기 원상복귀
@@ -175,8 +247,8 @@ public class EnemySpawner : MonoBehaviour
 
                         enemies.Remove(enemy);
                         enemies.Insert(0, enemy);
-                        
-                        
+
+
                         break;
                     }
                 }
@@ -184,7 +256,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    public bool unprojectMousePosition(	out Vector3 world_position, Vector3 mouse_position)
+    public bool unprojectMousePosition(out Vector3 world_position, Vector3 mouse_position)
     {
         bool ret;
         // 판을 생성. 이 판은 카메라에 대해서 뒤쪽 방향(Vector3.back)에서.
@@ -196,22 +268,38 @@ public class EnemySpawner : MonoBehaviour
             mouse_position);
         float depth;
         // 광선(ray）이 판（plane）에 닿았다면.
-        if(plane.Raycast(ray, out depth)) {
+        if (plane.Raycast(ray, out depth))
+        {
             // 인수 world_position을 마우스 위치로 덮어쓴다.
             world_position = ray.origin + ray.direction * depth;
             ret = true;
             // 닿지 않았다면.
-        } else {
+        }
+        else
+        {
             // 인수 world_position을 제로인 벡터로 덮어쓴다.
             world_position = Vector3.zero;
             ret = false;
         }
-        return(ret);
+        return (ret);
     }
 
-    private void STAGECONTROL() // 스테이지코드 스위치문
+    private void STAGECONTROL(int stagecode) // 스테이지코드 스위치문
     {
-        
+        switch (stagecode)
+        {
+            case 1:
+                SpawnEnemy1();
+                break;
+            case 2:
+                SpawnEnemy2();
+                break;
+            case 3:
+                SpawnEnemy3();
+                break;
+
+        }
     }
-    
+
+
 }
