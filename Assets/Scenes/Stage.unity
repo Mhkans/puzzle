@@ -1213,7 +1213,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Stage Select
+  m_Text: STAGE SELECT
 --- !u!222 &1987171517
 CanvasRenderer:
   m_ObjectHideFlags: 0
