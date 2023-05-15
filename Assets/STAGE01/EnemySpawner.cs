@@ -127,8 +127,10 @@ public class EnemySpawner : MonoBehaviour
         if (!enemies.Contains(enemy))
         {
             enemies.Add(enemy);
+            
         }
-
+    
+        
         Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
         enemy.enemyHP = enemySlider;
 
@@ -273,9 +275,11 @@ public class EnemySpawner : MonoBehaviour
         switch (stagecode)
         {
             case 1:
+                BossMonster.isdead = false;
                 SpawnEnemy1();
                 break;
             case 2:
+                BossMonster.isdead = false; 
                 SpawnEnemy2();
                 break;
             case 3:

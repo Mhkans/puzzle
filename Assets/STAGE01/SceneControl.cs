@@ -108,26 +108,18 @@ public class SceneControl : MonoBehaviour {
 	{
 		switch(this.step) {
 		case STEP.PLAY:
-			GUI.color = Color.black;
-			// 경과 시간을 표시.
-			GUI.Label(new Rect(960.0f, 50.0f, 200.0f, 20.0f),
-			          "시간" + Mathf.CeilToInt(this.step_timer).ToString() + "초",
-			          guistyle);
+			
 			GUI.color = Color.white;
+			guistyle.fontSize = 50;
+			guistyle.fontStyle = FontStyle.Bold;
+			// 색상을 변경한 부분은 다음 두 줄입니다.
+			guistyle.normal.textColor = Color.white;
+			GUI.Label(new Rect(300f, 100.0f, 200.0f, 20.0f),
+				"시간: " + Mathf.CeilToInt(step_timer).ToString() + "초",
+				guistyle);
+		
 			break;
-		case STEP.CLEAR:
-			GUI.color = Color.black;
-			// 「☆클리어-！☆」라는 문자열을 표시.
-			GUI.Label(new Rect(
-				Screen.width/2.0f - 80.0f, 20.0f, 200.0f, 20.0f),
-			          "☆클리어-!☆", guistyle);
-			// 클리어 시간을 표시.
-			GUI.Label(new Rect(
-				Screen.width/2.0f - 80.0f, 40.0f, 200.0f, 20.0f),
-			          "클리어 시간" + Mathf.CeilToInt(this.clear_time).ToString() +
-			          "초", guistyle);
-			GUI.color = Color.white;
-			break;
+		
 		}
 	}
 

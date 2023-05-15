@@ -32,11 +32,7 @@ public class Player : MonoBehaviour
             isDead = true;
             Die();
         }
-
-        if (Input.GetKeyDown(KeyCode.Space)) //디버그용 코드 월요일전까지 삭제
-        {
-            currentHp -= 100;
-        }
+        
     }
 
     public void handleHP()
