@@ -187,7 +187,7 @@ public class EnemySpawner : MonoBehaviour
     }
     public void SpawnBoss()
     {
-
+        BossMonster.isdead = false;
 
         Vector3 offset = new Vector3(0, 6.5f, 0);
         GameObject newbossObject = Instantiate(bossPrefab, spawnPosition + offset, Quaternion.identity);
@@ -203,23 +203,7 @@ public class EnemySpawner : MonoBehaviour
     {
         enemies.Remove(enemy);
         MaxEnemyNum = 0;
-        StartCoroutine(Respawn(enemy));
-    }
-
-    private IEnumerator Respawn(Enemy enemy)
-    {
-        yield return new WaitForSeconds(10.0f);
-        Vector3 offset = new Vector3(4.0f * GetEnemyCount() - 6.0f, 5.5f, 0);
-        GameObject newEnemyObject = Instantiate(enemyPrefab, spawnPosition + offset, Quaternion.identity);
-        Enemy newEnemy = newEnemyObject.GetComponent<Enemy>();
-        if (!enemies.Contains(newEnemy))
-        {
-            enemies.Add(newEnemy);
-        }
-
-        Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
-        newEnemy.enemyHP = enemySlider;
-        enemySlider.transform.position = Camera.main.WorldToScreenPoint(newEnemy.transform.position + new Vector3(0, 1.0f, 0));
+        
     }
 
     public void clickEnemy()

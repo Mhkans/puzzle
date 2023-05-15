@@ -65,9 +65,10 @@ public class SceneControl : MonoBehaviour {
 
 				if (enemy.GetEnemyCount() == 0)
 				{
-					this.next_step = STEP.REWARD; 
-					
+					this.next_step = STEP.REWARD;
+					break;
 				}
+				
 					
 				break; 
 			}
@@ -82,6 +83,8 @@ public class SceneControl : MonoBehaviour {
 					// block_root를 정지.
 					this.block_root.enabled = false;
 					SceneManager.LoadScene("Clear");
+					next_step = STEP.NONE;
+					
 					break;
 
 
@@ -92,9 +95,9 @@ public class SceneControl : MonoBehaviour {
 					}
 					break;
 
-			case STEP.REWARD:
+				case STEP.REWARD:
 					SceneManager.LoadScene("Reward");
-				break;
+					break;
 			}
 
 			this.step_timer = 0.0f;

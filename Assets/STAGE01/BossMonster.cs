@@ -66,6 +66,16 @@ public class BossMonster : Enemy
             }
         }
     }
+    /*public void immortality()
+    {
+        foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+        {
+            if (enemy)
+            {
+                enemy.currentHp -= att * Player.attCoefficient;
+            }
+        }
+    }*/
 
     public override void Die()
     {
