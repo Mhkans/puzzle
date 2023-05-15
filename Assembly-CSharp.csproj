@@ -67,6 +67,7 @@
      <Compile Include="Assets\Reward\button1.cs" />
      <Compile Include="Assets\Scenes\Title2.cs" />
      <Compile Include="Assets\Scenes\STAGE03.cs" />
+     <Compile Include="Assets\STAGE01\GuideControl.cs" />
      <Compile Include="Assets\STAGE01\ScoreCounter.cs" />
      <Compile Include="Assets\Scenes\STAGE02.cs" />
      <Compile Include="Assets\Reward\Reward.cs" />
@@ -76,7 +77,7 @@
      <Compile Include="Assets\STAGE01\RestartButton.cs" />
      <Compile Include="Assets\Scenes\Control.cs" />
      <Compile Include="Assets\Reward\button2.cs" />
-     <Compile Include="Assets\STAGE01\GuideControl.cs" />
+     <Compile Include="Assets\STAGE01\TextHPbar.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

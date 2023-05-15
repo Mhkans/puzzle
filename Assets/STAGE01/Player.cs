@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float MaxHp;
-    public float currentHp;
+    public static float MaxHp;
+    public static float currentHp;
     [SerializeField] private Slider hpbar;
     public static float attCoefficient = 1.0f; // 공격력 계수
     public static float healCoefficient = 1.0f; // 회복력 계수
