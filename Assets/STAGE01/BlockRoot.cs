@@ -33,7 +33,6 @@ public class BlockRoot : MonoBehaviour {
 		enemys = enemyObj.GetComponent<Enemy>();
 		boss = enemyObj.GetComponent<BossMonster>();
 		
-		
 		Vector3 mouse_position; // 마우스의 위치.
 		this.unprojectMousePosition( // 마우스의 위치를 가져옴.
 		                            out mouse_position, Input.mousePosition);
@@ -52,6 +51,94 @@ public class BlockRoot : MonoBehaviour {
 						if(!block.isContainedPosition(mouse_position_xy)) {
 							continue; // 루프의 맨 앞으로 점프.
 						}
+
+						if (block.color == Block.COLOR.SPBLOCK01)
+						{
+							int lx = block.i_pos.x;
+							int rx = block.i_pos.x;
+							int dy = block.i_pos.y;
+							int uy = block.i_pos.y;
+
+							// 블록의 왼쪽을 체크.
+							for (int x = lx - 1; x >= 0; x--)
+							{
+								BlockControl nextBlock = this.blocks[x, block.i_pos.y];
+								if (nextBlock.step == Block.STEP.FALL || nextBlock.next_step == Block.STEP.FALL)
+								{
+									break; // 루프 탈출.
+								}
+
+								if (nextBlock.step == Block.STEP.SLIDE || nextBlock.next_step == Block.STEP.SLIDE)
+								{
+									break; // 루프 탈출.
+								}
+
+								lx = x;
+							}
+
+							// 블록의 오른쪽을 체크.
+							for (int x = rx + 1; x < Block.BLOCK_NUM_X; x++)
+							{
+								BlockControl nextBlock = this.blocks[x, block.i_pos.y];
+								if (nextBlock.step == Block.STEP.FALL || nextBlock.next_step == Block.STEP.FALL)
+								{
+									break; // 루프 탈출.
+								}
+
+								if (nextBlock.step == Block.STEP.SLIDE || nextBlock.next_step == Block.STEP.SLIDE)
+								{
+									break; // 루프 탈출.
+								}
+
+								rx = x;
+							}
+
+							// 블록의 아래쪽을 체크.
+							for (int y = dy - 1; y >= 0; y--)
+							{
+								BlockControl nextBlock = this.blocks[block.i_pos.x, y];
+								if (nextBlock.step == Block.STEP.FALL || nextBlock.next_step == Block.STEP.FALL)
+								{
+									break; // 루프 탈출.
+								}
+
+								if (nextBlock.step == Block.STEP.SLIDE || nextBlock.next_step == Block.STEP.SLIDE)
+								{
+									break; // 루프 탈출.
+								}
+
+								dy = y;
+							}
+
+							// 블록의 위쪽을 체크.
+							for (int y = uy + 1; y < Block.BLOCK_NUM_Y; y++)
+							{
+								BlockControl nextBlock = this.blocks[block.i_pos.x, y];
+								if (nextBlock.step == Block.STEP.FALL || nextBlock.next_step == Block.STEP.FALL)
+								{
+									break; // 루프 탈출.
+								}
+
+								if (nextBlock.step == Block.STEP.SLIDE || nextBlock.next_step == Block.STEP.SLIDE)
+								{
+									break; // 루프 탈출.
+								}
+
+								uy = y;
+							}
+
+							for (int x = lx; x <= rx; x++)
+							{
+								// 완성된 블록을 발화 상태로.
+								this.blocks[x, block.i_pos.y].toVanishing();
+							}
+
+							for (int y = dy; y <= uy; y++)
+							{
+								this.blocks[block.i_pos.x, y].toVanishing();
+							}
+						}
+
 						// 처리 중인 블록을 grabbed_block에 등록.
 						this.grabbed_block = block;
 						// 잡았을 때의 처리를 실행.
@@ -107,6 +194,7 @@ public class BlockRoot : MonoBehaviour {
 				if(! block.isIdle()) { // 대기 중이면 루프의 처음으로 점프하고,.
 					continue; // 다음 블록을 처리한다.
 				}
+				
 				// 세로 또는 가로에 같은 색 블록이 세 개 이상 나열했다면.
 				if (this.checkConnection(block))
 				{
@@ -309,7 +397,7 @@ public class BlockRoot : MonoBehaviour {
 		// 조건이 충족되면 블록을 떨어뜨리고 싶다.
 		do {
 			if(is_vanishing) { // 연소 중인 블록이 있으면.
-				break; // 낙하 처리른 하지 않는다.
+				break; // 낙하 처리 하지 않는다.
 			}
 			if(this.is_has_sliding_block()) { // 교체 중인 블록이 있으면.
 				break; // 낙하 처리는 하지 않는다.
@@ -537,8 +625,7 @@ public class BlockRoot : MonoBehaviour {
 	public bool checkConnection(BlockControl start)
 	{
 		bool ret = false;
-		int normal_block_num = 0;
-		// 인수의 블록이 발화 후가 아니라면.
+		int normal_block_num = 0; // 인수의 블록이 발화 후가 아니라면.
 		if (!start.isVanishing())
 		{
 			normal_block_num = 1;
@@ -547,179 +634,139 @@ public class BlockRoot : MonoBehaviour {
 		// 그리드 좌표를 기억해 둔다.
 		int rx = start.i_pos.x;
 		int lx = start.i_pos.x;
+		int uy = start.i_pos.y;
+		int dy = start.i_pos.y;
+
 		// 블록의 왼쪽을 체크.
-
-		
-		for (int x = lx - 1; x > 0; x--)
+		for (int x = lx - 1; x >= 0; x--)
+		{
+			BlockControl next_block = this.blocks[x, start.i_pos.y];
+			if (next_block.color != start.color)
 			{
-				BlockControl next_block = this.blocks[x, start.i_pos.y];
-				if (next_block.color != start.color && start.color != Block.COLOR.SPBLOCK01)
-				{
-					
-					break; 
-				}
-				if (next_block.step == Block.STEP.FALL || // 낙하 중이면.
-				    next_block.next_step == Block.STEP.FALL)
-				{
-					break; // 루프 탈출.
-				}
-
-				if (next_block.step == Block.STEP.SLIDE || // 슬라이드 중이면.
-				    next_block.next_step == Block.STEP.SLIDE)
-				{
-					break; // 루프 탈출.
-				}
-
-				if (!next_block.isVanishing())
-				{
-					// 발화 중이 아니라면.
-					normal_block_num++; // 검사용 카운터를 증가.
-				}
-
-				lx = x;
+				break;
 			}
 
-			// 블록의 오른쪽을 체크.
-			for (int x = rx + 1; x < Block.BLOCK_NUM_X; x++)
+			if (next_block.step == Block.STEP.FALL || next_block.next_step == Block.STEP.FALL)
 			{
-				BlockControl next_block = this.blocks[x, start.i_pos.y];
-				if (next_block.color != start.color && start.color != Block.COLOR.SPBLOCK01)
-				{
-					
-					break; 
-				}
-				if (next_block.step == Block.STEP.FALL ||
-				    next_block.next_step == Block.STEP.FALL)
-				{
-					break;
-				}
-
-				if (next_block.step == Block.STEP.SLIDE ||
-				    next_block.next_step == Block.STEP.SLIDE)
-				{
-					break;
-				}
-
-				if (!next_block.isVanishing())
-				{
-					normal_block_num++;
-				}
-
-				rx = x;
+				break; // 루프 탈출.
 			}
 
-			do
+			if (next_block.step == Block.STEP.SLIDE || next_block.next_step == Block.STEP.SLIDE)
 			{
-				// 오른쪽 블록의 그리드 번호 - 왼쪽 블록의 그리드 번호＋.
-				// 중앙 블록（1）을 더한 수가 3미만이면.
-				if (rx - lx + 1 < 3)
-				{
-					break; // 루프 탈출.
-				}
+				break; // 루프 탈출.
+			}
 
-				if (normal_block_num == 0)
-				{
-					// 발화 중이 아닌 블록이 하나도 없으면.
-					break; // 루프 탈출.
-				}
+			if (!next_block.isVanishing())
+			{
+				// 발화 중이 아니라면.
+				normal_block_num++; // 검사용 카운터를 증가.
+			}
 
-				for (int x = lx; x < rx + 1; x++)
+			lx = x;
+		}
+
+		// 블록의 오른쪽을 체크.
+		for (int x = rx + 1; x < Block.BLOCK_NUM_X; x++)
+		{
+			BlockControl next_block = this.blocks[x, start.i_pos.y];
+			if (next_block.color != start.color)
+			{
+				break;
+			}
+
+			if (next_block.step == Block.STEP.FALL || next_block.next_step == Block.STEP.FALL)
+			{
+				break;
+			}
+
+			if (next_block.step == Block.STEP.SLIDE || next_block.next_step == Block.STEP.SLIDE)
+			{
+				break;
+			}
+
+			if (!next_block.isVanishing())
+			{
+				normal_block_num++;
+			}
+
+			rx = x;
+		}
+
+		// 블록의 위쪽을 검사.
+		for (int y = dy - 1; y >= 0; y--)
+		{
+			BlockControl next_block = this.blocks[start.i_pos.x, y];
+			if (next_block.color != start.color)
+			{
+				break;
+			}
+
+			if (next_block.step == Block.STEP.FALL || next_block.next_step == Block.STEP.FALL)
+			{
+				break;
+			}
+
+			if (next_block.step == Block.STEP.SLIDE || next_block.next_step == Block.STEP.SLIDE)
+			{
+				break;
+			}
+
+			if (!next_block.isVanishing())
+			{
+				normal_block_num++;
+			}
+
+			dy = y;
+		}
+
+		// 블록의 아래쪽을 검사.
+		for (int y = uy + 1; y < Block.BLOCK_NUM_Y; y++)
+		{
+			BlockControl next_block = this.blocks[start.i_pos.x, y];
+			if (next_block.color != start.color)
+			{
+				break;
+			}
+
+			if (next_block.step == Block.STEP.FALL || next_block.next_step == Block.STEP.FALL)
+			{
+				break;
+			}
+
+			if (next_block.step == Block.STEP.SLIDE || next_block.next_step == Block.STEP.SLIDE)
+			{
+				break;
+			}
+
+			if (!next_block.isVanishing())
+			{
+				normal_block_num++;
+			}
+
+			uy = y;
+		}
+
+		if (rx - lx + 1 >= 3 || uy - dy + 1 >= 3)
+		{
+			if (normal_block_num > 0)
+			{
+				for (int x = lx; x <= rx; x++)
 				{
 					// 완성된 같은 색 블록을 발화 상태로.
 					this.blocks[x, start.i_pos.y].toVanishing();
 					ret = true;
 				}
-			} while (false);
 
-			normal_block_num = 0;
-			if (!start.isVanishing())
-			{
-				normal_block_num = 1;
-			}
-
-			int uy = start.i_pos.y;
-			int dy = start.i_pos.y;
-			// 블록의 위쪽을 검사.
-			for (int y = dy - 1; y > 0; y--)
-			{
-				BlockControl next_block = this.blocks[start.i_pos.x, y];
-				if (next_block.color != start.color && start.color != Block.COLOR.SPBLOCK01)
-				{
-					
-					break; 
-				}
-				if (next_block.step == Block.STEP.FALL ||
-				    next_block.next_step == Block.STEP.FALL)
-				{
-					break;
-				}
-
-				if (next_block.step == Block.STEP.SLIDE ||
-				    next_block.next_step == Block.STEP.SLIDE)
-				{
-					break;
-				}
-
-				if (!next_block.isVanishing())
-				{
-					normal_block_num++;
-				}
-
-				dy = y;
-			}
-
-			// 블록의 아래쪽을 검사.
-			for (int y = uy + 1; y < Block.BLOCK_NUM_Y; y++)
-			{
-				BlockControl next_block = this.blocks[start.i_pos.x, y];
-				if (next_block.color != start.color && start.color != Block.COLOR.SPBLOCK01)
-				{
-					
-					break; 
-				}
-				if (next_block.step == Block.STEP.FALL ||
-				    next_block.next_step == Block.STEP.FALL)
-				{
-					break;
-				}
-
-				if (next_block.step == Block.STEP.SLIDE ||
-				    next_block.next_step == Block.STEP.SLIDE)
-				{
-					break;
-				}
-
-				if (!next_block.isVanishing())
-				{
-					normal_block_num++;
-				}
-
-				uy = y;
-			}
-
-			do
-			{
-				if (uy - dy + 1 < 3)
-				{
-					break;
-				}
-
-				if (normal_block_num == 0)
-				{
-					break;
-				}
-
-				for (int y = dy; y < uy + 1; y++)
+				for (int y = dy; y <= uy; y++)
 				{
 					this.blocks[start.i_pos.x, y].toVanishing();
 					ret = true;
 				}
-			} while (false);
-		
+			}
+		}
 
-		return (ret);
+		return ret;
 	}
-
 
 
 	private bool is_has_vanishing_block()

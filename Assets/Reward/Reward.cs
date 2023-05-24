@@ -38,7 +38,6 @@ public class Reward : MonoBehaviour
     public static bool hasMachinegun = false;
     public static bool isadditionalblow = false;
     public static int pinkcount = 0;
-    public static int bombcount = 0;
     public static int additionalcount = 0;
     Dictionary<Item, ItemInfo> itemInfoDict = new Dictionary<Item, ItemInfo>()
     {
@@ -46,7 +45,7 @@ public class Reward : MonoBehaviour
         { Item.Shieldboost, new ItemInfo("Shieldboost", "방어력이 3 증가합니다.") },
         { Item.healboost, new ItemInfo("healboost", "20%의 체력 회복 증가 효과를 받습니다.") },
         { Item.Pinkboost, new ItemInfo("Pinkboost", "회복패널이 더 많이 생성됩니다.") },
-        { Item.hpboost, new ItemInfo("bombboost", "20%의 체력 증가 효과를 받습니다.") },
+        { Item.hpboost, new ItemInfo("hpboost", "20%의 체력 증가 효과를 받습니다.") },
         { Item.machinegun, new ItemInfo("machinegun", "적에게 주는 데미지가 반으로 줄어들지만 모든 적을 공격합니다.") },
         { Item.additionalblow, new ItemInfo("additionalblow", "30%의 확률로 무속성 공격을 추가로 가합니다.(중첩가능)") },
     };

@@ -61,8 +61,12 @@ public class Player : MonoBehaviour
     private void Die()
     {
         isDead = true;
-        
-
+        attCoefficient = 1.0f;
+        healCoefficient = 1.0f;
+        hpCoefficient = 1.0f;
+        shield = 0;
+        Reward.ismachinegun = false;
+        Reward.isadditionalblow = false;
     }
 
     public void Heal(int count)
