@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Enemy: MonoBehaviour //적을 만든다
+public class Enemy: MonoBehaviour 
 {
     public enum Status
     {
@@ -14,6 +14,7 @@ public class Enemy: MonoBehaviour //적을 만든다
     public float MaxHp;
     public float currentHp;
     public Status status;
+    public static Status initialstat;
     private float attackTime;
     public float term;
     public int damage; // 5초마다 player에게 주는 데미지
@@ -22,18 +23,24 @@ public class Enemy: MonoBehaviour //적을 만든다
     {
         MaxHp = 50;
         currentHp = MaxHp;
-        status = GetRandomStatus();
         attackTime = 0.0f;
+        initialstat = GetRandomStatus();
+        status = initialstat;
         term = 5.0f;
         damage = 5;
 
     }
-
+    Status GetRandomStatus()
+    {
+        List<Enemy.Status> statuses = new List<Enemy.Status>() { Enemy.Status.Greenstat, Enemy.Status.Yellowstat, Enemy.Status.Bluestat };
+        int randomIndex = Random.Range(0, statuses.Count);
+        return statuses[randomIndex];
+    }
     void Update() // 공격 사망 처리  EnemyNum = 0 이면 보상페이즈
     {
         if (Time.time > attackTime + term)
         {
-            Invoke("Attack",3.0f);
+            Attack();
             attackTime = Time.time;
         }
 
@@ -48,13 +55,7 @@ public class Enemy: MonoBehaviour //적을 만든다
     {
        enemyHP.value = (float)currentHp / (float)MaxHp;
     }
-    Status GetRandomStatus()
-    {
-        //랜덤하게 Status를 선택합니다.
-        List<Status> statuses = new List<Status>() { Status.Greenstat, Status.Yellowstat, Status.Bluestat };
-        int randomIndex = Random.Range(0, statuses.Count);
-        return statuses[randomIndex];
-    }
+   
    
     public void TakeDamage(float att)
     {

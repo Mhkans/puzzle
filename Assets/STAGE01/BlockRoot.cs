@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEditorInternal;
 
 public class BlockRoot : MonoBehaviour {
 
@@ -14,6 +15,8 @@ public class BlockRoot : MonoBehaviour {
 	public Enemy enemys = null;
 	public BossMonster boss = null;
 	public EnemySpawner enemyspawner = null;
+	private bool healHP = false;
+	private bool bomb = false;
 	void Start() {
 		this.main_camera = GameObject.FindGameObjectWithTag("MainCamera");
 		this.score_counter = this.gameObject.GetComponent<ScoreCounter>();
@@ -73,6 +76,18 @@ public class BlockRoot : MonoBehaviour {
 									break; // 루프 탈출.
 								}
 
+								if (nextBlock.color == Block.COLOR.PINK)
+								{
+									healHP = true;
+									
+								}
+
+								if (nextBlock.color == Block.COLOR.SPBLOCK02)
+								{
+									bomb = true;
+								}
+
+
 								lx = x;
 							}
 
@@ -88,6 +103,17 @@ public class BlockRoot : MonoBehaviour {
 								if (nextBlock.step == Block.STEP.SLIDE || nextBlock.next_step == Block.STEP.SLIDE)
 								{
 									break; // 루프 탈출.
+								}
+
+								
+								if (nextBlock.color == Block.COLOR.PINK)
+								{
+									healHP = true;
+									
+								}
+								if (nextBlock.color == Block.COLOR.SPBLOCK02)
+								{
+									bomb = true;
 								}
 
 								rx = x;
@@ -107,6 +133,17 @@ public class BlockRoot : MonoBehaviour {
 									break; // 루프 탈출.
 								}
 
+								
+								if (nextBlock.color == Block.COLOR.PINK)
+								{
+									healHP = true;
+									
+								}
+								if (nextBlock.color == Block.COLOR.SPBLOCK02)
+								{
+									bomb = true;
+								}
+
 								dy = y;
 							}
 
@@ -124,6 +161,17 @@ public class BlockRoot : MonoBehaviour {
 									break; // 루프 탈출.
 								}
 
+								
+								if (nextBlock.color == Block.COLOR.PINK)
+								{
+									healHP = true;
+									
+								}
+								if (nextBlock.color == Block.COLOR.SPBLOCK02)
+								{
+									bomb = true;
+								}
+
 								uy = y;
 							}
 
@@ -137,13 +185,30 @@ public class BlockRoot : MonoBehaviour {
 							{
 								this.blocks[block.i_pos.x, y].toVanishing();
 							}
+							
+							
 						}
 
 						// 처리 중인 블록을 grabbed_block에 등록.
+						
 						this.grabbed_block = block;
 						// 잡았을 때의 처리를 실행.
 						this.grabbed_block.beginGrab();
 						break;
+					}
+					if (healHP == true)
+					{
+						player.Heal(10);
+						healHP = false;
+					}
+
+					if (bomb == true)
+					{
+						foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+						{
+							enemy.currentHp -= 15;
+							bomb = false;
+						}
 					}
 				}
 			}
@@ -621,8 +686,189 @@ public class BlockRoot : MonoBehaviour {
 		block1.beginSlide(offset1); // 이동할 곳의 블록의 이동을 시작.
 	}
 
+public bool checkConnection(BlockControl start)
+	{
+		bool ret = false;
+		int normal_block_num = 0;
+		// 인수의 블록이 발화 후가 아니라면.
+		if (!start.isVanishing())
+		{
+			normal_block_num = 1;
+		}
 
-	public bool checkConnection(BlockControl start)
+		// 그리드 좌표를 기억해 둔다.
+		int rx = start.i_pos.x;
+		int lx = start.i_pos.x;
+		// 블록의 왼쪽을 체크.
+
+		
+		for (int x = lx - 1; x > 0; x--)
+			{
+				BlockControl next_block = this.blocks[x, start.i_pos.y];
+				if (next_block.color != start.color)
+				{
+					break; 
+				}
+				if (next_block.step == Block.STEP.FALL || // 낙하 중이면.
+				    next_block.next_step == Block.STEP.FALL)
+				{
+					break; // 루프 탈출.
+				}
+
+				if (next_block.step == Block.STEP.SLIDE || // 슬라이드 중이면.
+				    next_block.next_step == Block.STEP.SLIDE)
+				{
+					break; // 루프 탈출.
+				}
+
+				if (!next_block.isVanishing())
+				{
+					// 발화 중이 아니라면.
+					normal_block_num++; // 검사용 카운터를 증가.
+				}
+
+				lx = x;
+			}
+
+			// 블록의 오른쪽을 체크.
+			for (int x = rx + 1; x < Block.BLOCK_NUM_X; x++)
+			{
+				BlockControl next_block = this.blocks[x, start.i_pos.y];
+				if (next_block.color != start.color)				{
+					
+					break; 
+				}
+				if (next_block.step == Block.STEP.FALL ||
+				    next_block.next_step == Block.STEP.FALL)
+				{
+					break;
+				}
+
+				if (next_block.step == Block.STEP.SLIDE ||
+				    next_block.next_step == Block.STEP.SLIDE)
+				{
+					break;
+				}
+
+				if (!next_block.isVanishing())
+				{
+					normal_block_num++;
+				}
+
+				rx = x;
+			}
+
+			do
+			{
+				// 오른쪽 블록의 그리드 번호 - 왼쪽 블록의 그리드 번호＋.
+				// 중앙 블록（1）을 더한 수가 3미만이면.
+				if (rx - lx + 1 < 3)
+				{
+					break; // 루프 탈출.
+				}
+
+				if (normal_block_num == 0)
+				{
+					// 발화 중이 아닌 블록이 하나도 없으면.
+					break; // 루프 탈출.
+				}
+
+				for (int x = lx; x < rx + 1; x++)
+				{
+					// 완성된 같은 색 블록을 발화 상태로.
+					this.blocks[x, start.i_pos.y].toVanishing();
+					ret = true;
+				}
+			} while (false);
+
+			normal_block_num = 0;
+			if (!start.isVanishing())
+			{
+				normal_block_num = 1;
+			}
+
+			int uy = start.i_pos.y;
+			int dy = start.i_pos.y;
+			// 블록의 위쪽을 검사.
+			for (int y = dy - 1; y > 0; y--)
+			{
+				BlockControl next_block = this.blocks[start.i_pos.x, y];
+				if (next_block.color != start.color)				{
+					
+					break; 
+				}
+				if (next_block.step == Block.STEP.FALL ||
+				    next_block.next_step == Block.STEP.FALL)
+				{
+					break;
+				}
+
+				if (next_block.step == Block.STEP.SLIDE ||
+				    next_block.next_step == Block.STEP.SLIDE)
+				{
+					break;
+				}
+
+				if (!next_block.isVanishing())
+				{
+					normal_block_num++;
+				}
+
+				dy = y;
+			}
+
+			// 블록의 아래쪽을 검사.
+			for (int y = uy + 1; y < Block.BLOCK_NUM_Y; y++)
+			{
+				BlockControl next_block = this.blocks[start.i_pos.x, y];
+				if (next_block.color != start.color)
+				{
+					
+					break; 
+				}
+				if (next_block.step == Block.STEP.FALL ||
+				    next_block.next_step == Block.STEP.FALL)
+				{
+					break;
+				}
+
+				if (next_block.step == Block.STEP.SLIDE ||
+				    next_block.next_step == Block.STEP.SLIDE)
+				{
+					break;
+				}
+
+				if (!next_block.isVanishing())
+				{
+					normal_block_num++;
+				}
+
+				uy = y;
+			}
+
+			do
+			{
+				if (uy - dy + 1 < 3)
+				{
+					break;
+				}
+
+				if (normal_block_num == 0)
+				{
+					break;
+				}
+
+				for (int y = dy; y < uy + 1; y++)
+				{
+					this.blocks[start.i_pos.x, y].toVanishing();
+					ret = true;
+				}
+			} while (false);
+		
+
+		return (ret);
+	}
+	public bool checkConnection02(BlockControl start)
 	{
 		bool ret = false;
 		int normal_block_num = 0; // 인수의 블록이 발화 후가 아니라면.
@@ -804,6 +1050,8 @@ public class BlockRoot : MonoBehaviour {
 		}
 		return(ret);
 	}
+
+	
 
 	public void fallBlock(
 		BlockControl block0, Block.DIR4 dir, BlockControl block1)

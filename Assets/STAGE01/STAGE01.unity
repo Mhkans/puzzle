@@ -1159,17 +1159,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3c31d7b9fe58a7408e0fc4ca6be340b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boss: {fileID: 0}
   enemySliderPrefab: {fileID: 6736228907411516920, guid: 7cab6e17714de144a97944992689c292, type: 3}
-  enemyPrefab: {fileID: 6190022088579737276, guid: 66d75b7fdae8d454286043ca0cb14e13, type: 3}
-  bossPrefab: {fileID: 37861176794452067, guid: f2639f482e6c7634ba0fcc0e2ddb6c66, type: 3}
+  BenemyPrefab: {fileID: 6190022088579737276, guid: 66d75b7fdae8d454286043ca0cb14e13, type: 3}
+  GenemyPrefab: {fileID: 6190022088579737276, guid: 6f0e222225ca2cc429ff6533ce05b656, type: 3}
+  YenemyPrefab: {fileID: 6190022088579737276, guid: 4a504c494d9f51645a6ebd0b09386d9c, type: 3}
+  BbossPrefab: {fileID: 37861176794452067, guid: f2639f482e6c7634ba0fcc0e2ddb6c66, type: 3}
+  GbossPrefab: {fileID: 37861176794452067, guid: 6db72fd9096b190418a76eb8ce838e74, type: 3}
+  YbossPrefab: {fileID: 37861176794452067, guid: 9f7f350cd9b8e934891abbeecdbb86fe, type: 3}
   spawnPosition: {x: 0, y: 0, z: 0}
   targetEnemy: {fileID: 0}
   enemies: []
   canvas: {fileID: 0}
-  blueStatusPrefab: {fileID: 5752094348125113621, guid: 2fa711a95f3f09642a421291c0aa8062, type: 3}
-  greenStatusPrefab: {fileID: 8173638739261076526, guid: 5b4b0b87184e8fc4abd4b2328cad911f, type: 3}
-  yellowStatusPrefab: {fileID: 7721118823389492342, guid: c063dca1c357c4b4e99a48a2ccc494c9, type: 3}
 --- !u!1 &1211712758
 GameObject:
   m_ObjectHideFlags: 0

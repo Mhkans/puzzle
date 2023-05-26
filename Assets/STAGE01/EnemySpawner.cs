@@ -5,25 +5,29 @@ using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour
 {
+    private Enemy.Status enemyAttribute;
     private GameObject main_camera = null; // 메인 카메라.
-    public BossMonster boss;
     public Slider enemySliderPrefab;
     public static EnemySpawner Instance;
-    public GameObject enemyPrefab = null;
-    public GameObject bossPrefab = null;
+    public GameObject BenemyPrefab = null;
+    public GameObject GenemyPrefab = null;
+    public GameObject YenemyPrefab = null;
+    public GameObject BbossPrefab = null;
+    public GameObject GbossPrefab = null;
+    public GameObject YbossPrefab = null;
     public static int MaxEnemyNum = 2; // 만드는 ENEMY의 수, 임시값
     public Vector3 spawnPosition = Vector3.zero; // 스폰 위치
     public Enemy targetEnemy = null;
     public List<Enemy> enemies = new List<Enemy>();
     public Canvas canvas; // 새로운 Canvas
-    public GameObject blueStatusPrefab = null;
-    public GameObject greenStatusPrefab = null;
-    public GameObject yellowStatusPrefab = null;
-    private List<GameObject> statusPrefabs = new List<GameObject>();
-    public static int stagecode = 3;
+    //public GameObject blueStatusPrefab = null;
+    //public GameObject greenStatusPrefab = null;
+    //public GameObject yellowStatusPrefab = null;
+    public static int stagecode = 2;
     public void Start()
     {
 
+        
         canvas = FindObjectOfType<Canvas>(); // Canvas 찾기
         Instance = this;
         this.main_camera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -56,100 +60,75 @@ public class EnemySpawner : MonoBehaviour
                 enemy.enemyHP.transform.position =
                     Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
             }
-
-            if (enemy.status == Enemy.Status.Bluestat)
-            {
-                // blueStatusPrefab 생성
-                GameObject blueStatus = Instantiate(blueStatusPrefab,
-                    new Vector3(enemy.transform.position.x - 1.0f, enemy.transform.position.y,
-                        enemy.transform.position.z), Quaternion.identity);
-
-                // 에너미의 자식 오브젝트로 추가
-                blueStatus.transform.parent = enemy.transform;
-
-                // 생성된 속성프리팹을 리스트에 추가
-                statusPrefabs.Add(blueStatus);
-            }
-            else if (enemy.status == Enemy.Status.Yellowstat)
-            {
-                // yellowStatusPrefab 생성
-                GameObject yellowStatus = Instantiate(yellowStatusPrefab,
-                    new Vector3(enemy.transform.position.x - 1.0f, enemy.transform.position.y,
-                        enemy.transform.position.z), Quaternion.identity);
-
-                // 에너미의 자식 오브젝트로 추가
-                yellowStatus.transform.parent = enemy.transform;
-
-                // 생성된 속성프리팹을 리스트에 추가
-                statusPrefabs.Add(yellowStatus);
-            }
-            else if (enemy.status == Enemy.Status.Greenstat)
-            {
-                // greenStatusPrefab 생성
-                GameObject greenStatus = Instantiate(greenStatusPrefab,
-                    new Vector3(enemy.transform.position.x - 1.0f, enemy.transform.position.y,
-                        enemy.transform.position.z), Quaternion.identity);
-
-                // 에너미의 자식 오브젝트로 추가
-                greenStatus.transform.parent = enemy.transform;
-
-                // 생성된 속성프리팹을 리스트에 추가
-                statusPrefabs.Add(greenStatus);
-            }
         }
-
-        for (int i = 10; i < statusPrefabs.Count; i++)
-        {
-            Destroy(statusPrefabs[i]);
-        }
-        Destroy(statusPrefabs[0]);
-
     }
-
-
 
     public int GetEnemyCount()
     {
         return enemies.Count;
     }
-
+   
     public void SpawnEnemy1()
     {
-        if (GetEnemyCount() >= MaxEnemyNum) // * 보스전일때는 인원수 조정
+        if (GetEnemyCount() >= MaxEnemyNum)
         {
             return;
         }
-
-
         Vector3 offset = new Vector3(0, 5.5f, 0);
-        GameObject newEnemyObject = Instantiate(enemyPrefab, spawnPosition + offset, Quaternion.identity);
-        Enemy enemy = newEnemyObject.GetComponent<Enemy>();
-        if (!enemies.Contains(enemy))
+
+        GameObject newEnemyObject = null;
+        enemyAttribute = Enemy.initialstat;
+        switch (enemyAttribute)
         {
-            enemies.Add(enemy);
+            case Enemy.Status.Bluestat:
+                newEnemyObject = Instantiate(BenemyPrefab, spawnPosition + offset, Quaternion.identity);
+                break;
+            case Enemy.Status.Yellowstat:
+                newEnemyObject = Instantiate(YenemyPrefab, spawnPosition + offset, Quaternion.identity);
+                break;
+            case Enemy.Status.Greenstat:
+                newEnemyObject = Instantiate(GenemyPrefab, spawnPosition + offset, Quaternion.identity);
+                break;
             
         }
-    
-        
+        Enemy enemy = newEnemyObject.GetComponent<Enemy>();
+         
+
+        if (!enemies.Contains(enemy))
+        {
+            enemies.Add(enemy);
+        }
+
         Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
         enemy.enemyHP = enemySlider;
-
-        enemySlider.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1.0f, 0));
-
-
-
     }
+
     public void SpawnEnemy2()
     {
-        if (GetEnemyCount() >= MaxEnemyNum) // * 보스전일때는 인원수 조정
+        if (GetEnemyCount() >= MaxEnemyNum)
         {
             return;
         }
-
-
         Vector3 offset = new Vector3(2.0f * GetEnemyCount() - 2.0f, 5.5f, 0);
-        GameObject newEnemyObject = Instantiate(enemyPrefab, spawnPosition + offset, Quaternion.identity);
+
+        GameObject newEnemyObject = null;
+        enemyAttribute = Enemy.initialstat;
+        switch (enemyAttribute)
+        {
+            case Enemy.Status.Bluestat:
+                newEnemyObject = Instantiate(BenemyPrefab, spawnPosition + offset, Quaternion.identity);
+                break;
+            case Enemy.Status.Yellowstat:
+                newEnemyObject = Instantiate(YenemyPrefab, spawnPosition + offset, Quaternion.identity);
+                break;
+            case Enemy.Status.Greenstat:
+                newEnemyObject = Instantiate(GenemyPrefab, spawnPosition + offset, Quaternion.identity);
+                break;
+            
+        }
         Enemy enemy = newEnemyObject.GetComponent<Enemy>();
+         
+
         if (!enemies.Contains(enemy))
         {
             enemies.Add(enemy);
@@ -157,23 +136,34 @@ public class EnemySpawner : MonoBehaviour
 
         Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
         enemy.enemyHP = enemySlider;
-
-        enemySlider.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1.0f, 0));
-
-
-
     }
+
     public void SpawnEnemy3()
     {
-        if (GetEnemyCount() >= MaxEnemyNum) // * 보스전일때는 인원수 조정
+        if (GetEnemyCount() >= MaxEnemyNum)
         {
             return;
         }
-
-
         Vector3 offset = new Vector3(4.0f * GetEnemyCount() - 6.0f, 5.5f, 0);
-        GameObject newEnemyObject = Instantiate(enemyPrefab, spawnPosition + offset, Quaternion.identity);
+
+        GameObject newEnemyObject = null;
+        enemyAttribute = Enemy.initialstat;
+        switch (enemyAttribute)
+        {
+            case Enemy.Status.Bluestat:
+                newEnemyObject = Instantiate(BenemyPrefab, spawnPosition + offset, Quaternion.identity);
+                break;
+            case Enemy.Status.Yellowstat:
+                newEnemyObject = Instantiate(YenemyPrefab, spawnPosition + offset, Quaternion.identity);
+                break;
+            case Enemy.Status.Greenstat:
+                newEnemyObject = Instantiate(GenemyPrefab, spawnPosition + offset, Quaternion.identity);
+                break;
+            
+        }
         Enemy enemy = newEnemyObject.GetComponent<Enemy>();
+         
+
         if (!enemies.Contains(enemy))
         {
             enemies.Add(enemy);
@@ -181,18 +171,30 @@ public class EnemySpawner : MonoBehaviour
 
         Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
         enemy.enemyHP = enemySlider;
+    }  
 
-        enemySlider.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1.0f, 0));
-
-
-
-    }
     public void SpawnBoss()
     {
         BossMonster.isdead = false;
 
         Vector3 offset = new Vector3(0, 6.5f, 0);
-        GameObject newbossObject = Instantiate(bossPrefab, spawnPosition + offset, Quaternion.identity);
+        BossMonster.Status enemyAttribute = BossMonster.initialstat;
+
+        GameObject newbossObject = null;
+
+        if (enemyAttribute == BossMonster.Status.Bluestat)
+        {
+            newbossObject = Instantiate(BbossPrefab, spawnPosition+offset, Quaternion.identity);
+        }
+        else if (enemyAttribute == BossMonster.Status.Yellowstat)
+        {
+            newbossObject = Instantiate(YbossPrefab, spawnPosition+offset, Quaternion.identity);
+        }
+        else if (enemyAttribute == BossMonster.Status.Greenstat)
+        {
+            newbossObject = Instantiate(GbossPrefab, spawnPosition+offset, Quaternion.identity);
+        }
+        
         BossMonster bossMonster = newbossObject.GetComponent<BossMonster>();
         enemies.Add(bossMonster);
         Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);

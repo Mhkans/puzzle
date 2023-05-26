@@ -3,7 +3,16 @@ guid: b3c31d7b9fe58a7408e0fc4ca6be340b
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - enemySliderPrefab: {instanceID: 0}
+  - BenemyPrefab: {fileID: 6190022088579737276, guid: 66d75b7fdae8d454286043ca0cb14e13, type: 3}
+  - GenemyPrefab: {fileID: 6190022088579737276, guid: 66d75b7fdae8d454286043ca0cb14e13, type: 3}
+  - YenemyPrefab: {fileID: 6190022088579737276, guid: 66d75b7fdae8d454286043ca0cb14e13, type: 3}
+  - BbossPrefab: {instanceID: 0}
+  - GbossPrefab: {instanceID: 0}
+  - YbossPrefab: {instanceID: 0}
+  - targetEnemy: {instanceID: 0}
+  - canvas: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
