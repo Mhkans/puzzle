@@ -75,9 +75,11 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
         Vector3 offset = new Vector3(0, 5.5f, 0);
-
         GameObject newEnemyObject = null;
-        enemyAttribute = Enemy.initialstat;
+
+        Enemy enemy = newEnemyObject.GetComponent<Enemy>();
+
+        enemyAttribute = enemy.status;
         switch (enemyAttribute)
         {
             case Enemy.Status.Bluestat:
@@ -91,7 +93,6 @@ public class EnemySpawner : MonoBehaviour
                 break;
             
         }
-        Enemy enemy = newEnemyObject.GetComponent<Enemy>();
          
 
         if (!enemies.Contains(enemy))
@@ -102,17 +103,26 @@ public class EnemySpawner : MonoBehaviour
         Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
         enemy.enemyHP = enemySlider;
     }
-
+    Enemy.Status GetRandomStatus()
+    {
+        List<Enemy.Status> statuses = new List<Enemy.Status>() { Enemy.Status.Greenstat, Enemy.Status.Yellowstat, Enemy.Status.Bluestat };
+        int randomIndex = Random.Range(0, statuses.Count);
+        return statuses[randomIndex];
+    }
     public void SpawnEnemy2()
     {
         if (GetEnemyCount() >= MaxEnemyNum)
         {
             return;
         }
+    
         Vector3 offset = new Vector3(2.0f * GetEnemyCount() - 2.0f, 5.5f, 0);
-
+    
         GameObject newEnemyObject = null;
-        enemyAttribute = Enemy.initialstat;
+        Enemy enemy = null;
+    
+        enemyAttribute = GetRandomStatus(); // GetRandomEnemyAttribute()는 랜덤한 적의 속성을 반환하는 함수로 가정합니다.
+
         switch (enemyAttribute)
         {
             case Enemy.Status.Bluestat:
@@ -124,19 +134,34 @@ public class EnemySpawner : MonoBehaviour
             case Enemy.Status.Greenstat:
                 newEnemyObject = Instantiate(GenemyPrefab, spawnPosition + offset, Quaternion.identity);
                 break;
-            
         }
-        Enemy enemy = newEnemyObject.GetComponent<Enemy>();
-         
-
-        if (!enemies.Contains(enemy))
+    
+        if (newEnemyObject != null)
         {
-            enemies.Add(enemy);
-        }
+            enemy = newEnemyObject.GetComponent<Enemy>();
+        
+            if (enemy != null)
+            {
+                if (!enemies.Contains(enemy))
+                {
+                    enemies.Add(enemy);
+                }
 
-        Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
-        enemy.enemyHP = enemySlider;
+                Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
+                enemy.enemyHP = enemySlider;
+            }
+            else
+            {
+                Debug.LogError("Enemy component not found on the GameObject.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Failed to instantiate enemy object.");
+        }
     }
+
+
 
     public void SpawnEnemy3()
     {
@@ -145,9 +170,11 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
         Vector3 offset = new Vector3(4.0f * GetEnemyCount() - 6.0f, 5.5f, 0);
-
         GameObject newEnemyObject = null;
-        enemyAttribute = Enemy.initialstat;
+
+        Enemy enemy = newEnemyObject.GetComponent<Enemy>();
+
+        enemyAttribute = enemy.status;
         switch (enemyAttribute)
         {
             case Enemy.Status.Bluestat:
@@ -161,7 +188,6 @@ public class EnemySpawner : MonoBehaviour
                 break;
             
         }
-        Enemy enemy = newEnemyObject.GetComponent<Enemy>();
          
 
         if (!enemies.Contains(enemy))
@@ -178,9 +204,12 @@ public class EnemySpawner : MonoBehaviour
         BossMonster.isdead = false;
 
         Vector3 offset = new Vector3(0, 6.5f, 0);
-        BossMonster.Status enemyAttribute = BossMonster.initialstat;
-
         GameObject newbossObject = null;
+
+        BossMonster bossMonster = newbossObject.GetComponent<BossMonster>();
+
+        enemyAttribute = bossMonster.status;
+
 
         if (enemyAttribute == BossMonster.Status.Bluestat)
         {
@@ -195,7 +224,6 @@ public class EnemySpawner : MonoBehaviour
             newbossObject = Instantiate(GbossPrefab, spawnPosition+offset, Quaternion.identity);
         }
         
-        BossMonster bossMonster = newbossObject.GetComponent<BossMonster>();
         enemies.Add(bossMonster);
         Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
         bossMonster.enemyHP = enemySlider;

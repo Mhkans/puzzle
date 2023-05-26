@@ -14,7 +14,6 @@ public class Enemy: MonoBehaviour
     public float MaxHp;
     public float currentHp;
     public Status status;
-    public static Status initialstat;
     private float attackTime;
     public float term;
     public int damage; // 5초마다 player에게 주는 데미지
@@ -24,8 +23,7 @@ public class Enemy: MonoBehaviour
         MaxHp = 50;
         currentHp = MaxHp;
         attackTime = 0.0f;
-        initialstat = GetRandomStatus();
-        status = initialstat;
+        status = GetRandomStatus();
         term = 5.0f;
         damage = 5;
 
