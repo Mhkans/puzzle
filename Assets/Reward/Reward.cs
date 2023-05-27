@@ -75,7 +75,6 @@ public class Reward : MonoBehaviour
             if (!itemList.Contains(randomItem))
             {
                 itemList.Add(randomItem);
-                Debug.Log("Selected item is: " + randomItem);
             }
             else
             {
@@ -94,11 +93,6 @@ public class Reward : MonoBehaviour
         buttonText2.text = itemList[1].ToString() + "\n"  + "\n"+ itemInfoDict[itemList[1]].description;
         buttonText3.text = itemList[2].ToString() + "\n"  + "\n" +itemInfoDict[itemList[2]].description;
 
-        foreach (var item in itemList)
-        {
-            Debug.Log(item.ToString());
-        }
-
     }
 
     // 아이템 이름을 기반으로 아이템 정보를 반환하는 함수
@@ -108,15 +102,12 @@ public class Reward : MonoBehaviour
         {
             case Item.attboost:
                 Player.attCoefficient *= 1.2f;
-                Debug.Log("att is: " + Player.attCoefficient);
                 break;
             case Item.Shieldboost:
                 Player.shield += 3;
-                Debug.Log("shield is: " + Player.shield);
                 break;
             case Item.healboost:
                 Player.healCoefficient *= 1.2f;
-                Debug.Log("heal is: " + Player.healCoefficient);
                 break;
             case Item.Pinkboost:
                 Pinkcount();

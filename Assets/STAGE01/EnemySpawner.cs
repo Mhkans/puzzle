@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour
 {
-    private Enemy.Status enemyAttribute;
     private GameObject main_camera = null; // 메인 카메라.
     public Slider enemySliderPrefab;
     public static EnemySpawner Instance;
@@ -15,19 +14,15 @@ public class EnemySpawner : MonoBehaviour
     public GameObject BbossPrefab = null;
     public GameObject GbossPrefab = null;
     public GameObject YbossPrefab = null;
-    public static int MaxEnemyNum = 2; // 만드는 ENEMY의 수, 임시값
+    public int MaxEnemyNum = 3; // 만드는 ENEMY의 수, 임시값
     public Vector3 spawnPosition = Vector3.zero; // 스폰 위치
     public Enemy targetEnemy = null;
     public List<Enemy> enemies = new List<Enemy>();
     public Canvas canvas; // 새로운 Canvas
-    //public GameObject blueStatusPrefab = null;
-    //public GameObject greenStatusPrefab = null;
-    //public GameObject yellowStatusPrefab = null;
     public static int stagecode = 2;
+
     public void Start()
     {
-
-        
         canvas = FindObjectOfType<Canvas>(); // Canvas 찾기
         Instance = this;
         this.main_camera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -45,12 +40,14 @@ public class EnemySpawner : MonoBehaviour
                 break;
         }
 
-
+        STAGECONTROL(stagecode);
+       
     }
 
     public void Update()
     {
-        STAGECONTROL(stagecode);
+
+
         clickEnemy();
 
         foreach (Enemy enemy in enemies)
@@ -61,47 +58,7 @@ public class EnemySpawner : MonoBehaviour
                     Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
             }
         }
-    }
 
-    public int GetEnemyCount()
-    {
-        return enemies.Count;
-    }
-   
-    public void SpawnEnemy1()
-    {
-        if (GetEnemyCount() >= MaxEnemyNum)
-        {
-            return;
-        }
-        Vector3 offset = new Vector3(0, 5.5f, 0);
-        GameObject newEnemyObject = null;
-
-        Enemy enemy = newEnemyObject.GetComponent<Enemy>();
-
-        enemyAttribute = enemy.status;
-        switch (enemyAttribute)
-        {
-            case Enemy.Status.Bluestat:
-                newEnemyObject = Instantiate(BenemyPrefab, spawnPosition + offset, Quaternion.identity);
-                break;
-            case Enemy.Status.Yellowstat:
-                newEnemyObject = Instantiate(YenemyPrefab, spawnPosition + offset, Quaternion.identity);
-                break;
-            case Enemy.Status.Greenstat:
-                newEnemyObject = Instantiate(GenemyPrefab, spawnPosition + offset, Quaternion.identity);
-                break;
-            
-        }
-         
-
-        if (!enemies.Contains(enemy))
-        {
-            enemies.Add(enemy);
-        }
-
-        Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
-        enemy.enemyHP = enemySlider;
     }
     Enemy.Status GetRandomStatus()
     {
@@ -109,95 +66,68 @@ public class EnemySpawner : MonoBehaviour
         int randomIndex = Random.Range(0, statuses.Count);
         return statuses[randomIndex];
     }
-    public void SpawnEnemy2()
+    
+    public int GetEnemyCount()
     {
-        if (GetEnemyCount() >= MaxEnemyNum)
-        {
-            return;
-        }
-    
-        Vector3 offset = new Vector3(2.0f * GetEnemyCount() - 2.0f, 5.5f, 0);
-    
-        GameObject newEnemyObject = null;
-        Enemy enemy = null;
-    
-        enemyAttribute = GetRandomStatus(); // GetRandomEnemyAttribute()는 랜덤한 적의 속성을 반환하는 함수로 가정합니다.
-
-        switch (enemyAttribute)
-        {
-            case Enemy.Status.Bluestat:
-                newEnemyObject = Instantiate(BenemyPrefab, spawnPosition + offset, Quaternion.identity);
-                break;
-            case Enemy.Status.Yellowstat:
-                newEnemyObject = Instantiate(YenemyPrefab, spawnPosition + offset, Quaternion.identity);
-                break;
-            case Enemy.Status.Greenstat:
-                newEnemyObject = Instantiate(GenemyPrefab, spawnPosition + offset, Quaternion.identity);
-                break;
-        }
-    
-        if (newEnemyObject != null)
-        {
-            enemy = newEnemyObject.GetComponent<Enemy>();
-        
-            if (enemy != null)
-            {
-                if (!enemies.Contains(enemy))
-                {
-                    enemies.Add(enemy);
-                }
-
-                Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
-                enemy.enemyHP = enemySlider;
-            }
-            else
-            {
-                Debug.LogError("Enemy component not found on the GameObject.");
-            }
-        }
-        else
-        {
-            Debug.LogError("Failed to instantiate enemy object.");
-        }
+        return enemies.Count;
     }
 
-
-
-    public void SpawnEnemy3()
+    
+    private void SpawnEnemy(int a)
     {
         if (GetEnemyCount() >= MaxEnemyNum)
         {
             return;
         }
-        Vector3 offset = new Vector3(4.0f * GetEnemyCount() - 6.0f, 5.5f, 0);
-        GameObject newEnemyObject = null;
-
-        Enemy enemy = newEnemyObject.GetComponent<Enemy>();
-
-        enemyAttribute = enemy.status;
-        switch (enemyAttribute)
+    
+        for (int i = 0; i < MaxEnemyNum; i++)
         {
-            case Enemy.Status.Bluestat:
-                newEnemyObject = Instantiate(BenemyPrefab, spawnPosition + offset, Quaternion.identity);
-                break;
-            case Enemy.Status.Yellowstat:
-                newEnemyObject = Instantiate(YenemyPrefab, spawnPosition + offset, Quaternion.identity);
-                break;
-            case Enemy.Status.Greenstat:
-                newEnemyObject = Instantiate(GenemyPrefab, spawnPosition + offset, Quaternion.identity);
-                break;
-            
-        }
-         
+            Vector3 offset = Vector3.zero;
 
-        if (!enemies.Contains(enemy))
-        {
+            switch (a)
+            {
+                case 1:
+                    offset = new Vector3(0, 5.5f, 0);
+                    break;
+                case 2:
+                    offset = new Vector3((2.0f * i) - 2.0f, 5.5f, 0);
+                    break;
+                case 3:
+                    offset = new Vector3((4.0f * i) - 6.0f, 5.5f, 0);
+                    break;
+            }
+            GameObject newEnemyObject = null;
+            Enemy.Status randomStatus = GetRandomStatus();
+
+            switch (randomStatus)
+            {
+                case Enemy.Status.Bluestat:
+                    newEnemyObject = Instantiate(BenemyPrefab, spawnPosition + offset, Quaternion.identity);
+                    break;
+                case Enemy.Status.Yellowstat:
+                    newEnemyObject = Instantiate(YenemyPrefab, spawnPosition + offset, Quaternion.identity);
+                    break;
+                case Enemy.Status.Greenstat:
+                    newEnemyObject = Instantiate(GenemyPrefab, spawnPosition + offset, Quaternion.identity);
+                    break;
+            }
+
+            Enemy enemy = newEnemyObject.GetComponent<Enemy>();
+            enemy.status = randomStatus; // Assign the random status to the enemy
+
             enemies.Add(enemy);
-        }
 
-        Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
-        enemy.enemyHP = enemySlider;
-    }  
+            Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
+            enemy.enemyHP = enemySlider;
+
+            Debug.Log(enemies[i].status);
+            Debug.Log(randomStatus);
+            Debug.Log("1111111111");
+            Debug.Log(enemies[i].status);
+            Debug.Log(randomStatus);
+            Debug.Log("2222222222");
+        }
+    }
 
     public void SpawnBoss()
     {
@@ -205,32 +135,34 @@ public class EnemySpawner : MonoBehaviour
 
         Vector3 offset = new Vector3(0, 6.5f, 0);
         GameObject newbossObject = null;
+        Enemy.Status enemyAttribute = enemies[0].status;
+
+        if (enemyAttribute == Enemy.Status.Bluestat)
+        {
+            newbossObject = Instantiate(BbossPrefab, spawnPosition + offset, Quaternion.identity);
+        }
+        else if (enemyAttribute == Enemy.Status.Yellowstat)
+        {
+            newbossObject = Instantiate(YbossPrefab, spawnPosition + offset, Quaternion.identity);
+        }
+        else if (enemyAttribute == Enemy.Status.Greenstat)
+        {
+            newbossObject = Instantiate(GbossPrefab, spawnPosition + offset, Quaternion.identity);
+        }
 
         BossMonster bossMonster = newbossObject.GetComponent<BossMonster>();
 
-        enemyAttribute = bossMonster.status;
+        if (bossMonster != null && !enemies.Contains(bossMonster))
+        {
+            enemies.Add(bossMonster);
+        }
 
-
-        if (enemyAttribute == BossMonster.Status.Bluestat)
-        {
-            newbossObject = Instantiate(BbossPrefab, spawnPosition+offset, Quaternion.identity);
-        }
-        else if (enemyAttribute == BossMonster.Status.Yellowstat)
-        {
-            newbossObject = Instantiate(YbossPrefab, spawnPosition+offset, Quaternion.identity);
-        }
-        else if (enemyAttribute == BossMonster.Status.Greenstat)
-        {
-            newbossObject = Instantiate(GbossPrefab, spawnPosition+offset, Quaternion.identity);
-        }
-        
-        enemies.Add(bossMonster);
         Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
         bossMonster.enemyHP = enemySlider;
 
         enemySlider.transform.position = Camera.main.WorldToScreenPoint(bossMonster.transform.position + new Vector3(0, 1.0f, 0));
-
     }
+
     public void EnemyDestroyed(Enemy enemy)
     {
         enemies.Remove(enemy);
@@ -300,20 +232,20 @@ public class EnemySpawner : MonoBehaviour
         return (ret);
     }
 
-    private void STAGECONTROL(int stagecode) // 스테이지코드 스위치문
+    private void STAGECONTROL(int a) // 스테이지코드 스위치문
     {
-        switch (stagecode)
+        switch (a)
         {
             case 1:
                 BossMonster.isdead = false;
-                SpawnEnemy1();
+                SpawnEnemy(1);
                 break;
             case 2:
                 BossMonster.isdead = false; 
-                SpawnEnemy2();
+                SpawnEnemy(2);
                 break;
             case 3:
-                SpawnEnemy3();
+                SpawnEnemy(3);
                 break;
 
         }

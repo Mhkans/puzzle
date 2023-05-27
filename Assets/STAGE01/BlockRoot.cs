@@ -186,7 +186,7 @@ public class BlockRoot : MonoBehaviour {
 								this.blocks[block.i_pos.x, y].toVanishing();
 							}
 							
-							
+							enemys.TakeDamage(5);
 						}
 
 						// 처리 중인 블록을 grabbed_block에 등록.

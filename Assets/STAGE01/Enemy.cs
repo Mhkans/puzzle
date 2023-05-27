@@ -10,6 +10,7 @@ public class Enemy: MonoBehaviour
         Bluestat,Yellowstat,Greenstat
     }
 
+
     public Slider enemyHP;
     public float MaxHp;
     public float currentHp;
@@ -20,22 +21,18 @@ public class Enemy: MonoBehaviour
     public GameObject statusObject = null;
     public virtual void Start()
     {
+        status = GetRandomStatus();
         MaxHp = 50;
         currentHp = MaxHp;
         attackTime = 0.0f;
-        status = GetRandomStatus();
         term = 5.0f;
         damage = 5;
 
     }
-    Status GetRandomStatus()
+   
+    void Update() 
     {
-        List<Enemy.Status> statuses = new List<Enemy.Status>() { Enemy.Status.Greenstat, Enemy.Status.Yellowstat, Enemy.Status.Bluestat };
-        int randomIndex = Random.Range(0, statuses.Count);
-        return statuses[randomIndex];
-    }
-    void Update() // 공격 사망 처리  EnemyNum = 0 이면 보상페이즈
-    {
+       
         if (Time.time > attackTime + term)
         {
             Attack();
@@ -48,7 +45,13 @@ public class Enemy: MonoBehaviour
             Die();
         }
     }
-
+    Status GetRandomStatus()
+    {
+        List<Enemy.Status> statuses = new List<Enemy.Status>() { Enemy.Status.Greenstat, Enemy.Status.Yellowstat, Enemy.Status.Bluestat };
+        int randomIndex = Random.Range(0, statuses.Count);
+        return statuses[randomIndex];
+    }
+    
     public virtual void handleHP()
     {
        enemyHP.value = (float)currentHp / (float)MaxHp;
@@ -160,5 +163,6 @@ public class Enemy: MonoBehaviour
         } while(false);
         return(ret);
     }
+
     
 }
