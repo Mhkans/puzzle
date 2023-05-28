@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
         
         currentHp = currentHp - (damage - shield);
     
-        if (currentHp <= 0 && !isDead)
+        if (currentHp < 0 && !isDead)
         {
             isDead = true;
             Die();

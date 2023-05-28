@@ -10,7 +10,6 @@ public class SceneControl : MonoBehaviour {
 	private ScoreCounter score_counter = null;
 	private Player player = null;
 	private EnemySpawner enemy = null;
-	public RestartButton restartbutton = null;
 	public enum STEP { 
 		NONE = -1,// 상태 정보 없음.
 		PLAY ,// 플레이 중.(전투와 퍼즐게임을 처리)
@@ -89,10 +88,8 @@ public class SceneControl : MonoBehaviour {
 
 
 				case STEP.GAMEOVER:
-					if (restartbutton != null)
-					{
-						restartbutton.gameObject.SetActive(true);
-					}
+					SceneManager.LoadScene("Fail");
+
 					break;
 
 				case STEP.REWARD:

@@ -14,15 +14,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Stage.unity
     guid: 2855f12021bc44c40b18b59e4a369744
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/STAGE01/STAGE01.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Reward/Reward.unity
     guid: 98241ec74ad36624f9963320a99eb56e
+  - enabled: 1
+    path: Assets/Scenes/Fail.unity
+    guid: 48a157ec9f015a046af4512304fa72fb
   - enabled: 1
     path: Assets/Scenes/Clear.unity
     guid: f3be76d7874c3134fb636d8e3217682c
