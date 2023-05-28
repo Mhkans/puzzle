@@ -268,7 +268,7 @@ public class BlockRoot : MonoBehaviour {
 					{
 						if (block.color == Block.COLOR.PINK)
 						{
-							player.Heal(10); // 핑크 블록이면 플레이어의 체력을 10 회복시킨다.
+							player.Heal(6); // 핑크 블록이면 플레이어의 체력을 6 회복시킨다.
 						}
 						else if (block.color == Block.COLOR.BLUE && enemys.status == Enemy.Status.Greenstat)
 						{

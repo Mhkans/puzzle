@@ -25,7 +25,7 @@ public class Enemy: MonoBehaviour
         currentHp = MaxHp;
         attackTime = 0.0f;
         term = 5.0f;
-        damage = 5;
+        damage = 6;
 
     }
    
