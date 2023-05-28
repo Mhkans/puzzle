@@ -19,6 +19,8 @@ public class EnemySpawner : MonoBehaviour
     public Enemy targetEnemy = null;
     public List<Enemy> enemies = new List<Enemy>();
     public List<Enemy.Status> StatusList = new List<Enemy.Status>();
+    public static bool stage01clear = false; 
+    public static bool stage02clear = false;
     public Canvas canvas; // 새로운 Canvas
     public static int stagecode = 3;
 

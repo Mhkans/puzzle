@@ -10,7 +10,9 @@ public class Enhance : MonoBehaviour
     void Start()
     {
         EnhanceText =  GetComponent<Text>();
-        EnhanceText.text = "현재 공격력 : " + 10 * Player.attCoefficient +
+        EnhanceText.text = "적의 공격력 : " + 5 +"\n\n" +
+                           "    PLAYER  " + " \n " +
+                           "\n현재 공격력 : " + 10 * Player.attCoefficient +
                            "\n현재 방어력 : "  + Player.shield+ " "+
                            "\n현재 회복력 : " + 10 * Player.healCoefficient +
                            "\n현재 체력 : " + 100 * Player.hpCoefficient +

@@ -64,11 +64,18 @@ public class SceneControl : MonoBehaviour {
 
 				if (enemy.GetEnemyCount() == 0)
 				{
+					if (EnemySpawner.stagecode == 1)
+					{
+						EnemySpawner.stage01clear = true;
+					}
+					else if (EnemySpawner.stagecode == 2)
+					{
+						EnemySpawner.stage02clear = true;
+					}
 					this.next_step = STEP.REWARD;
 					break;
 				}
 				
-					
 				break; 
 			}
 		}
@@ -81,6 +88,9 @@ public class SceneControl : MonoBehaviour {
 				case STEP.CLEAR:
 					// block_root를 정지.
 					this.block_root.enabled = false;
+					EnemySpawner.stage01clear = false;
+					EnemySpawner.stage02clear = false;
+
 					SceneManager.LoadScene("Clear");
 					next_step = STEP.NONE;
 					
@@ -88,6 +98,9 @@ public class SceneControl : MonoBehaviour {
 
 
 				case STEP.GAMEOVER:
+					EnemySpawner.stage01clear = false;
+					EnemySpawner.stage02clear = false;
+
 					SceneManager.LoadScene("Fail");
 
 					break;
@@ -101,6 +114,7 @@ public class SceneControl : MonoBehaviour {
 		}
 	}
 
+	
 	void OnGUI()
 	{
 		switch(this.step) {

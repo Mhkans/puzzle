@@ -1232,8 +1232,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2074926040}
   - component: {fileID: 2074926039}
-  - component: {fileID: 2074926042}
-  - component: {fileID: 2074926041}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1253,6 +1251,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abe5f83b23971ff46aab9469590db07b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Stage01: {fileID: 1849681932}
+  Stage02: {fileID: 627374839}
   SceneToLoad: STAGE01
 --- !u!4 &2074926040
 Transform:
@@ -1268,29 +1268,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2074926041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2074926038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d98a16279a91ee74fbf2400c148c8530, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SceneToLoad3: STAGE03
---- !u!114 &2074926042
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2074926038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bd16459285af00449b8696e52cf40db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SceneToLoad2: STAGE02
