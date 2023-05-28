@@ -21,7 +21,7 @@ public class Enemy: MonoBehaviour
     public GameObject statusObject = null;
     public virtual void Start()
     {
-        MaxHp = 50;
+        MaxHp = 100;
         currentHp = MaxHp;
         attackTime = 0.0f;
         term = 5.0f;
