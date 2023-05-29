@@ -61,7 +61,7 @@ public class BlockRoot : MonoBehaviour {
 							int rx = block.i_pos.x;
 							int dy = block.i_pos.y;
 							int uy = block.i_pos.y;
-
+							
 							// 블록의 왼쪽을 체크.
 							for (int x = lx - 1; x >= 0; x--)
 							{
@@ -87,9 +87,78 @@ public class BlockRoot : MonoBehaviour {
 									bomb = true;
 								}
 
+								if (nextBlock.color == Block.COLOR.SPBLOCK01)
+								{
+									int slx = x;
+									int srx = x;
+									int sdy = block.i_pos.y;
+									int suy = block.i_pos.y;
+
+									for (int sy = sdy - 1; sy >= 0; sy--)
+									{
+										BlockControl snextBlock = this.blocks[x, sy];
+										if (snextBlock.step == Block.STEP.FALL || snextBlock.next_step == Block.STEP.FALL)
+										{
+											break; // 루프 탈출.
+										}
+
+										if (snextBlock.step == Block.STEP.SLIDE || snextBlock.next_step == Block.STEP.SLIDE)
+										{
+											break; // 루프 탈출.
+										}
+
+								
+										if (snextBlock.color == Block.COLOR.PINK)
+										{
+											healHP = true;
+									
+										}
+										if (snextBlock.color == Block.COLOR.SPBLOCK02)
+										{
+											bomb = true;
+										}
+									
+										
+										sdy = sy;
+									}
+
+									// 블록의 위쪽을 체크.
+									for (int sy = suy + 1; sy< Block.BLOCK_NUM_Y; sy++)
+									{
+										BlockControl snextBlock = this.blocks[x, sy];
+										if (snextBlock.step == Block.STEP.FALL || snextBlock.next_step == Block.STEP.FALL)
+										{
+											break; // 루프 탈출.
+										}
+
+										if (snextBlock.step == Block.STEP.SLIDE || snextBlock.next_step == Block.STEP.SLIDE)
+										{
+											break; // 루프 탈출.
+										}
+
+								
+										if (snextBlock.color == Block.COLOR.PINK)
+										{
+											healHP = true;
+									
+										}
+										if (snextBlock.color == Block.COLOR.SPBLOCK02)
+										{
+											bomb = true;
+										}
+									
+										suy = sy;
+									}
+									for (int y = sdy; y <= suy; y++)
+									{
+										blocks[x, y].toVanishing();
+									}
+
+								}
 
 								lx = x;
 							}
+							
 
 							// 블록의 오른쪽을 체크.
 							for (int x = rx + 1; x < Block.BLOCK_NUM_X; x++)
@@ -114,6 +183,75 @@ public class BlockRoot : MonoBehaviour {
 								if (nextBlock.color == Block.COLOR.SPBLOCK02)
 								{
 									bomb = true;
+								}
+
+								if (nextBlock.color == Block.COLOR.SPBLOCK01)
+								{
+									int slx = x;
+									int srx = x;
+									int sdy = block.i_pos.y;
+									int suy = block.i_pos.y;
+
+									for (int sy = sdy - 1; sy >= 0; sy--)
+									{
+										BlockControl snextBlock = this.blocks[x, sy];
+										if (snextBlock.step == Block.STEP.FALL || snextBlock.next_step == Block.STEP.FALL)
+										{
+											break; // 루프 탈출.
+										}
+
+										if (snextBlock.step == Block.STEP.SLIDE || snextBlock.next_step == Block.STEP.SLIDE)
+										{
+											break; // 루프 탈출.
+										}
+
+								
+										if (snextBlock.color == Block.COLOR.PINK)
+										{
+											healHP = true;
+									
+										}
+										if (snextBlock.color == Block.COLOR.SPBLOCK02)
+										{
+											bomb = true;
+										}
+									
+										
+										sdy = sy;
+									}
+
+									// 블록의 위쪽을 체크.
+									for (int sy = suy + 1; sy< Block.BLOCK_NUM_Y; sy++)
+									{
+										BlockControl snextBlock = this.blocks[x, sy];
+										if (snextBlock.step == Block.STEP.FALL || snextBlock.next_step == Block.STEP.FALL)
+										{
+											break; // 루프 탈출.
+										}
+
+										if (snextBlock.step == Block.STEP.SLIDE || snextBlock.next_step == Block.STEP.SLIDE)
+										{
+											break; // 루프 탈출.
+										}
+
+								
+										if (snextBlock.color == Block.COLOR.PINK)
+										{
+											healHP = true;
+									
+										}
+										if (snextBlock.color == Block.COLOR.SPBLOCK02)
+										{
+											bomb = true;
+										}
+									
+										suy = sy;
+									}
+									for (int y = sdy; y <= suy; y++)
+									{
+										blocks[x, y].toVanishing();
+									}
+
 								}
 
 								rx = x;
@@ -144,6 +282,73 @@ public class BlockRoot : MonoBehaviour {
 									bomb = true;
 								}
 
+								if (nextBlock.color == Block.COLOR.SPBLOCK01)
+								{
+									int slx = block.i_pos.x;
+									int srx = block.i_pos.x;
+									int sdy = y;
+									int suy = y;
+									for (int sx = slx - 1; sx >= 0; sx--)
+									{
+										BlockControl snextBlock = this.blocks[sx, y];
+										if (snextBlock.step == Block.STEP.FALL || snextBlock.next_step == Block.STEP.FALL)
+										{
+											break; // 루프 탈출.
+										}
+
+										if (snextBlock.step == Block.STEP.SLIDE ||
+										    snextBlock.next_step == Block.STEP.SLIDE)
+										{
+											break; // 루프 탈출.
+										}
+
+										if (snextBlock.color == Block.COLOR.PINK)
+										{
+											healHP = true;
+
+										}
+
+										if (snextBlock.color == Block.COLOR.SPBLOCK02)
+										{
+											bomb = true;
+										}
+
+										slx = sx;
+									}
+									for (int sx = srx + 1; sx < Block.BLOCK_NUM_X; sx++)
+									{
+										BlockControl snextBlock = this.blocks[sx, y];
+										if (snextBlock.step == Block.STEP.FALL || snextBlock.next_step == Block.STEP.FALL)
+										{
+											break; // 루프 탈출.
+										}
+
+										if (snextBlock.step == Block.STEP.SLIDE ||
+										    snextBlock.next_step == Block.STEP.SLIDE)
+										{
+											break; // 루프 탈출.
+										}
+
+										if (snextBlock.color == Block.COLOR.PINK)
+										{
+											healHP = true;
+
+										}
+
+										if (snextBlock.color == Block.COLOR.SPBLOCK02)
+										{
+											bomb = true;
+										}
+
+										srx = sx;
+									}
+									for (int x = slx; x <= srx; x++)
+									{
+										// 완성된 블록을 발화 상태로.
+										this.blocks[x, y].toVanishing();
+									}
+								}
+								
 								dy = y;
 							}
 
@@ -171,6 +376,72 @@ public class BlockRoot : MonoBehaviour {
 								{
 									bomb = true;
 								}
+								if (nextBlock.color == Block.COLOR.SPBLOCK01)
+								{
+									int slx = block.i_pos.x;
+									int srx = block.i_pos.x;
+									int sdy = y;
+									int suy = y;
+									for (int sx = slx - 1; sx >= 0; sx--)
+									{
+										BlockControl snextBlock = this.blocks[sx, y];
+										if (snextBlock.step == Block.STEP.FALL || snextBlock.next_step == Block.STEP.FALL)
+										{
+											break; // 루프 탈출.
+										}
+
+										if (snextBlock.step == Block.STEP.SLIDE ||
+										    snextBlock.next_step == Block.STEP.SLIDE)
+										{
+											break; // 루프 탈출.
+										}
+
+										if (snextBlock.color == Block.COLOR.PINK)
+										{
+											healHP = true;
+
+										}
+
+										if (snextBlock.color == Block.COLOR.SPBLOCK02)
+										{
+											bomb = true;
+										}
+
+										slx = sx;
+									}
+									for (int sx = srx + 1; sx < Block.BLOCK_NUM_X; sx++)
+									{
+										BlockControl snextBlock = this.blocks[sx, y];
+										if (snextBlock.step == Block.STEP.FALL || snextBlock.next_step == Block.STEP.FALL)
+										{
+											break; // 루프 탈출.
+										}
+
+										if (snextBlock.step == Block.STEP.SLIDE ||
+										    snextBlock.next_step == Block.STEP.SLIDE)
+										{
+											break; // 루프 탈출.
+										}
+
+										if (snextBlock.color == Block.COLOR.PINK)
+										{
+											healHP = true;
+
+										}
+
+										if (snextBlock.color == Block.COLOR.SPBLOCK02)
+										{
+											bomb = true;
+										}
+
+										srx = sx;
+									}
+									for (int x = slx; x <= srx; x++)
+									{
+										// 완성된 블록을 발화 상태로.
+										this.blocks[x, y].toVanishing();
+									}
+								}
 
 								uy = y;
 							}
@@ -185,7 +456,6 @@ public class BlockRoot : MonoBehaviour {
 							{
 								this.blocks[block.i_pos.x, y].toVanishing();
 							}
-							
 							enemys.TakeDamage(5);
 						}
 
@@ -1008,6 +1278,7 @@ public bool checkConnection(BlockControl start)
 					this.blocks[start.i_pos.x, y].toVanishing();
 					ret = true;
 				}
+				
 			}
 		}
 
@@ -1094,11 +1365,5 @@ public bool checkConnection(BlockControl start)
 		return(ret);
 	}
 
-
-
-
-
-
-
-
+	
 }

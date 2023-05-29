@@ -117,7 +117,7 @@ public class BlockControl : MonoBehaviour {
 		if(this.next_step == Block.STEP.NONE) { // 상태 정보 없음인 경우. 
 			switch(this.step) {
 				case Block.STEP.READY:
-					if (this.step_timer >= 3.0f) { // 3초를 기다린 후에
+					if (this.step_timer >= 1.0f) { // 3초를 기다린 후에
 						this.next_step = Block.STEP.IDLE; // IDLE 상태로 전환
 					}
 					break;

@@ -119,6 +119,7 @@ public class EnemySpawner : MonoBehaviour
             enemy.status = enemyStatus; // Assign the random status to the enemy
             enemies.Add(enemy);
             Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
+            enemySlider.transform.SetSiblingIndex(1);
             enemy.enemyHP = enemySlider;
         }
     }
