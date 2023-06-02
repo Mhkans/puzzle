@@ -18,14 +18,19 @@ public class EnemySpawner : MonoBehaviour
     public Vector3 spawnPosition = Vector3.zero; // 스폰 위치
     public Enemy targetEnemy = null;
     public List<Enemy> enemies = new List<Enemy>();
-    public List<Enemy.Status> StatusList = new List<Enemy.Status>();
+    public List<Enemy> SummonedEnemy = new List<Enemy>();
     public static bool stage01clear = false; 
     public static bool stage02clear = false;
     public Canvas canvas; // 새로운 Canvas
     public static int stagecode = 3;
-
+    private float elapsedTime = 0f; 
+    public int spawnInterval; 
+    private int enemyCount = 0; 
+    public bool canSpawn = false; 
     public void Start()
     {
+        spawnInterval = 10;
+        canSpawn = true;
         canvas = FindObjectOfType<Canvas>(); // Canvas 찾기
         Instance = this;
         this.main_camera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -39,7 +44,7 @@ public class EnemySpawner : MonoBehaviour
                 break;
             case 3:
                 SpawnBoss();
-                MaxEnemyNum = 2;
+                MaxEnemyNum = 0;
                 break;
         }
 
@@ -50,6 +55,15 @@ public class EnemySpawner : MonoBehaviour
     public void Update()
     {
 
+        if (stagecode == 3)
+        {
+            elapsedTime += Time.deltaTime;
+            if (canSpawn && enemyCount < 2 && elapsedTime >= spawnInterval)
+            {
+                BossSpawnEnemy();
+                elapsedTime = 0f; // 경과 시간 초기화
+            }
+        }
 
         clickEnemy();
 
@@ -61,7 +75,15 @@ public class EnemySpawner : MonoBehaviour
                     Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
             }
         }
-
+        foreach (Enemy enemy in SummonedEnemy)
+        {
+            if (enemy.enemyHP != null)
+            {
+                enemy.enemyHP.transform.position =
+                    Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
+            }
+        }
+        
     }
     Enemy.Status GetRandomStatus()
     {
@@ -74,7 +96,10 @@ public class EnemySpawner : MonoBehaviour
     {
         return enemies.Count;
     }
-
+    public int GetBossEnemyCount()
+    {
+        return SummonedEnemy.Count;
+    }
     
     private void SpawnEnemy(int a)
     {
@@ -123,10 +148,41 @@ public class EnemySpawner : MonoBehaviour
             enemy.enemyHP = enemySlider;
         }
     }
+    private void BossSpawnEnemy()
+    {
+        Vector3 offset = new Vector3((4.0f * enemyCount) - 2.0f, 5.5f, 0);
 
+        Enemy.Status enemyStatus = GetRandomStatus();
+        GameObject newEnemyObject = null;
+        switch (enemyStatus)
+        {
+            case Enemy.Status.Bluestat:
+                newEnemyObject = Instantiate(BenemyPrefab, spawnPosition + offset, Quaternion.identity);
+                break;
+            case Enemy.Status.Yellowstat:
+                newEnemyObject = Instantiate(YenemyPrefab, spawnPosition + offset, Quaternion.identity);
+                break;
+            case Enemy.Status.Greenstat:
+                newEnemyObject = Instantiate(GenemyPrefab, spawnPosition + offset, Quaternion.identity);
+                break;
+        }
+
+        Enemy enemy = newEnemyObject.GetComponent<Enemy>();
+        enemy.status = enemyStatus;
+        SummonedEnemy.Add(enemy);
+        Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
+        enemySlider.transform.SetSiblingIndex(1);
+        enemy.enemyHP = enemySlider;
+
+        enemyCount++; // 소환된 적 수 증가
+
+        if (enemyCount >= 2) // 적이 2마리 이상 소환되었을 경우 소환 중지
+        {
+            canSpawn = false;
+        }
+    }
     public void SpawnBoss()
     {
-        
         Vector3 offset = new Vector3(0, 6.5f, 0);
         GameObject newBossObject = null;
         Enemy.Status enemyAttribute = GetRandomStatus();
@@ -162,6 +218,16 @@ public class EnemySpawner : MonoBehaviour
         
     }
 
+    public void BossEnemyDestored(Enemy enemy)
+    {
+        SummonedEnemy.Remove(enemy);
+        enemyCount--;
+        if (enemyCount < 2)
+        {
+            canSpawn = true;
+        }
+    }
+
     public void clickEnemy()
     {
         if (Input.GetMouseButtonDown(0))
@@ -187,8 +253,28 @@ public class EnemySpawner : MonoBehaviour
 
                         enemies.Remove(enemy);
                         enemies.Insert(0, enemy);
+                        
+                        break;
+                    }
+                }
+                foreach (Enemy enemy in SummonedEnemy)
+                {
+                    if (enemy.isContainedPosition(clickPosition))
+                    {
 
+                        if (targetEnemy != null)
+                        {
+                            // 이전에 선택된 적의 크기 원상복귀
+                            targetEnemy.transform.localScale /= 1.2f;
+                        }
 
+                        targetEnemy = enemy;
+                        // 선택된 적의 크기를 20% 증가
+                        targetEnemy.transform.localScale *= 1.2f;
+
+                        SummonedEnemy.Remove(enemy);
+                        SummonedEnemy.Insert(0, enemy);
+                        
                         break;
                     }
                 }
@@ -230,14 +316,14 @@ public class EnemySpawner : MonoBehaviour
         {
             case 1:
                 BossMonster.isdead = false;
-                SpawnEnemy(1);
+                SpawnEnemy(a);
                 break;
             case 2:
                 BossMonster.isdead = false; 
-                SpawnEnemy(2);
+                SpawnEnemy(a);
                 break;
             case 3:
-                SpawnEnemy(3);
+                BossMonster.isdead = false;
                 break;
 
         }

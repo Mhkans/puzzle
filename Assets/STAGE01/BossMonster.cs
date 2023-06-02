@@ -11,7 +11,7 @@ public class BossMonster : Enemy
         MaxHp = 200;
         currentHp = MaxHp;
         term = 2.0f;
-        damage = 10;
+        damage = 3;
     }
 
     public override void Attack()

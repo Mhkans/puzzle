@@ -21,7 +21,7 @@ public class Enemy: MonoBehaviour
     public GameObject statusObject = null;
     public virtual void Start()
     {
-        MaxHp = 100;
+        MaxHp = 50;
         currentHp = MaxHp;
         attackTime = 0.0f;
         term = 5.0f;
@@ -59,15 +59,15 @@ public class Enemy: MonoBehaviour
    
     public void TakeDamage(float att)
     {
-        if (EnemySpawner.Instance.enemies.Count > 0) // 리스트에 적이 있어야 함
+        if (EnemySpawner.Instance.SummonedEnemy.Count > 0) // 리스트에 적이 있어야 함
         {
-            Enemy enemy = EnemySpawner.Instance.enemies[0]; // 첫 번째 적을 가져옴
+            Enemy enemy = EnemySpawner.Instance.SummonedEnemy[0]; // 첫 번째 적을 가져옴
             if (enemy.currentHp <= 0) // 첫 번째 적이 죽은 경우
             {
                 // 두 번째 적(인덱스 1)이 존재하는 경우, 가져옴
-                if (EnemySpawner.Instance.enemies.Count > 1) 
+                if (EnemySpawner.Instance.SummonedEnemy.Count > 1) 
                 {
-                    enemy = EnemySpawner.Instance.enemies[1];
+                    enemy = EnemySpawner.Instance.SummonedEnemy[1];
                 }
                 else
                 {
@@ -76,21 +76,59 @@ public class Enemy: MonoBehaviour
             }
             enemy.currentHp -= att * Player.attCoefficient;
         }
-    }
-    public void TakeAll(float att)
-    {
-        foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+        else
         {
-            if (enemy.currentHp > 0)
+            if (EnemySpawner.Instance.enemies.Count > 0) // 리스트에 적이 있어야 함
             {
+                Enemy enemy = EnemySpawner.Instance.enemies[0]; // 첫 번째 적을 가져옴
+                if (enemy.currentHp <= 0) // 첫 번째 적이 죽은 경우
+                {
+                    // 두 번째 적(인덱스 1)이 존재하는 경우, 가져옴
+                    if (EnemySpawner.Instance.enemies.Count > 1)
+                    {
+                        enemy = EnemySpawner.Instance.enemies[1];
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+
                 enemy.currentHp -= att * Player.attCoefficient;
             }
         }
+    }
+    public void TakeAll(float att)
+    {
+        if (EnemySpawner.Instance.SummonedEnemy.Count > 0)
+        {
+            foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+            {
+                if (enemy.currentHp > 0)
+                {
+                    enemy.currentHp -= att * Player.attCoefficient;
+                }
+            }
+        }
+        else
+        {
+            foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+            {
+                if (enemy.currentHp > 0)
+                {
+                    enemy.currentHp -= att * Player.attCoefficient;
+                }
+            }
+        }
+
+        
+        
     }
     public virtual void Die()
     {
         Destroy(gameObject);
         EnemySpawner.Instance.EnemyDestroyed(this);
+        EnemySpawner.Instance.BossEnemyDestored(this);
         Destroy(enemyHP.gameObject);
         Destroy(statusObject);
     }
