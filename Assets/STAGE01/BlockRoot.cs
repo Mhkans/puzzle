@@ -479,6 +479,11 @@ public class BlockRoot : MonoBehaviour {
 							enemy.currentHp -= 15;
 							bomb = false;
 						}
+						foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+						{
+							enemy.currentHp -= 15;
+							bomb = false;
+						}
 					}
 				}
 			}
@@ -658,6 +663,11 @@ public class BlockRoot : MonoBehaviour {
 							foreach (Enemy enemy in EnemySpawner.Instance.enemies)
 							{
 								enemy.currentHp -= 15;
+							}
+							foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+							{
+								enemy.currentHp -= 15;
+								
 							}
 						}
 						else
