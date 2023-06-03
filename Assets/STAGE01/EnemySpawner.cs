@@ -75,15 +75,26 @@ public class EnemySpawner : MonoBehaviour
                     Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
             }
         }
+
         foreach (Enemy enemy in SummonedEnemy)
         {
             if (enemy.enemyHP != null)
             {
                 enemy.enemyHP.transform.position =
                     Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
+
+            }
+            if (SummonedEnemy.IndexOf(enemy) == 0)
+            {
+                enemy.transform.position = new Vector3(-2.0f, 5.5f, 0);
+
+            }
+            else if (SummonedEnemy.IndexOf(enemy) == 1)
+            {
+                enemy.transform.position = new Vector3(2.0f, 5.5f, 0);
+
             }
         }
-        
     }
     Enemy.Status GetRandomStatus()
     {
