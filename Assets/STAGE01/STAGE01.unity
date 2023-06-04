@@ -1185,8 +1185,10 @@ MonoBehaviour:
   spawnPosition: {x: 0, y: 0, z: 0}
   targetEnemy: {fileID: 0}
   enemies: []
-  StatusList: 
+  SummonedEnemy: []
   canvas: {fileID: 0}
+  spawnInterval: 0
+  canSpawn: 0
 --- !u!1 &1228336747
 GameObject:
   m_ObjectHideFlags: 0
@@ -2048,7 +2050,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uAC15\uD654"
+  m_Text: "\uC2A4\uD0EF"
 --- !u!222 &2051661084
 CanvasRenderer:
   m_ObjectHideFlags: 0

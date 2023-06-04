@@ -803,10 +803,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1100906820}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1100906825}
+        m_TargetAssemblyTypeName: BossGuide1, Assembly-CSharp
+        m_MethodName: LoadUI
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -862,10 +862,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1100906820}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c5a9ae289b2654e9775c7f7d34d127, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a02e6305979c524c928b39708d3d770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boss: {fileID: 249247738}
+  Guide4: {fileID: 249247738}
 --- !u!1 &1377644154
 GameObject:
   m_ObjectHideFlags: 0
