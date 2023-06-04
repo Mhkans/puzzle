@@ -22,7 +22,7 @@ public class Block {
 		GRAY, // 회색.
 		NUM, // 색이 몇 종류인지 나타낸다(=7).
 		FIRST = PINK, // 초기 색상(분홍)
-		LAST = GREEN, // 마지막 색상（오렌지）.
+		LAST = GRAY, // 마지막 색상（오렌지）.
 		NORMAL_COLOR_NUM = GRAY,
 		SPBLOCK01, 
 		SPBLOCK02
@@ -448,6 +448,9 @@ public class BlockControl : MonoBehaviour {
 		else if (Random.Range(0, 100) < 10) {
 			this.setColor(Block.COLOR.SPBLOCK02);
 		}
+		/*else if (Random.Range(0, 100) < 15) {
+			this.setColor(Block.COLOR.GREEN);
+		}*/
 		else
 		{
 			this.setColor((Block.COLOR)color_index);

@@ -1,7 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using UnityEditor.IMGUI.Controls;
-using UnityEditorInternal;
 
 public class BlockRoot : MonoBehaviour {
 
@@ -20,6 +17,7 @@ public class BlockRoot : MonoBehaviour {
 	public Player player = null;
 	public Enemy enemys = null;
 	public BossMonster boss = null;
+	public BossEnemy BossEnemy = null;
 	public EnemySpawner enemyspawner = null;
 	private int DAMAGE = 4;
 	void Start() {
@@ -40,6 +38,8 @@ public class BlockRoot : MonoBehaviour {
 		GameObject enemyObj = GameObject.FindWithTag("Enemy");
 		enemys = enemyObj.GetComponent<Enemy>();
 		boss = enemyObj.GetComponent<BossMonster>();
+		BossEnemy = enemyObj.GetComponent<BossEnemy>();
+
 		
 		Vector3 mouse_position; // 마우스의 위치.
 		this.unprojectMousePosition( // 마우스의 위치를 가져옴.
@@ -117,7 +117,7 @@ public class BlockRoot : MonoBehaviour {
 										enemy.currentHp -= 15;
 							
 									}
-									foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+									foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
 									{
 										enemy.currentHp -= 15;
 							
@@ -173,7 +173,7 @@ public class BlockRoot : MonoBehaviour {
 												enemy.currentHp -= 15;
 							
 											}
-											foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+											foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
 											{
 												enemy.currentHp -= 15;
 							
@@ -229,7 +229,7 @@ public class BlockRoot : MonoBehaviour {
 												enemy.currentHp -= 15;
 							
 											}
-											foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+											foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
 											{
 												enemy.currentHp -= 15;
 							
@@ -302,7 +302,7 @@ public class BlockRoot : MonoBehaviour {
 										enemy.currentHp -= 15;
 							
 									}
-									foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+									foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
 									{
 										enemy.currentHp -= 15;
 							
@@ -358,7 +358,7 @@ public class BlockRoot : MonoBehaviour {
 												enemy.currentHp -= 15;
 							
 											}
-											foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+											foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
 											{
 												enemy.currentHp -= 15;
 							
@@ -415,7 +415,7 @@ public class BlockRoot : MonoBehaviour {
 												enemy.currentHp -= 15;
 							
 											}
-											foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+											foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
 											{
 												enemy.currentHp -= 15;
 							
@@ -480,7 +480,7 @@ public class BlockRoot : MonoBehaviour {
 										enemy.currentHp -= 15;
 							
 									}
-									foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+									foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
 									{
 										enemy.currentHp -= 15;
 							
@@ -535,7 +535,7 @@ public class BlockRoot : MonoBehaviour {
 												enemy.currentHp -= 15;
 							
 											}
-											foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+											foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
 											{
 												enemy.currentHp -= 15;
 							
@@ -589,7 +589,7 @@ public class BlockRoot : MonoBehaviour {
 												enemy.currentHp -= 15;
 							
 											}
-											foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+											foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
 											{
 												enemy.currentHp -= 15;
 							
@@ -657,7 +657,7 @@ public class BlockRoot : MonoBehaviour {
 										enemy.currentHp -= 15;
 							
 									}
-									foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+									foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
 									{
 										enemy.currentHp -= 15;
 							
@@ -711,7 +711,7 @@ public class BlockRoot : MonoBehaviour {
 												enemy.currentHp -= 15;
 							
 											}
-											foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+											foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
 											{
 												enemy.currentHp -= 15;
 							
@@ -762,7 +762,7 @@ public class BlockRoot : MonoBehaviour {
 												enemy.currentHp -= 15;
 							
 											}
-											foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+											foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
 											{
 												enemy.currentHp -= 15;
 							
@@ -1027,7 +1027,7 @@ public class BlockRoot : MonoBehaviour {
 							{
 								enemy.currentHp -= 15;
 							}
-							foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+							foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
 							{
 								enemy.currentHp -= 15;
 								

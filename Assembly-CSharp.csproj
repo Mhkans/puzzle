@@ -58,6 +58,7 @@
      <Compile Include="Assets\STAGE01\ButtonTooltip.cs" />
      <Compile Include="Assets\STAGE01\SceneControl.cs" />
      <Compile Include="Assets\STAGE01\TextHPbar.cs" />
+     <Compile Include="Assets\STAGE01\BossEnemy.cs" />
      <Compile Include="Assets\STAGE01\BossMonster.cs" />
      <Compile Include="Assets\Scenes\Fail.cs" />
      <Compile Include="Assets\Scenes\BossGuide1.cs" />

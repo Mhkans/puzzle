@@ -10,7 +10,12 @@ public class Enhance : MonoBehaviour
     void Start()
     {
         EnhanceText =  GetComponent<Text>();
-        EnhanceText.text = "보스의 공격력 : " + 5 +"\n" +
+        EnhanceText.text = "    ENEMY  " + " \n\n " +
+                           "보스의 체력 : " + 400 +"\n" +
+                           "보스의 공격력 : " + 8 +"\n" +
+                           "보스의 방패 소환 주기 : " + EnemySpawner.spawnInterval +"초"+"\n" +
+                           "방패의 체력 : " + 50 +"\n" +
+                           "적의 체력 : " + 200 +"\n" +
                            "적의 공격력 : " + 5 +"\n\n" +
                            "    PLAYER  " + " \n " +
                            "\n현재 공격력 : 블럭당 " + 2 * Player.attCoefficient  +

@@ -21,15 +21,15 @@ public class Enemy: MonoBehaviour
     public GameObject statusObject = null;
     public virtual void Start()
     {
-        MaxHp = 50;
+        MaxHp = 200;
         currentHp = MaxHp;
         attackTime = 0.0f;
         term = 5.0f;
-        damage = 6;
+        damage = 5;
 
     }
    
-    void Update() 
+   void Update() 
     {
        
         if (Time.time > attackTime + term)

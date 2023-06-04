@@ -1183,13 +1183,13 @@ MonoBehaviour:
   BbossPrefab: {fileID: 37861176794452067, guid: f2639f482e6c7634ba0fcc0e2ddb6c66, type: 3}
   GbossPrefab: {fileID: 37861176794452067, guid: 6db72fd9096b190418a76eb8ce838e74, type: 3}
   YbossPrefab: {fileID: 37861176794452067, guid: 9f7f350cd9b8e934891abbeecdbb86fe, type: 3}
+  BossEnemy: {fileID: 7014931246065760682, guid: 7d7b705a2f7376249898f7d001327107, type: 3}
   MaxEnemyNum: 3
   spawnPosition: {x: 0, y: 0, z: 0}
   targetEnemy: {fileID: 0}
   enemies: []
   SummonedEnemy: []
   canvas: {fileID: 0}
-  spawnInterval: 0
   canSpawn: 0
 --- !u!1 &1228336747
 GameObject:
@@ -1542,6 +1542,7 @@ MonoBehaviour:
   player: {fileID: 1528659370}
   enemys: {fileID: 0}
   boss: {fileID: 0}
+  BossEnemy: {fileID: 0}
   enemyspawner: {fileID: 0}
 --- !u!114 &1559608663
 MonoBehaviour:

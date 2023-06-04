@@ -18,6 +18,7 @@ public class EnemySpawner : MonoBehaviour
     public GameObject BbossPrefab = null;
     public GameObject GbossPrefab = null;
     public GameObject YbossPrefab = null;
+    public GameObject BossEnemy = null;
     public int MaxEnemyNum = 3; // 만드는 ENEMY의 수, 임시값
     public Vector3 spawnPosition = Vector3.zero; // 스폰 위치
     public Enemy targetEnemy = null;
@@ -28,13 +29,13 @@ public class EnemySpawner : MonoBehaviour
     public Canvas canvas; // 새로운 Canvas
     public static int stagecode = 3;
     private float elapsedTime = 0f; 
-    public int spawnInterval; 
+    public static int spawnInterval; 
     private int enemyCount = 0; 
     public bool canSpawn = false; 
     public void Start()
     {
         audio = this.gameObject.AddComponent<AudioSource>();
-        spawnInterval = 5;
+        spawnInterval = 8;
         canSpawn = true;
         canvas = FindObjectOfType<Canvas>(); // Canvas 찾기
         Instance = this;
@@ -55,6 +56,7 @@ public class EnemySpawner : MonoBehaviour
                 audio.clip = stageSound02;
                 audio.Play();
                 SpawnBoss();
+                BossSpawnEnemy();
                 MaxEnemyNum = 0;
                 break;
         }
@@ -71,7 +73,7 @@ public class EnemySpawner : MonoBehaviour
             elapsedTime += Time.deltaTime;
             if (canSpawn && enemyCount < 2 && elapsedTime >= spawnInterval)
             {
-                //BossSpawnEnemy();
+                BossSpawnEnemy();
                 elapsedTime = 0f; // 경과 시간 초기화
             }
             
@@ -88,7 +90,7 @@ public class EnemySpawner : MonoBehaviour
                     Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
             }
         }
-        foreach (Enemy enemy in SummonedEnemy)
+        foreach (BossEnemy enemy in SummonedEnemy)
         {
             if (enemy.enemyHP != null)
             {
@@ -174,23 +176,10 @@ public class EnemySpawner : MonoBehaviour
     {
         Vector3 offset = new Vector3((4.0f * enemyCount) - 2.0f, 5.5f, 0);
 
-        Enemy.Status enemyStatus = GetRandomStatus();
+       
         GameObject newEnemyObject = null;
-        switch (enemyStatus)
-        {
-            case Enemy.Status.Bluestat:
-                newEnemyObject = Instantiate(BenemyPrefab, spawnPosition + offset, Quaternion.identity);
-                break;
-            case Enemy.Status.Yellowstat:
-                newEnemyObject = Instantiate(YenemyPrefab, spawnPosition + offset, Quaternion.identity);
-                break;
-            case Enemy.Status.Greenstat:
-                newEnemyObject = Instantiate(GenemyPrefab, spawnPosition + offset, Quaternion.identity);
-                break;
-        }
-
-        Enemy enemy = newEnemyObject.GetComponent<Enemy>();
-        enemy.status = enemyStatus;
+        newEnemyObject = Instantiate(BossEnemy, spawnPosition + offset, Quaternion.identity);
+        BossEnemy enemy = newEnemyObject.GetComponent<BossEnemy>();
         SummonedEnemy.Add(enemy);
         Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
         enemySlider.transform.SetSiblingIndex(1);
@@ -294,7 +283,6 @@ public class EnemySpawner : MonoBehaviour
                         // 선택된 적의 크기를 20% 증가
                         targetEnemy.transform.localScale *= 1.2f;
 
-                        int index = SummonedEnemy.IndexOf(enemy);
                         SummonedEnemy.Remove(enemy);
                         SummonedEnemy.Insert(0, enemy);
                         
