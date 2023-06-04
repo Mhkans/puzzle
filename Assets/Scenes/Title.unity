@@ -395,6 +395,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bfb3aef8f0c0ee42bd51bdc8b0bc68d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TitleSound: {fileID: 8300000, guid: d1576f1ca63955244b3ede05e0e31b22, type: 3}
+  clickSound: {fileID: 8300000, guid: 3beff5b37dcc88842b0c1770d45ac91c, type: 3}
   SceneToLoad: Stage
 --- !u!4 &699112384
 Transform:
@@ -829,6 +831,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 699112382}
+        m_TargetAssemblyTypeName: Title, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

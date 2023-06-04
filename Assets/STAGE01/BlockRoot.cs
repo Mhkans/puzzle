@@ -1,9 +1,12 @@
 using UnityEngine;
 using System.Collections;
+using UnityEditor.IMGUI.Controls;
 using UnityEditorInternal;
 
 public class BlockRoot : MonoBehaviour {
 
+	private AudioSource audio;
+	public AudioClip sound;
 	public GameObject BlockPrefab = null; // 만들어야 할 블록의 Prefab.
 	public BlockControl[,] blocks; // 그리드.
 	public Block.COLOR blockColor;
@@ -21,7 +24,7 @@ public class BlockRoot : MonoBehaviour {
 		GameObject playerObj = GameObject.FindWithTag("Player");
 		player = playerObj.GetComponent<Player>();
 
-		
+		this.audio = this.gameObject.AddComponent<AudioSource>();
 
 		enemyspawner = gameObject.GetComponent<EnemySpawner>();
 		
@@ -850,7 +853,8 @@ public class BlockRoot : MonoBehaviour {
 				if (this.checkConnection(block))
 				{
 					ignite_count++; // 발화 수를 증가.
-					
+					audio.clip = sound;
+					audio.Play();
 
 				}
 

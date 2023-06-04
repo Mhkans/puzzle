@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class button1 : MonoBehaviour
 {
+    private AudioSource audio;
+    public AudioClip clickSound;
     Reward rewardInstance;
     Reward.Item selectedItem;
     
     void Start()
     {
+        audio = this.gameObject.AddComponent<AudioSource>();
         rewardInstance = FindObjectOfType<Reward>();
     }
 
@@ -22,5 +26,11 @@ public class button1 : MonoBehaviour
         {
             Reward.hasMachinegun = true;
         }
+        
+    }
+    public void buttonclick()
+    {
+        this.audio.clip = this.clickSound;
+        audio.Play();
     }
 }

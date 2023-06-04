@@ -543,6 +543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c96c59c0bce971e42a793eacb434e521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clickSound: {fileID: 8300000, guid: 41d7a9eef06b09543995256dffc23055, type: 3}
 --- !u!1 &1809631795
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,6 +722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7148f6ddc769ae646b268674691918bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageSound: {fileID: 8300000, guid: 8a51ca678f303cf409786782b8fbd947, type: 3}
   itemList: 
   buttonText1: {fileID: 751546862}
   buttonText2: {fileID: 1965221393}

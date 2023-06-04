@@ -43,6 +43,7 @@ public class Enemy: MonoBehaviour
         {
             Die();
         }
+        
     }
     Status GetRandomStatus()
     {
@@ -97,6 +98,7 @@ public class Enemy: MonoBehaviour
                 enemy.currentHp -= att * Player.attCoefficient;
             }
         }
+        Debug.Log(currentHp);
     }
     public void TakeAll(float att)
     {

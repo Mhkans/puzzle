@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour
 {
+    private AudioSource audio;
+    public AudioClip stageSound01;
+    public AudioClip stageSound02;
+
     private GameObject main_camera = null; // 메인 카메라.
     public Slider enemySliderPrefab;
     public static EnemySpawner Instance;
@@ -29,6 +33,7 @@ public class EnemySpawner : MonoBehaviour
     public bool canSpawn = false; 
     public void Start()
     {
+        audio = this.gameObject.AddComponent<AudioSource>();
         spawnInterval = 10;
         canSpawn = true;
         canvas = FindObjectOfType<Canvas>(); // Canvas 찾기
@@ -37,12 +42,18 @@ public class EnemySpawner : MonoBehaviour
         switch (stagecode)
         {
             case 1:
+                audio.clip = stageSound01;
+                audio.Play();
                 MaxEnemyNum = 1;
                 break;
             case 2:
+                audio.clip = stageSound01;
+                audio.Play();
                 MaxEnemyNum = 3;
                 break;
             case 3:
+                audio.clip = stageSound02;
+                audio.Play();
                 SpawnBoss();
                 MaxEnemyNum = 0;
                 break;

@@ -1174,6 +1174,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3c31d7b9fe58a7408e0fc4ca6be340b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageSound01: {fileID: 8300000, guid: 5371cedd369929c4f8b6eacc3836a3cb, type: 3}
+  stageSound02: {fileID: 8300000, guid: ce3aa7c72bf59ec4d9c0fb77fb8a0f22, type: 3}
   enemySliderPrefab: {fileID: 6736228907411516920, guid: 7cab6e17714de144a97944992689c292, type: 3}
   BenemyPrefab: {fileID: 6190022088579737276, guid: 66d75b7fdae8d454286043ca0cb14e13, type: 3}
   GenemyPrefab: {fileID: 6190022088579737276, guid: 6f0e222225ca2cc429ff6533ce05b656, type: 3}
@@ -1533,6 +1535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f26a44b5c43fc94ca295645ca479421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sound: {fileID: 8300000, guid: 596b5ce36a0b79042b0104633601207b, type: 3}
   BlockPrefab: {fileID: 1815493555048605402, guid: 98a4aab481474054ea9bf85cf6f24bc7, type: 3}
   blockColor: 0
   player: {fileID: 1528659370}

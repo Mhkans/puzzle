@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 public class Reward : MonoBehaviour
 {
+    private AudioSource audio;
+    public AudioClip stageSound;
+    
     Item selectedItem;
     public enum Item
     {
@@ -47,8 +50,10 @@ public class Reward : MonoBehaviour
     };
     void Start()
     {
-        
+        audio = this.gameObject.AddComponent<AudioSource>();
         AddRandomItemsToList();
+        audio.clip = stageSound;
+        audio.Play();
     }
 
     void Update()
@@ -125,5 +130,7 @@ public class Reward : MonoBehaviour
         additionalcount += 1;
 
     }
+
+    
     
 }
