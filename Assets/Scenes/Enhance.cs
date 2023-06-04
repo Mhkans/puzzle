@@ -10,11 +10,12 @@ public class Enhance : MonoBehaviour
     void Start()
     {
         EnhanceText =  GetComponent<Text>();
-        EnhanceText.text = "적의 공격력 : " + 5 +"\n\n" +
+        EnhanceText.text = "보스의 공격력 : " + 5 +"\n" +
+                           "적의 공격력 : " + 5 +"\n\n" +
                            "    PLAYER  " + " \n " +
-                           "\n현재 공격력 : " + 10 * Player.attCoefficient +
+                           "\n현재 공격력 : 블럭당 " + 2 * Player.attCoefficient  +
                            "\n현재 방어력 : "  + Player.shield+ " "+
-                           "\n현재 회복력 : " + 10 * Player.healCoefficient +
+                           "\n현재 회복력 : 블럭당" + 2 * Player.healCoefficient +
                            "\n현재 체력 : " + 100 * Player.hpCoefficient +
                            "\n머신건 장착 : " + (Reward.ismachinegun ? "YES" : "NO") +
                            "\n추가타 적용 : " + (Reward.isadditionalblow ? "YES   \n" : "NO   \n") + Reward.additionalcount + "회 추가공격";

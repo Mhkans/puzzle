@@ -34,7 +34,7 @@ public class EnemySpawner : MonoBehaviour
     public void Start()
     {
         audio = this.gameObject.AddComponent<AudioSource>();
-        spawnInterval = 10;
+        spawnInterval = 5;
         canSpawn = true;
         canvas = FindObjectOfType<Canvas>(); // Canvas 찾기
         Instance = this;
@@ -65,17 +65,19 @@ public class EnemySpawner : MonoBehaviour
 
     public void Update()
     {
-
+        
         if (stagecode == 3)
         {
             elapsedTime += Time.deltaTime;
             if (canSpawn && enemyCount < 2 && elapsedTime >= spawnInterval)
             {
-                BossSpawnEnemy();
+                //BossSpawnEnemy();
                 elapsedTime = 0f; // 경과 시간 초기화
             }
+            
+           
         }
-
+       
         clickEnemy();
 
         foreach (Enemy enemy in enemies)
@@ -92,6 +94,15 @@ public class EnemySpawner : MonoBehaviour
             {
                 enemy.enemyHP.transform.position =
                     Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
+            }
+
+            if (SummonedEnemy.IndexOf(enemy) == 0)
+            {
+                enemy.transform.position = new Vector3(-2.0f, 5.5f, 0);
+            }
+            if (SummonedEnemy.IndexOf(enemy) == 1)
+            {
+                enemy.transform.position = new Vector3(2.0f, 5.5f, 0);
             }
         }
         
@@ -283,6 +294,7 @@ public class EnemySpawner : MonoBehaviour
                         // 선택된 적의 크기를 20% 증가
                         targetEnemy.transform.localScale *= 1.2f;
 
+                        int index = SummonedEnemy.IndexOf(enemy);
                         SummonedEnemy.Remove(enemy);
                         SummonedEnemy.Insert(0, enemy);
                         

@@ -41,11 +41,11 @@ public class Reward : MonoBehaviour
     public static int additionalcount = 0;
     Dictionary<Item, ItemInfo> itemInfoDict = new Dictionary<Item, ItemInfo>()
     {
-        { Item.attboost, new ItemInfo("attboost", "20%의 공격력 증가 효과를 받습니다.") },
+        { Item.attboost, new ItemInfo("attboost", "50%의 공격력 증가 효과를 받습니다.") },
         { Item.Shieldboost, new ItemInfo("Shieldboost", "방어력이 3 증가합니다.") },
-        { Item.healboost, new ItemInfo("healboost", "20%의 체력 회복 증가 효과를 받습니다.") },
-        { Item.hpboost, new ItemInfo("hpboost", "20%의 체력 증가 효과를 받습니다.") },
-        { Item.machinegun, new ItemInfo("machinegun", "적에게 주는 데미지가 반으로 줄어들지만 모든 적을 공격합니다.") },
+        { Item.healboost, new ItemInfo("healboost", "50%의 체력 회복 증가 효과를 받습니다.") },
+        { Item.hpboost, new ItemInfo("hpboost", "30%의 체력 증가 효과를 받습니다.") },
+        { Item.machinegun, new ItemInfo("machinegun", "적에게 주는 데미지가 반으로 줄어들지만 모든 적을 공격합니다.(중첩불가능)") },
         { Item.additionalblow, new ItemInfo("additionalblow", "30%의 확률로 무속성 공격을 추가로 가합니다.(중첩가능)") },
     };
     void Start()
@@ -102,16 +102,16 @@ public class Reward : MonoBehaviour
         switch (selectedItem)
         {
             case Item.attboost:
-                Player.attCoefficient *= 1.2f;
+                Player.attCoefficient *= 1.5f;
                 break;
             case Item.Shieldboost:
                 Player.shield += 3;
                 break;
             case Item.healboost:
-                Player.healCoefficient *= 1.2f;
+                Player.healCoefficient *= 1.5f;
                 break;
             case Item.hpboost:
-                Player.hpCoefficient *= 1.2f;
+                Player.hpCoefficient *= 1.3f;
                 break;
             case Item.machinegun:
                 ismachinegun = true;

@@ -6,7 +6,10 @@ using UnityEditorInternal;
 public class BlockRoot : MonoBehaviour {
 
 	private AudioSource audio;
+	
+
 	public AudioClip sound;
+	public AudioClip bombSound;
 	public GameObject BlockPrefab = null; // 만들어야 할 블록의 Prefab.
 	public BlockControl[,] blocks; // 그리드.
 	public Block.COLOR blockColor;
@@ -18,6 +21,7 @@ public class BlockRoot : MonoBehaviour {
 	public Enemy enemys = null;
 	public BossMonster boss = null;
 	public EnemySpawner enemyspawner = null;
+	private int DAMAGE = 4;
 	void Start() {
 		this.main_camera = GameObject.FindGameObjectWithTag("MainCamera");
 		this.score_counter = this.gameObject.GetComponent<ScoreCounter>();
@@ -64,6 +68,8 @@ public class BlockRoot : MonoBehaviour {
 
 						if (block.color == Block.COLOR.SPBLOCK01)
 						{
+							audio.clip = sound;
+							audio.Play();
 							int lx = block.i_pos.x;
 							int rx = block.i_pos.x;
 							int dy = block.i_pos.y;
@@ -786,7 +792,7 @@ public class BlockRoot : MonoBehaviour {
 								this.blocks[block.i_pos.x, y].toVanishing();
 							}
 							
-							enemys.TakeDamage((greencount+bluecount+yellowcount)*2);
+							enemys.TakeDamage((greencount+bluecount+yellowcount)*DAMAGE);
 							player.Heal(pinkcount*2);
 						}
 
@@ -852,10 +858,18 @@ public class BlockRoot : MonoBehaviour {
 				// 세로 또는 가로에 같은 색 블록이 세 개 이상 나열했다면.
 				if (this.checkConnection(block))
 				{
+					
 					ignite_count++; // 발화 수를 증가.
-					audio.clip = sound;
-					audio.Play();
-
+					if (this.blockColor == Block.COLOR.SPBLOCK02)
+					{
+						audio.clip = bombSound;
+						audio.Play();
+					}
+					else
+					{
+						audio.clip = sound;
+						audio.Play();
+					}
 				}
 
 			}
@@ -898,11 +912,11 @@ public class BlockRoot : MonoBehaviour {
 								if (Reward.ismachinegun == true)
 								{
 									
-									enemys.TakeAll(blueCount*2);
+									enemys.TakeAll(blueCount*DAMAGE);
 								}
 								else
 								{
-									enemys.TakeDamage(blueCount * 4);
+									enemys.TakeDamage(blueCount * 2*DAMAGE);
 
 								}
 							}
@@ -910,19 +924,19 @@ public class BlockRoot : MonoBehaviour {
 							{
 								if (Reward.ismachinegun == true)
 								{
-									enemys.TakeAll(blueCount*2);
+									enemys.TakeAll(blueCount*DAMAGE);
 									if (UnityEngine.Random.Range(0, 10) < 3)
 									{
-										enemys.TakeAll(blueCount*2 *Reward.additionalcount); 
+										enemys.TakeAll(blueCount*DAMAGE *Reward.additionalcount); 
 									}
 
 								}
 								else
 								{
-									enemys.TakeDamage(blueCount *4);
+									enemys.TakeDamage(blueCount *DAMAGE*2);
 									if (UnityEngine.Random.Range(0, 10) < 3)
 									{
-										enemys.TakeDamage(blueCount* 4 *Reward.additionalcount); 
+										enemys.TakeDamage(blueCount* DAMAGE*2 *Reward.additionalcount); 
 									}
 
 								}
@@ -937,11 +951,11 @@ public class BlockRoot : MonoBehaviour {
 							{
 								if (Reward.ismachinegun == true)
 								{
-									enemys.TakeAll(YellowCount *2);
+									enemys.TakeAll(YellowCount *DAMAGE);
 								}
 								else
 								{
-									enemys.TakeDamage(YellowCount *4);
+									enemys.TakeDamage(YellowCount *DAMAGE*2);
 
 								}
 							}
@@ -949,19 +963,19 @@ public class BlockRoot : MonoBehaviour {
 							{
 								if (Reward.ismachinegun == true)
 								{
-									enemys.TakeAll(YellowCount *2);
+									enemys.TakeAll(YellowCount *DAMAGE);
 									if (UnityEngine.Random.Range(0, 10) < 3)
 									{
-										enemys.TakeAll(YellowCount* 2 *Reward.additionalcount); 
+										enemys.TakeAll(YellowCount* DAMAGE*2 *Reward.additionalcount); 
 									}
 
 								}
 								else
 								{
-									enemys.TakeDamage(YellowCount *4);
+									enemys.TakeDamage(YellowCount *DAMAGE*2);
 									if (UnityEngine.Random.Range(0, 10) < 3)
 									{
-										enemys.TakeDamage(YellowCount*4 *Reward.additionalcount); 
+										enemys.TakeDamage(YellowCount*DAMAGE*2 *Reward.additionalcount); 
 									}
 
 								}
@@ -975,11 +989,11 @@ public class BlockRoot : MonoBehaviour {
 							{
 								if (Reward.ismachinegun == true)
 								{
-									enemys.TakeAll(GreenCount*2);
+									enemys.TakeAll(GreenCount*DAMAGE);
 								}
 								else
 								{
-									enemys.TakeDamage(GreenCount*4);
+									enemys.TakeDamage(GreenCount*DAMAGE*2);
 
 								}
 							}
@@ -987,19 +1001,19 @@ public class BlockRoot : MonoBehaviour {
 							{
 								if (Reward.ismachinegun == true)
 								{
-									enemys.TakeAll(GreenCount *2);
+									enemys.TakeAll(GreenCount *DAMAGE);
 									if (UnityEngine.Random.Range(0, 10) < 3)
 									{
-										enemys.TakeAll(GreenCount *2 *Reward.additionalcount); 
+										enemys.TakeAll(GreenCount *DAMAGE *Reward.additionalcount); 
 									}
 
 								}
 								else
 								{
-									enemys.TakeDamage(GreenCount*4);
+									enemys.TakeDamage(GreenCount*DAMAGE*2);
 									if (UnityEngine.Random.Range(0, 10) < 3)
 									{
-										enemys.TakeDamage(GreenCount *4 *Reward.additionalcount); 
+										enemys.TakeDamage(GreenCount *DAMAGE*2 *Reward.additionalcount); 
 									}
 
 								}
@@ -1030,7 +1044,7 @@ public class BlockRoot : MonoBehaviour {
 								}
 								else
 								{
-									enemys.TakeDamage(block_count*2);
+									enemys.TakeDamage(block_count);
 
 								}
 							}

@@ -1536,6 +1536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: 596b5ce36a0b79042b0104633601207b, type: 3}
+  bombSound: {fileID: 8300000, guid: de4e1a0a5f370824db7bb84e51e959ff, type: 3}
   BlockPrefab: {fileID: 1815493555048605402, guid: 98a4aab481474054ea9bf85cf6f24bc7, type: 3}
   blockColor: 0
   player: {fileID: 1528659370}
