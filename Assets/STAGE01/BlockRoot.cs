@@ -15,8 +15,6 @@ public class BlockRoot : MonoBehaviour {
 	public Enemy enemys = null;
 	public BossMonster boss = null;
 	public EnemySpawner enemyspawner = null;
-	private bool healHP = false;
-	private bool bomb = false;
 	void Start() {
 		this.main_camera = GameObject.FindGameObjectWithTag("MainCamera");
 		this.score_counter = this.gameObject.GetComponent<ScoreCounter>();
@@ -46,7 +44,13 @@ public class BlockRoot : MonoBehaviour {
 			if(!this.is_has_falling_block()) {
 				if(Input.GetMouseButtonDown(0)) { // 마우스 버튼이 눌렸다면.
 					// blocks 배열의 모든 요소를 차례로 처리한다.
-					foreach(BlockControl block in this.blocks) {
+					foreach(BlockControl block in this.blocks)
+					{
+						int pinkcount = 0;
+						int bluecount = 0;
+						int greencount = 0;
+						int yellowcount = 0;
+						int blockcount = 0;
 						if(! block.isGrabbable()) { // 블록을 잡을 수 없다면.
 							continue; // 루프의 맨 앞으로 점프.
 						}
@@ -78,13 +82,37 @@ public class BlockRoot : MonoBehaviour {
 
 								if (nextBlock.color == Block.COLOR.PINK)
 								{
-									healHP = true;
-									
+									pinkcount++;
+
 								}
 
+								if (nextBlock.color == Block.COLOR.BLUE)
+								{
+									bluecount++;
+
+								}
+								if (nextBlock.color == Block.COLOR.GREEN)
+								{
+									greencount++;
+
+								}
+								if (nextBlock.color == Block.COLOR.YELLOW)
+								{
+									yellowcount++;
+
+								}
 								if (nextBlock.color == Block.COLOR.SPBLOCK02)
 								{
-									bomb = true;
+									foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+									{
+										enemy.currentHp -= 15;
+							
+									}
+									foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+									{
+										enemy.currentHp -= 15;
+							
+									}
 								}
 
 								if (nextBlock.color == Block.COLOR.SPBLOCK01)
@@ -108,17 +136,45 @@ public class BlockRoot : MonoBehaviour {
 										}
 
 								
-										if (snextBlock.color == Block.COLOR.PINK)
+										if (nextBlock.color == Block.COLOR.PINK)
 										{
-											healHP = true;
-									
+											pinkcount++;
+
 										}
-										if (snextBlock.color == Block.COLOR.SPBLOCK02)
+
+										if (nextBlock.color == Block.COLOR.BLUE)
 										{
-											bomb = true;
+											bluecount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.GREEN)
+										{
+											greencount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.YELLOW)
+										{
+											yellowcount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.SPBLOCK02)
+										{
+											foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+											{
+												enemy.currentHp -= 15;
+							
+											}
+											foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+											{
+												enemy.currentHp -= 15;
+							
+											}
 										}
 									
-										
+										else
+										{
+											blockcount++;
+										}
 										sdy = sy;
 									}
 
@@ -136,17 +192,45 @@ public class BlockRoot : MonoBehaviour {
 											break; // 루프 탈출.
 										}
 
-								
-										if (snextBlock.color == Block.COLOR.PINK)
+										if (nextBlock.color == Block.COLOR.PINK)
 										{
-											healHP = true;
-									
+											pinkcount++;
+
 										}
-										if (snextBlock.color == Block.COLOR.SPBLOCK02)
+
+										if (nextBlock.color == Block.COLOR.BLUE)
 										{
-											bomb = true;
+											bluecount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.GREEN)
+										{
+											greencount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.YELLOW)
+										{
+											yellowcount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.SPBLOCK02)
+										{
+											foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+											{
+												enemy.currentHp -= 15;
+							
+											}
+											foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+											{
+												enemy.currentHp -= 15;
+							
+											}
 										}
 									
+										else
+										{
+											blockcount++;
+										}
 										suy = sy;
 									}
 									for (int y = sdy; y <= suy; y++)
@@ -154,9 +238,15 @@ public class BlockRoot : MonoBehaviour {
 										blocks[x, y].toVanishing();
 									}
 
+									
 								}
 
+								else
+								{
+									blockcount++;
+								}
 								lx = x;
+								
 							}
 							
 
@@ -177,12 +267,37 @@ public class BlockRoot : MonoBehaviour {
 								
 								if (nextBlock.color == Block.COLOR.PINK)
 								{
-									healHP = true;
-									
+									pinkcount++;
+
+								}
+
+								if (nextBlock.color == Block.COLOR.BLUE)
+								{
+									bluecount++;
+
+								}
+								if (nextBlock.color == Block.COLOR.GREEN)
+								{
+									greencount++;
+
+								}
+								if (nextBlock.color == Block.COLOR.YELLOW)
+								{
+									yellowcount++;
+
 								}
 								if (nextBlock.color == Block.COLOR.SPBLOCK02)
 								{
-									bomb = true;
+									foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+									{
+										enemy.currentHp -= 15;
+							
+									}
+									foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+									{
+										enemy.currentHp -= 15;
+							
+									}
 								}
 
 								if (nextBlock.color == Block.COLOR.SPBLOCK01)
@@ -206,17 +321,45 @@ public class BlockRoot : MonoBehaviour {
 										}
 
 								
-										if (snextBlock.color == Block.COLOR.PINK)
+										if (nextBlock.color == Block.COLOR.PINK)
 										{
-											healHP = true;
-									
+											pinkcount++;
+
 										}
-										if (snextBlock.color == Block.COLOR.SPBLOCK02)
+
+										if (nextBlock.color == Block.COLOR.BLUE)
 										{
-											bomb = true;
+											bluecount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.GREEN)
+										{
+											greencount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.YELLOW)
+										{
+											yellowcount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.SPBLOCK02)
+										{
+											foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+											{
+												enemy.currentHp -= 15;
+							
+											}
+											foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+											{
+												enemy.currentHp -= 15;
+							
+											}
 										}
 									
-										
+										else
+										{
+											blockcount++;
+										}
 										sdy = sy;
 									}
 
@@ -235,14 +378,39 @@ public class BlockRoot : MonoBehaviour {
 										}
 
 								
-										if (snextBlock.color == Block.COLOR.PINK)
+										if (nextBlock.color == Block.COLOR.PINK)
 										{
-											healHP = true;
-									
+											pinkcount++;
+
 										}
-										if (snextBlock.color == Block.COLOR.SPBLOCK02)
+
+										if (nextBlock.color == Block.COLOR.BLUE)
 										{
-											bomb = true;
+											bluecount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.GREEN)
+										{
+											greencount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.YELLOW)
+										{
+											yellowcount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.SPBLOCK02)
+										{
+											foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+											{
+												enemy.currentHp -= 15;
+							
+											}
+											foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+											{
+												enemy.currentHp -= 15;
+							
+											}
 										}
 									
 										suy = sy;
@@ -253,7 +421,10 @@ public class BlockRoot : MonoBehaviour {
 									}
 
 								}
-
+								else
+								{
+									blockcount++;
+								}
 								rx = x;
 							}
 
@@ -274,12 +445,37 @@ public class BlockRoot : MonoBehaviour {
 								
 								if (nextBlock.color == Block.COLOR.PINK)
 								{
-									healHP = true;
-									
+									pinkcount++;
+
+								}
+
+								if (nextBlock.color == Block.COLOR.BLUE)
+								{
+									bluecount++;
+
+								}
+								if (nextBlock.color == Block.COLOR.GREEN)
+								{
+									greencount++;
+
+								}
+								if (nextBlock.color == Block.COLOR.YELLOW)
+								{
+									yellowcount++;
+
 								}
 								if (nextBlock.color == Block.COLOR.SPBLOCK02)
 								{
-									bomb = true;
+									foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+									{
+										enemy.currentHp -= 15;
+							
+									}
+									foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+									{
+										enemy.currentHp -= 15;
+							
+									}
 								}
 
 								if (nextBlock.color == Block.COLOR.SPBLOCK01)
@@ -302,17 +498,44 @@ public class BlockRoot : MonoBehaviour {
 											break; // 루프 탈출.
 										}
 
-										if (snextBlock.color == Block.COLOR.PINK)
+										if (nextBlock.color == Block.COLOR.PINK)
 										{
-											healHP = true;
+											pinkcount++;
 
 										}
 
-										if (snextBlock.color == Block.COLOR.SPBLOCK02)
+										if (nextBlock.color == Block.COLOR.BLUE)
 										{
-											bomb = true;
-										}
+											bluecount++;
 
+										}
+										if (nextBlock.color == Block.COLOR.GREEN)
+										{
+											greencount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.YELLOW)
+										{
+											yellowcount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.SPBLOCK02)
+										{
+											foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+											{
+												enemy.currentHp -= 15;
+							
+											}
+											foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+											{
+												enemy.currentHp -= 15;
+							
+											}
+										}
+										else
+										{
+											blockcount++;
+										}
 										slx = sx;
 									}
 									for (int sx = srx + 1; sx < Block.BLOCK_NUM_X; sx++)
@@ -329,17 +552,44 @@ public class BlockRoot : MonoBehaviour {
 											break; // 루프 탈출.
 										}
 
-										if (snextBlock.color == Block.COLOR.PINK)
+										if (nextBlock.color == Block.COLOR.PINK)
 										{
-											healHP = true;
+											pinkcount++;
 
 										}
 
-										if (snextBlock.color == Block.COLOR.SPBLOCK02)
+										if (nextBlock.color == Block.COLOR.BLUE)
 										{
-											bomb = true;
-										}
+											bluecount++;
 
+										}
+										if (nextBlock.color == Block.COLOR.GREEN)
+										{
+											greencount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.YELLOW)
+										{
+											yellowcount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.SPBLOCK02)
+										{
+											foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+											{
+												enemy.currentHp -= 15;
+							
+											}
+											foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+											{
+												enemy.currentHp -= 15;
+							
+											}
+										}
+										else
+										{
+											blockcount++;
+										}
 										srx = sx;
 									}
 									for (int x = slx; x <= srx; x++)
@@ -348,7 +598,10 @@ public class BlockRoot : MonoBehaviour {
 										this.blocks[x, y].toVanishing();
 									}
 								}
-								
+								else
+								{
+									blockcount++;
+								}
 								dy = y;
 							}
 
@@ -369,12 +622,37 @@ public class BlockRoot : MonoBehaviour {
 								
 								if (nextBlock.color == Block.COLOR.PINK)
 								{
-									healHP = true;
-									
+									pinkcount++;
+
+								}
+
+								if (nextBlock.color == Block.COLOR.BLUE)
+								{
+									bluecount++;
+
+								}
+								if (nextBlock.color == Block.COLOR.GREEN)
+								{
+									greencount++;
+
+								}
+								if (nextBlock.color == Block.COLOR.YELLOW)
+								{
+									yellowcount++;
+
 								}
 								if (nextBlock.color == Block.COLOR.SPBLOCK02)
 								{
-									bomb = true;
+									foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+									{
+										enemy.currentHp -= 15;
+							
+									}
+									foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+									{
+										enemy.currentHp -= 15;
+							
+									}
 								}
 								if (nextBlock.color == Block.COLOR.SPBLOCK01)
 								{
@@ -396,15 +674,39 @@ public class BlockRoot : MonoBehaviour {
 											break; // 루프 탈출.
 										}
 
-										if (snextBlock.color == Block.COLOR.PINK)
+										if (nextBlock.color == Block.COLOR.PINK)
 										{
-											healHP = true;
+											pinkcount++;
 
 										}
 
-										if (snextBlock.color == Block.COLOR.SPBLOCK02)
+										if (nextBlock.color == Block.COLOR.BLUE)
 										{
-											bomb = true;
+											bluecount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.GREEN)
+										{
+											greencount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.YELLOW)
+										{
+											yellowcount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.SPBLOCK02)
+										{
+											foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+											{
+												enemy.currentHp -= 15;
+							
+											}
+											foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+											{
+												enemy.currentHp -= 15;
+							
+											}
 										}
 
 										slx = sx;
@@ -423,15 +725,39 @@ public class BlockRoot : MonoBehaviour {
 											break; // 루프 탈출.
 										}
 
-										if (snextBlock.color == Block.COLOR.PINK)
+										if (nextBlock.color == Block.COLOR.PINK)
 										{
-											healHP = true;
+											pinkcount++;
 
 										}
 
-										if (snextBlock.color == Block.COLOR.SPBLOCK02)
+										if (nextBlock.color == Block.COLOR.BLUE)
 										{
-											bomb = true;
+											bluecount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.GREEN)
+										{
+											greencount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.YELLOW)
+										{
+											yellowcount++;
+
+										}
+										if (nextBlock.color == Block.COLOR.SPBLOCK02)
+										{
+											foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+											{
+												enemy.currentHp -= 15;
+							
+											}
+											foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+											{
+												enemy.currentHp -= 15;
+							
+											}
 										}
 
 										srx = sx;
@@ -456,7 +782,9 @@ public class BlockRoot : MonoBehaviour {
 							{
 								this.blocks[block.i_pos.x, y].toVanishing();
 							}
-							enemys.TakeDamage(5);
+							
+							enemys.TakeDamage((greencount+bluecount+yellowcount)*2);
+							player.Heal(pinkcount*2);
 						}
 
 						// 처리 중인 블록을 grabbed_block에 등록.
@@ -466,20 +794,7 @@ public class BlockRoot : MonoBehaviour {
 						this.grabbed_block.beginGrab();
 						break;
 					}
-					if (healHP == true)
-					{
-						player.Heal(10);
-						healHP = false;
-					}
-
-					if (bomb == true)
-					{
-						foreach (Enemy enemy in EnemySpawner.Instance.enemies)
-						{
-							enemy.currentHp -= 15;
-							bomb = false;
-						}
-					}
+					
 				}
 			}
 		} else { // 잡은 블록이 비어있지 않으면.
@@ -523,7 +838,8 @@ public class BlockRoot : MonoBehaviour {
 			// 아무것도 하지 않는다.
 			// 낙하 중도 슬라이드 중도 아니면.
 		} else {
-			int ignite_count = 0; // 발화 수.
+			int ignite_count = 0;
+			
 			// 그리드 안의 모든 블록에 대해서 처리.
 			foreach(BlockControl block in this.blocks) {
 				if(! block.isIdle()) { // 대기 중이면 루프의 처음으로 점프하고,.
@@ -534,171 +850,7 @@ public class BlockRoot : MonoBehaviour {
 				if (this.checkConnection(block))
 				{
 					ignite_count++; // 발화 수를 증가.
-					if (EnemySpawner.Instance.enemies.Count > 0)
-					{
-						if (block.color == Block.COLOR.PINK)
-						{
-							player.Heal(6); // 핑크 블록이면 플레이어의 체력을 6 회복시킨다.
-						}
-						else if (block.color == Block.COLOR.BLUE && enemys.status == Enemy.Status.Greenstat)
-						{
-							if (Reward.isadditionalblow == false)
-							{
-								if (Reward.ismachinegun == true)
-								{
-									enemys.TakeAll(5);
-								}
-								else
-								{
-									enemys.TakeDamage(10);
-
-								}
-							}
-							else
-							{
-								if (Reward.ismachinegun == true)
-								{
-									enemys.TakeAll(5);
-									if (UnityEngine.Random.Range(0, 10) < 3)
-									{
-										enemys.TakeAll(2.5f*Reward.additionalcount); 
-									}
-
-								}
-								else
-								{
-									enemys.TakeDamage(10);
-									if (UnityEngine.Random.Range(0, 10) < 3)
-									{
-										enemys.TakeDamage(5*Reward.additionalcount); 
-									}
-
-								}
-							}
-
-
-						}
-						else if (block.color == Block.COLOR.YELLOW && enemys.status == Enemy.Status.Bluestat)
-						{
-							if (Reward.isadditionalblow == false)
-							{
-								if (Reward.ismachinegun == true)
-								{
-									enemys.TakeAll(5);
-								}
-								else
-								{
-									enemys.TakeDamage(10);
-
-								}
-							}
-							else
-							{
-								if (Reward.ismachinegun == true)
-								{
-									enemys.TakeAll(5);
-									if (UnityEngine.Random.Range(0, 10) < 3)
-									{
-										enemys.TakeAll(2.5f*Reward.additionalcount); 
-									}
-
-								}
-								else
-								{
-									enemys.TakeDamage(10);
-									if (UnityEngine.Random.Range(0, 10) < 3)
-									{
-										enemys.TakeDamage(5*Reward.additionalcount); 
-									}
-
-								}
-							}
-
-						}
-						else if (block.color == Block.COLOR.GREEN && enemys.status == Enemy.Status.Yellowstat)
-						{
-							if (Reward.isadditionalblow == false)
-							{
-								if (Reward.ismachinegun == true)
-								{
-									enemys.TakeAll(5);
-								}
-								else
-								{
-									enemys.TakeDamage(10);
-
-								}
-							}
-							else
-							{
-								if (Reward.ismachinegun == true)
-								{
-									enemys.TakeAll(5);
-									if (UnityEngine.Random.Range(0, 10) < 3)
-									{
-										enemys.TakeAll(2.5f*Reward.additionalcount); 
-									}
-
-								}
-								else
-								{
-									enemys.TakeDamage(10);
-									if (UnityEngine.Random.Range(0, 10) < 3)
-									{
-										enemys.TakeDamage(5*Reward.additionalcount); 
-									}
-
-								}
-							}
-
-
-						}
-						else if (block.color == Block.COLOR.SPBLOCK02)
-						{
-							foreach (Enemy enemy in EnemySpawner.Instance.enemies)
-							{
-								enemy.currentHp -= 15;
-							}
-						}
-						else
-						{
-							if (Reward.isadditionalblow == false)
-							{
-								if (Reward.ismachinegun == true)
-								{
-									enemys.TakeAll(2.5f);
-								}
-								else
-								{
-									enemys.TakeDamage(5);
-
-								}
-							}
-							else
-							{
-								if (Reward.ismachinegun == true)
-								{
-									enemys.TakeAll(2.5f);
-									if (UnityEngine.Random.Range(0, 10) < 3)
-									{
-										enemys.TakeAll(2.5f*Reward.additionalcount); 
-									}
-
-								}
-								else
-								{
-									enemys.TakeDamage(5);
-									if (UnityEngine.Random.Range(0, 10) < 3)
-									{
-										enemys.TakeDamage(5*Reward.additionalcount); 
-									}
-
-								}
-							}
-
-
-						}
-					}
+					
 
 				}
 
@@ -716,12 +868,193 @@ public class BlockRoot : MonoBehaviour {
 				this.score_counter.updateTotalScore(); // * 여기 변경
 
 				// = 한 군데라도 짝이 맞으면.
-				int block_count = 0; // 발화 중인 블록 수(다음 장에서 사용한다).
+				int block_count = 0; 
+				int blueCount = 0;
+				int pinkCount = 0;
+				int YellowCount = 0;
+				int GreenCount = 0;// 발화 중인 블록 수(다음 장에서 사용한다).
 				// 그리드 내의 모든 블록에 대해서 처리.
 				foreach(BlockControl block in this.blocks) {
 					if(block.isVanishing()) { // 발화 중(계속 타고 있는 중)이면.
 						block.rewindVanishTimer(); // 재발화！.
-						block_count++; // 발화 중인 블록 개수를 증가.  이 코드에서 foreach 쪽에다 넣어야해?
+						 // 발화 중인 블록 개수를 증가.  이 코드에서 foreach 쪽에다 넣어야해?
+						if (EnemySpawner.Instance.enemies.Count > 0)
+					{
+						if (block.color == Block.COLOR.PINK)
+						{
+							pinkCount++;
+							player.Heal(pinkCount);
+							
+						}
+						else if (block.color == Block.COLOR.BLUE && enemys.status == Enemy.Status.Greenstat)
+						{
+							blueCount++;
+							if (Reward.isadditionalblow == false)
+							{
+								if (Reward.ismachinegun == true)
+								{
+									
+									enemys.TakeAll(blueCount*2);
+								}
+								else
+								{
+									enemys.TakeDamage(blueCount * 4);
+
+								}
+							}
+							else
+							{
+								if (Reward.ismachinegun == true)
+								{
+									enemys.TakeAll(blueCount*2);
+									if (UnityEngine.Random.Range(0, 10) < 3)
+									{
+										enemys.TakeAll(blueCount*2 *Reward.additionalcount); 
+									}
+
+								}
+								else
+								{
+									enemys.TakeDamage(blueCount *4);
+									if (UnityEngine.Random.Range(0, 10) < 3)
+									{
+										enemys.TakeDamage(blueCount* 4 *Reward.additionalcount); 
+									}
+
+								}
+							}
+
+
+						}
+						else if (block.color == Block.COLOR.YELLOW && enemys.status == Enemy.Status.Bluestat)
+						{
+							YellowCount++;
+							if (Reward.isadditionalblow == false)
+							{
+								if (Reward.ismachinegun == true)
+								{
+									enemys.TakeAll(YellowCount *2);
+								}
+								else
+								{
+									enemys.TakeDamage(YellowCount *4);
+
+								}
+							}
+							else
+							{
+								if (Reward.ismachinegun == true)
+								{
+									enemys.TakeAll(YellowCount *2);
+									if (UnityEngine.Random.Range(0, 10) < 3)
+									{
+										enemys.TakeAll(YellowCount* 2 *Reward.additionalcount); 
+									}
+
+								}
+								else
+								{
+									enemys.TakeDamage(YellowCount *4);
+									if (UnityEngine.Random.Range(0, 10) < 3)
+									{
+										enemys.TakeDamage(YellowCount*4 *Reward.additionalcount); 
+									}
+
+								}
+							}
+
+						}
+						else if (block.color == Block.COLOR.GREEN && enemys.status == Enemy.Status.Yellowstat)
+						{
+							GreenCount++;
+							if (Reward.isadditionalblow == false)
+							{
+								if (Reward.ismachinegun == true)
+								{
+									enemys.TakeAll(GreenCount*2);
+								}
+								else
+								{
+									enemys.TakeDamage(GreenCount*4);
+
+								}
+							}
+							else
+							{
+								if (Reward.ismachinegun == true)
+								{
+									enemys.TakeAll(GreenCount *2);
+									if (UnityEngine.Random.Range(0, 10) < 3)
+									{
+										enemys.TakeAll(GreenCount *2 *Reward.additionalcount); 
+									}
+
+								}
+								else
+								{
+									enemys.TakeDamage(GreenCount*4);
+									if (UnityEngine.Random.Range(0, 10) < 3)
+									{
+										enemys.TakeDamage(GreenCount *4 *Reward.additionalcount); 
+									}
+
+								}
+							}
+
+
+						}
+						else if (block.color == Block.COLOR.SPBLOCK02)
+						{
+							foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+							{
+								enemy.currentHp -= 15;
+							}
+							foreach (Enemy enemy in EnemySpawner.Instance.SummonedEnemy)
+							{
+								enemy.currentHp -= 15;
+								
+							}
+						}
+						else
+						{
+							block_count++;
+							if (Reward.isadditionalblow == false)
+							{
+								if (Reward.ismachinegun == true)
+								{
+									enemys.TakeAll(block_count);
+								}
+								else
+								{
+									enemys.TakeDamage(block_count*2);
+
+								}
+							}
+							else
+							{
+								if (Reward.ismachinegun == true)
+								{
+									enemys.TakeAll(block_count);
+									if (UnityEngine.Random.Range(0, 10) < 3)
+									{
+										enemys.TakeAll(block_count*Reward.additionalcount); 
+									}
+
+								}
+								else
+								{
+									enemys.TakeDamage(block_count*2);
+									if (UnityEngine.Random.Range(0, 10) < 3)
+									{
+										enemys.TakeDamage(block_count* 2 *Reward.additionalcount); 
+									}
+
+								}
+							}
+
+
+						}
+					}
 					}
 				}
 			}
