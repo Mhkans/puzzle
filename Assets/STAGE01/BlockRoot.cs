@@ -43,8 +43,7 @@ public class BlockRoot : MonoBehaviour {
 
 		
 		Vector3 mouse_position; // 마우스의 위치.
-		this.unprojectMousePosition( // 마우스의 위치를 가져옴.
-		                            out mouse_position, Input.mousePosition);
+		this.unprojectMousePosition(out mouse_position, Input.mousePosition);
 		// 가져온 마우스 위치를 하나의 Vector2에 저장한다.
 		Vector2 mouse_position_xy =
 			new Vector2(mouse_position.x, mouse_position.y);
@@ -848,31 +847,58 @@ public class BlockRoot : MonoBehaviour {
 			// 아무것도 하지 않는다.
 			// 낙하 중도 슬라이드 중도 아니면.
 		} else {
-			int ignite_count = 0;
-			
-			// 그리드 안의 모든 블록에 대해서 처리.
-			foreach(BlockControl block in this.blocks) {
-				if(! block.isIdle()) { // 대기 중이면 루프의 처음으로 점프하고,.
-					continue; // 다음 블록을 처리한다.
+			/*int ignite_count = 0;
+
+			// Iterate through all the blocks within the grid
+			foreach (BlockControl block in this.blocks)
+			{
+				if (!block.isIdle())
+				{
+					continue;
 				}
 
+				// Check if the block is the one clicked with the left mouse button
 				if (Input.GetMouseButtonDown(0))
 				{
-					// 마우스 클릭 위치의 블록을 가져온다.
-					RaycastHit hit;
-					Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    
-					if (Physics.Raycast(ray, out hit))
+					// Check for connections if the block is the correct one
+					if (this.checkConnection(block))
 					{
-						BlockControl clickedBlock = hit.collider.GetComponent<BlockControl>();
-
-						if (clickedBlock != null)
+						ignite_count++;
+						if (block.color == Block.COLOR.SPBLOCK02)
 						{
-							// 세로 또는 가로에 같은 색 블록이 세 개 이상 나열했다면.
-							if (checkConnection(clickedBlock))
+							audio.clip = bombSound;
+							audio.Play();
+						}
+						else
+						{
+							audio.clip = sound;
+							audio.Play();
+						}
+					}
+				}
+			}*/
+			int ignite_count = 0;
+
+			if (Input.GetMouseButtonDown(0))
+			{
+
+				Vector3 clickPosition;
+				if (unprojectMousePosition(out clickPosition, Input.mousePosition))
+				{
+					
+					// Iterate through all the blocks within the grid
+					foreach (BlockControl block in this.blocks)
+					{
+						
+
+						if (block.isContainedPosition(clickPosition))
+						{
+							
+							if (checkConnection02(block))
 							{
-								ignite_count++; // 발화 수를 증가.
-								if (clickedBlock.color == Block.COLOR.SPBLOCK02)
+								
+								ignite_count++;
+								if (block.color == Block.COLOR.SPBLOCK02)
 								{
 									audio.clip = bombSound;
 									audio.Play();
@@ -883,11 +909,15 @@ public class BlockRoot : MonoBehaviour {
 									audio.Play();
 								}
 							}
+							
 						}
+						
 					}
+					
 				}
-
+				
 			}
+
 
 			if(ignite_count > 0) { // 점화 수가 0보다 크면.
 

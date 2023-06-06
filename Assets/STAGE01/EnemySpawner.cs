@@ -267,6 +267,7 @@ public class EnemySpawner : MonoBehaviour
                         
                         break;
                     }
+                    
                 }
                 foreach (Enemy enemy in SummonedEnemy)
                 {
