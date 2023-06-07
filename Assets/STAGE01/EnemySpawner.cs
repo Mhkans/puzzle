@@ -15,19 +15,28 @@ public class EnemySpawner : MonoBehaviour
     public GameObject BenemyPrefab = null;
     public GameObject GenemyPrefab = null;
     public GameObject YenemyPrefab = null;
+    public GameObject BheavyPrefab = null;
+    public GameObject GheavyPrefab = null;
+    public GameObject YheavyPrefab = null;
+    public GameObject BMiniPrefab = null;
+    public GameObject GMiniPrefab = null;
+    public GameObject YMiniPrefab = null;
     public GameObject BbossPrefab = null;
     public GameObject GbossPrefab = null;
     public GameObject YbossPrefab = null;
     public GameObject BossEnemy = null;
-    public int MaxEnemyNum = 3; // 만드는 ENEMY의 수, 임시값
+    public int MaxEnemyNum; // 만드는 ENEMY의 수, 임시값
     public Vector3 spawnPosition = Vector3.zero; // 스폰 위치
-    public Enemy targetEnemy = null;
+    public static Enemy targetEnemy = null;
     public List<Enemy> enemies = new List<Enemy>();
     public List<Enemy> SummonedEnemy = new List<Enemy>();
     public static bool stage01clear = false; 
     public static bool stage02clear = false;
+    public static bool stage03clear = false; 
+    public static bool stage04clear = false;
+    public static bool stage05clear = false; 
     public Canvas canvas; // 새로운 Canvas
-    public static int stagecode = 3;
+    public static int stagecode = 5;
     private float elapsedTime = 0f; 
     public static int spawnInterval; 
     private int enemyCount = 0; 
@@ -35,7 +44,7 @@ public class EnemySpawner : MonoBehaviour
     public void Start()
     {
         audio = this.gameObject.AddComponent<AudioSource>();
-        spawnInterval = 8;
+        spawnInterval = 10;
         canSpawn = true;
         canvas = FindObjectOfType<Canvas>(); // Canvas 찾기
         Instance = this;
@@ -50,25 +59,44 @@ public class EnemySpawner : MonoBehaviour
             case 2:
                 audio.clip = stageSound01;
                 audio.Play();
-                MaxEnemyNum = 3;
+                MaxEnemyNum = 2;
                 break;
             case 3:
                 audio.clip = stageSound02;
                 audio.Play();
+                SpawnMiniBoss();
+                BossSpawnEnemy();
+                BossSpawnEnemy();
+                MaxEnemyNum = 0;
+                break;
+            case 4:
+                audio.clip = stageSound01;
+                audio.Play();
+                MaxEnemyNum = 2;
+                break;
+            case 5:
+                audio.clip = stageSound01;
+                audio.Play();
+                MaxEnemyNum = 3;
+                break;
+            case 6:
+                audio.clip = stageSound02;
+                audio.Play();
                 SpawnBoss();
+                BossSpawnEnemy();
                 BossSpawnEnemy();
                 MaxEnemyNum = 0;
                 break;
         }
 
         STAGECONTROL(stagecode);
+
        
     }
 
     public void Update()
     {
-        
-        if (stagecode == 3)
+        if (stagecode == 6)
         {
             elapsedTime += Time.deltaTime;
             if (canSpawn && enemyCount < 2 && elapsedTime >= spawnInterval)
@@ -79,7 +107,32 @@ public class EnemySpawner : MonoBehaviour
             
            
         }
-       
+        if (targetEnemy == null)
+        {
+            if (Instance.SummonedEnemy.Count > 0)
+            {
+                targetEnemy = SummonedEnemy[0];
+                if (targetEnemy.currentHp <= 0)
+                {
+                    if (Instance.SummonedEnemy.Count > 1)
+                    {
+                        targetEnemy = SummonedEnemy[1];
+                    }
+                }
+            }
+            else
+            {
+                targetEnemy = enemies[0];
+                if (targetEnemy.currentHp <= 0)
+                {
+                    if (Instance.enemies.Count > 1)
+                    {
+                        targetEnemy = enemies[1];
+                    }
+                }
+            }
+            
+        }
         clickEnemy();
 
         foreach (Enemy enemy in enemies)
@@ -100,11 +153,11 @@ public class EnemySpawner : MonoBehaviour
 
             if (SummonedEnemy.IndexOf(enemy) == 0)
             {
-                enemy.transform.position = new Vector3(-2.0f, 5.5f, 0);
+                enemy.transform.position = new Vector3(-2.0f, 4.5f, 0);
             }
             if (SummonedEnemy.IndexOf(enemy) == 1)
             {
-                enemy.transform.position = new Vector3(2.0f, 5.5f, 0);
+                enemy.transform.position = new Vector3(2.0f, 4.5f, 0);
             }
         }
         
@@ -120,12 +173,9 @@ public class EnemySpawner : MonoBehaviour
     {
         return enemies.Count;
     }
-    public int GetBossEnemyCount()
-    {
-        return SummonedEnemy.Count;
-    }
     
-    private void SpawnEnemy(int a)
+    
+    private void SpawnEnemy0102(int a)
     {
         if (GetEnemyCount() >= MaxEnemyNum)
         {
@@ -142,11 +192,9 @@ public class EnemySpawner : MonoBehaviour
                     offset = new Vector3(0, 5.5f, 0);
                     break;
                 case 2:
-                    offset = new Vector3((2.0f * i) - 2.0f, 5.5f, 0);
+                    offset = new Vector3((3.0f * i) - 1.5f, 5.5f, 0);
                     break;
-                case 3:
-                    offset = new Vector3((4.0f * i) - 2.0f, 5.5f, 0);
-                    break;
+                
             }
 
             Enemy.Status enemyStatus = GetRandomStatus();
@@ -172,9 +220,53 @@ public class EnemySpawner : MonoBehaviour
             enemy.enemyHP = enemySlider;
         }
     }
+    private void SpawnEnemy0405(int a)
+    {
+        if (GetEnemyCount() >= MaxEnemyNum)
+        {
+            return;
+        }
+
+        for (int i = 0; i < MaxEnemyNum; i++)
+        {
+            Vector3 offset = Vector3.zero;
+
+            switch (a)
+            {
+                case 4:
+                    offset = new Vector3((4.0f * i) - 2.0f, 5.5f, 0);
+                    break;
+                case 5:
+                    offset = new Vector3((2.0f * i) - 2.0f, 5.5f, 0);
+                    break;
+            }
+            HeavyEnemy.Status enemyStatus = GetRandomStatus();
+            GameObject newEnemyObject = null;
+            switch (enemyStatus)
+            {
+                case HeavyEnemy.Status.Bluestat:
+                    newEnemyObject = Instantiate(BheavyPrefab, spawnPosition + offset, Quaternion.identity);
+                    break;
+                case HeavyEnemy.Status.Yellowstat:
+                    newEnemyObject = Instantiate(YheavyPrefab, spawnPosition + offset, Quaternion.identity);
+                    break;
+                case HeavyEnemy.Status.Greenstat:
+                    newEnemyObject = Instantiate(GheavyPrefab, spawnPosition + offset, Quaternion.identity);
+                    break;
+            }
+
+            HeavyEnemy enemy = newEnemyObject.GetComponent<HeavyEnemy>();
+            enemy.status = enemyStatus; // Assign the random status to the enemy
+            enemies.Add(enemy);
+            Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
+            enemySlider.transform.SetSiblingIndex(1);
+            enemy.enemyHP = enemySlider;
+        }
+    }
+
     private void BossSpawnEnemy()
     {
-        Vector3 offset = new Vector3((4.0f * enemyCount) - 2.0f, 5.5f, 0);
+        Vector3 offset = new Vector3(0, 4.5f, 0);
 
        
         GameObject newEnemyObject = null;
@@ -191,6 +283,35 @@ public class EnemySpawner : MonoBehaviour
         {
             canSpawn = false;
         }
+    }
+    public void SpawnMiniBoss()
+    {
+        Vector3 offset = new Vector3(0, 6.5f, 0);
+        GameObject newBossObject = null;
+        Enemy.Status enemyAttribute = GetRandomStatus();
+
+        switch (enemyAttribute)
+        {
+            case Enemy.Status.Bluestat:
+                newBossObject = Instantiate(BMiniPrefab, spawnPosition + offset, Quaternion.identity);
+                break;
+            case Enemy.Status.Yellowstat:
+                newBossObject = Instantiate(YMiniPrefab, spawnPosition + offset, Quaternion.identity);
+                break;
+            case Enemy.Status.Greenstat:
+                newBossObject = Instantiate(GMiniPrefab, spawnPosition + offset, Quaternion.identity);
+                break;
+        }
+
+        MiniBoss bossMonster = newBossObject.GetComponent<MiniBoss>();
+        bossMonster.status = enemyAttribute;
+        if (bossMonster != null && !enemies.Contains(bossMonster))
+        {
+            enemies.Add(bossMonster);
+        }
+
+        Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
+        bossMonster.enemyHP = enemySlider;
     }
     public void SpawnBoss()
     {
@@ -252,44 +373,25 @@ public class EnemySpawner : MonoBehaviour
                     if (enemy.isContainedPosition(clickPosition))
                     {
 
-                        if (targetEnemy != null)
+                        if (targetEnemy == null)
                         {
                             // 이전에 선택된 적의 크기 원상복귀
-                            targetEnemy.transform.localScale /= 1.2f;
+                            targetEnemy.transform.localScale /= 1.4f;
                         }
 
                         targetEnemy = enemy;
                         // 선택된 적의 크기를 20% 증가
-                        targetEnemy.transform.localScale *= 1.2f;
+                        targetEnemy.transform.localScale *= 1.4f;
 
                         enemies.Remove(enemy);
                         enemies.Insert(0, enemy);
                         
+
                         break;
                     }
                     
                 }
-                foreach (Enemy enemy in SummonedEnemy)
-                {
-                    if (enemy.isContainedPosition(clickPosition))
-                    {
-
-                        if (targetEnemy != null)
-                        {
-                            // 이전에 선택된 적의 크기 원상복귀
-                            targetEnemy.transform.localScale /= 1.2f;
-                        }
-
-                        targetEnemy = enemy;
-                        // 선택된 적의 크기를 20% 증가
-                        targetEnemy.transform.localScale *= 1.2f;
-
-                        SummonedEnemy.Remove(enemy);
-                        SummonedEnemy.Insert(0, enemy);
-                        
-                        break;
-                    }
-                }
+                
             }
         }
     }
@@ -328,13 +430,24 @@ public class EnemySpawner : MonoBehaviour
         {
             case 1:
                 BossMonster.isdead = false;
-                SpawnEnemy(a);
+                SpawnEnemy0102(a);
                 break;
             case 2:
                 BossMonster.isdead = false; 
-                SpawnEnemy(a);
+                SpawnEnemy0102(a);
                 break;
             case 3:
+                BossMonster.isdead = false; 
+                break;
+            case 4:
+                BossMonster.isdead = false; 
+                SpawnEnemy0405(a);
+                break;
+            case 5:
+                BossMonster.isdead = false; 
+                SpawnEnemy0405(a);
+                break;
+            case 6:
                 BossMonster.isdead = false;
                 break;
 

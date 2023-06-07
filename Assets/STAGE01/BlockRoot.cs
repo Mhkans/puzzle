@@ -17,9 +17,6 @@ public class BlockRoot : MonoBehaviour {
 	protected bool is_vanishing_prev = false; // 앞에서 발화했는가?.
 	public Player player = null;
 	public Enemy enemys = null;
-	public BossMonster boss = null;
-	public BossEnemy BossEnemy = null;
-	public EnemySpawner enemyspawner = null;
 	private int DAMAGE = 4;
 	void Start() {
 		this.main_camera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -29,7 +26,6 @@ public class BlockRoot : MonoBehaviour {
 
 		this.audio = this.gameObject.AddComponent<AudioSource>();
 
-		enemyspawner = gameObject.GetComponent<EnemySpawner>();
 		
 	}
 
@@ -38,8 +34,7 @@ public class BlockRoot : MonoBehaviour {
 		
 		GameObject enemyObj = GameObject.FindWithTag("Enemy");
 		enemys = enemyObj.GetComponent<Enemy>();
-		boss = enemyObj.GetComponent<BossMonster>();
-		BossEnemy = enemyObj.GetComponent<BossEnemy>();
+
 
 		
 		Vector3 mouse_position; // 마우스의 위치.
@@ -949,7 +944,7 @@ public class BlockRoot : MonoBehaviour {
 							player.Heal(pinkCount);
 							
 						}
-						else if (block.color == Block.COLOR.BLUE && enemys.status == Enemy.Status.Greenstat)
+						else if (block.color == Block.COLOR.BLUE && EnemySpawner.targetEnemy.status == Enemy.Status.Greenstat)
 						{
 							blueCount++;
 							if (Reward.isadditionalblow == false)
@@ -989,7 +984,7 @@ public class BlockRoot : MonoBehaviour {
 
 
 						}
-						else if (block.color == Block.COLOR.YELLOW && enemys.status == Enemy.Status.Bluestat)
+						else if (block.color == Block.COLOR.YELLOW && EnemySpawner.targetEnemy.status == Enemy.Status.Bluestat)
 						{
 							YellowCount++;
 							if (Reward.isadditionalblow == false)
@@ -1027,7 +1022,7 @@ public class BlockRoot : MonoBehaviour {
 							}
 
 						}
-						else if (block.color == Block.COLOR.GREEN && enemys.status == Enemy.Status.Yellowstat)
+						else if (block.color == Block.COLOR.GREEN && EnemySpawner.targetEnemy.status == Enemy.Status.Yellowstat)
 						{
 							GreenCount++;
 							if (Reward.isadditionalblow == false)

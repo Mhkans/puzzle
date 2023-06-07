@@ -72,6 +72,19 @@ public class SceneControl : MonoBehaviour {
 					{
 						EnemySpawner.stage02clear = true;
 					}
+					else if (EnemySpawner.stagecode == 3)
+					{
+						EnemySpawner.stage03clear = true;
+					}
+					else if (EnemySpawner.stagecode == 4)
+					{
+						EnemySpawner.stage04clear = true;
+					}
+					else if (EnemySpawner.stagecode == 5)
+					{
+						EnemySpawner.stage05clear = true;
+					}
+					
 					this.next_step = STEP.REWARD;
 					break;
 				}

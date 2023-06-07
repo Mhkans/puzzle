@@ -21,10 +21,7 @@ public class BossEnemy : Enemy
             Die();
         }
     }
-    public override void handleHP()
-    {
-        enemyHP.value = (float)currentHp / (float)MaxHp;
-    }
+    
     public override void Attack()
     {
        

@@ -21,7 +21,7 @@ public class Enemy: MonoBehaviour
     public GameObject statusObject = null;
     public virtual void Start()
     {
-        MaxHp = 200;
+        MaxHp = 150;
         currentHp = MaxHp;
         attackTime = 0.0f;
         term = 5.0f;
@@ -52,7 +52,7 @@ public class Enemy: MonoBehaviour
         return statuses[randomIndex];
     }
     
-    public virtual void handleHP()
+    public void handleHP()
     {
        enemyHP.value = (float)currentHp / (float)MaxHp;
     }
@@ -60,50 +60,38 @@ public class Enemy: MonoBehaviour
    
     public void TakeDamage(float att)
     {
+        Enemy enemy = null;
+        
         if (EnemySpawner.Instance.SummonedEnemy.Count > 0) // 리스트에 적이 있어야 함
         {
-            Enemy enemy = EnemySpawner.Instance.SummonedEnemy[0]; // 첫 번째 적을 가져옴
-            enemy.currentHp -= att * Player.attCoefficient;
-
-            if (enemy.currentHp <= 0) // 첫 번째 적이 죽은 경우
+            if (EnemySpawner.targetEnemy)
             {
-                // 두 번째 적(인덱스 1)이 존재하는 경우, 가져옴
-                if (EnemySpawner.Instance.SummonedEnemy.Count > 1) 
-                {
-                    enemy = EnemySpawner.Instance.SummonedEnemy[1];
-                    
-                }
-                else
-                {
-                    // 첫 번째 적이 죽고 두 번째 적도 없는 경우, 데미지를 더 이상 전달하지 않고 종료
-                    return;
-                }
+                enemy = EnemySpawner.targetEnemy;
+                
+            }
+            else
+            {
+                enemy = EnemySpawner.Instance.SummonedEnemy[0];
             }
 
+            enemy.currentHp -= att * Player.attCoefficient;
            
         }
         else
         {
             if (EnemySpawner.Instance.enemies.Count > 0) // 리스트에 적이 있어야 함
             {
-                Enemy enemy = EnemySpawner.Instance.enemies[0]; // 첫 번째 적을 가져옴
-                enemy.currentHp -= att * Player.attCoefficient;
-
-                if (enemy.currentHp <= 0) // 첫 번째 적이 죽은 경우
+                if (EnemySpawner.targetEnemy)
                 {
-                    // 두 번째 적(인덱스 1)이 존재하는 경우, 가져옴
-                    if (EnemySpawner.Instance.enemies.Count > 1)
-                    {
-                        enemy = EnemySpawner.Instance.enemies[1];
-                    }
-                    else
-                    {
-                        // 첫 번째 적이 죽고 두 번째 적도 없는 경우, 데미지를 더 이상 전달하지 않고 종료
-                        return;
-                    }
+                    enemy = EnemySpawner.targetEnemy;
+                    
                 }
+                else
+                {
+                    enemy = EnemySpawner.Instance.enemies[0];
+                } 
 
-               
+                enemy.currentHp -= att * Player.attCoefficient;
             }
         }
     }

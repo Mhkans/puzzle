@@ -1180,6 +1180,12 @@ MonoBehaviour:
   BenemyPrefab: {fileID: 6190022088579737276, guid: 66d75b7fdae8d454286043ca0cb14e13, type: 3}
   GenemyPrefab: {fileID: 6190022088579737276, guid: 6f0e222225ca2cc429ff6533ce05b656, type: 3}
   YenemyPrefab: {fileID: 6190022088579737276, guid: 4a504c494d9f51645a6ebd0b09386d9c, type: 3}
+  BheavyPrefab: {fileID: 7435992654392465851, guid: 966302ca0e0d9d2479f2a21859fdadd4, type: 3}
+  GheavyPrefab: {fileID: 1453034121893303640, guid: 0bfa61ef2506a624b9c3e28e0cb15a2d, type: 3}
+  YheavyPrefab: {fileID: 2016933705208641799, guid: a038c6f40fdb86a4f8bc8ed745e7951e, type: 3}
+  BMiniPrefab: {fileID: 0}
+  GMiniPrefab: {fileID: 0}
+  YMiniPrefab: {fileID: 0}
   BbossPrefab: {fileID: 37861176794452067, guid: f2639f482e6c7634ba0fcc0e2ddb6c66, type: 3}
   GbossPrefab: {fileID: 37861176794452067, guid: 6db72fd9096b190418a76eb8ce838e74, type: 3}
   YbossPrefab: {fileID: 37861176794452067, guid: 9f7f350cd9b8e934891abbeecdbb86fe, type: 3}

@@ -56,11 +56,14 @@
      <Compile Include="Assets\STAGE01\BlockRoot.cs" />
      <Compile Include="Assets\Scenes\Title.cs" />
      <Compile Include="Assets\STAGE01\ButtonTooltip.cs" />
+     <Compile Include="Assets\STAGE01\HeavyEnemy.cs" />
      <Compile Include="Assets\STAGE01\SceneControl.cs" />
+     <Compile Include="Assets\Scenes\STAGE06.cs" />
      <Compile Include="Assets\STAGE01\TextHPbar.cs" />
      <Compile Include="Assets\STAGE01\BossEnemy.cs" />
      <Compile Include="Assets\STAGE01\BossMonster.cs" />
      <Compile Include="Assets\Scenes\Fail.cs" />
+     <Compile Include="Assets\Scenes\STAGE05.cs" />
      <Compile Include="Assets\Scenes\BossGuide1.cs" />
      <Compile Include="Assets\STAGE01\Player.cs" />
      <Compile Include="Assets\Scenes\Exit.cs" />
@@ -81,7 +84,9 @@
      <Compile Include="Assets\Reward\button3.cs" />
      <Compile Include="Assets\Scenes\STAGE01.cs" />
      <Compile Include="Assets\STAGE01\BlockControl.cs" />
+     <Compile Include="Assets\Scenes\STAGE04.cs" />
      <Compile Include="Assets\Scenes\Control.cs" />
+     <Compile Include="Assets\STAGE01\MiniBoss.cs" />
      <Compile Include="Assets\Reward\button2.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
