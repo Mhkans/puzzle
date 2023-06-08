@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class Enemy: MonoBehaviour 
+using UnityEngine.EventSystems;
+public class Enemy: MonoBehaviour
 {
     public enum Status
     {
@@ -11,6 +11,7 @@ public class Enemy: MonoBehaviour
     }
 
 
+    public Text enemyTEXT;
     public Slider enemyHP;
     public float MaxHp;
     public float currentHp;
@@ -21,7 +22,7 @@ public class Enemy: MonoBehaviour
     public GameObject statusObject = null;
     public virtual void Start()
     {
-        MaxHp = 150;
+        MaxHp = 200;
         currentHp = MaxHp;
         attackTime = 0.0f;
         term = 5.0f;

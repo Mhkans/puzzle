@@ -1176,23 +1176,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageSound01: {fileID: 8300000, guid: 5371cedd369929c4f8b6eacc3836a3cb, type: 3}
   stageSound02: {fileID: 8300000, guid: ce3aa7c72bf59ec4d9c0fb77fb8a0f22, type: 3}
+  stageSound03: {fileID: 8300000, guid: 10ea0c6ecdfbe594d85161c221bce875, type: 3}
   enemySliderPrefab: {fileID: 6736228907411516920, guid: 7cab6e17714de144a97944992689c292, type: 3}
-  BenemyPrefab: {fileID: 6190022088579737276, guid: 66d75b7fdae8d454286043ca0cb14e13, type: 3}
-  GenemyPrefab: {fileID: 6190022088579737276, guid: 6f0e222225ca2cc429ff6533ce05b656, type: 3}
-  YenemyPrefab: {fileID: 6190022088579737276, guid: 4a504c494d9f51645a6ebd0b09386d9c, type: 3}
-  BheavyPrefab: {fileID: 7435992654392465851, guid: 966302ca0e0d9d2479f2a21859fdadd4, type: 3}
-  GheavyPrefab: {fileID: 1453034121893303640, guid: 0bfa61ef2506a624b9c3e28e0cb15a2d, type: 3}
-  YheavyPrefab: {fileID: 2016933705208641799, guid: a038c6f40fdb86a4f8bc8ed745e7951e, type: 3}
-  BMiniPrefab: {fileID: 0}
-  GMiniPrefab: {fileID: 0}
-  YMiniPrefab: {fileID: 0}
-  BbossPrefab: {fileID: 37861176794452067, guid: f2639f482e6c7634ba0fcc0e2ddb6c66, type: 3}
-  GbossPrefab: {fileID: 37861176794452067, guid: 6db72fd9096b190418a76eb8ce838e74, type: 3}
-  YbossPrefab: {fileID: 37861176794452067, guid: 9f7f350cd9b8e934891abbeecdbb86fe, type: 3}
-  BossEnemy: {fileID: 7014931246065760682, guid: 7d7b705a2f7376249898f7d001327107, type: 3}
+  enemyText: {fileID: 143749895274184627, guid: ae3bbf526ae5ea64989876f5a2711663, type: 3}
+  BenemyPrefab: {fileID: 4727416705211801522, guid: ba1a6170c0bca4d44a862949ffb9edcf, type: 3}
+  GenemyPrefab: {fileID: 3824254282395313685, guid: c7c8b9ce6f565a04ab58b942a9f5708e, type: 3}
+  YenemyPrefab: {fileID: 4663758578115603602, guid: 12109e9417000dc44aaca633f783f703, type: 3}
+  BheavyPrefab: {fileID: 1885813618214754970, guid: c91f4255be5dab3469fa2be8e2200d90, type: 3}
+  GheavyPrefab: {fileID: 3839207744936332992, guid: 2a843b9b2bab83642b8a1303c38ccf53, type: 3}
+  YheavyPrefab: {fileID: 3281124120280650397, guid: ad44698ea5b221c48b39e5643113a8f3, type: 3}
+  BMiniPrefab: {fileID: 9218525946062146744, guid: 652a042166fdb844999419399ffc4ff1, type: 3}
+  GMiniPrefab: {fileID: 6231104713095868097, guid: 8d6755a7451c36c4683f4bc71afa1191, type: 3}
+  YMiniPrefab: {fileID: 1034228795343545170, guid: 9026c7ca98e3e634f988e66f8915352d, type: 3}
+  BbossPrefab: {fileID: 2176719793872750275, guid: 26c25850a68bae043bdf695bd565dabf, type: 3}
+  GbossPrefab: {fileID: 3460884816229445572, guid: 28e1a03d979b59840b02e8782f9e61d7, type: 3}
+  YbossPrefab: {fileID: 7659636100315397220, guid: e30a44470b069cd42bcc4214864e0c46, type: 3}
+  BossEnemy: {fileID: 1914899238049436140, guid: abfc6206896ddda4092fbd85b25d04f0, type: 3}
   MaxEnemyNum: 3
   spawnPosition: {x: 0, y: 0, z: 0}
-  targetEnemy: {fileID: 0}
   enemies: []
   SummonedEnemy: []
   canvas: {fileID: 0}
@@ -1547,9 +1548,6 @@ MonoBehaviour:
   blockColor: 0
   player: {fileID: 1528659370}
   enemys: {fileID: 0}
-  boss: {fileID: 0}
-  BossEnemy: {fileID: 0}
-  enemyspawner: {fileID: 0}
 --- !u!114 &1559608663
 MonoBehaviour:
   m_ObjectHideFlags: 0

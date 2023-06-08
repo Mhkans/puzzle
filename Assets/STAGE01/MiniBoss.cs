@@ -8,7 +8,8 @@ public class MiniBoss : Enemy
     void Start()
     {
         base.Start();
-        MaxHp = 300;
+        MaxHp = 600;
+        currentHp = MaxHp;
         term = 4.0f;
         damage = 10;
     }

@@ -8,10 +8,10 @@ public class HeavyEnemy : Enemy
     public override void Start()
     {
         base.Start();
-        MaxHp = 300;
+        MaxHp = 500;
         currentHp = MaxHp;
         term = 9.5f;
-        damage = 1;
+        damage = 10;
     }
 
     // Update is called once per frame

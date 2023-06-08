@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class EnemySpawner : MonoBehaviour
 {
     private AudioSource audio;
     public AudioClip stageSound01;
     public AudioClip stageSound02;
-
+    public AudioClip stageSound03;
     private GameObject main_camera = null; // 메인 카메라.
     public Slider enemySliderPrefab;
+    public Text enemyText;
     public static EnemySpawner Instance;
     public GameObject BenemyPrefab = null;
     public GameObject GenemyPrefab = null;
@@ -70,12 +72,14 @@ public class EnemySpawner : MonoBehaviour
                 MaxEnemyNum = 0;
                 break;
             case 4:
-                audio.clip = stageSound01;
+                audio.clip = stageSound03;
+                audio.loop = true;
                 audio.Play();
                 MaxEnemyNum = 2;
                 break;
             case 5:
-                audio.clip = stageSound01;
+                audio.clip = stageSound03;
+                audio.loop = true;
                 audio.Play();
                 MaxEnemyNum = 3;
                 break;
@@ -91,7 +95,8 @@ public class EnemySpawner : MonoBehaviour
 
         STAGECONTROL(stagecode);
 
-       
+        enemies[0].transform.localScale *= 1.4f;
+
     }
 
     public void Update()
@@ -104,64 +109,68 @@ public class EnemySpawner : MonoBehaviour
                 BossSpawnEnemy();
                 elapsedTime = 0f; // 경과 시간 초기화
             }
-            
-           
+
+
         }
-        if (targetEnemy == null)
+
+
+        if (Instance.SummonedEnemy.Count > 0)
         {
-            if (Instance.SummonedEnemy.Count > 0)
+            targetEnemy = SummonedEnemy[0];
+            if (targetEnemy.currentHp <= 0)
             {
-                targetEnemy = SummonedEnemy[0];
-                if (targetEnemy.currentHp <= 0)
+                if (Instance.SummonedEnemy.Count > 1)
                 {
-                    if (Instance.SummonedEnemy.Count > 1)
-                    {
-                        targetEnemy = SummonedEnemy[1];
-                    }
+                    targetEnemy = SummonedEnemy[1];
                 }
             }
-            else
-            {
-                targetEnemy = enemies[0];
-                if (targetEnemy.currentHp <= 0)
-                {
-                    if (Instance.enemies.Count > 1)
-                    {
-                        targetEnemy = enemies[1];
-                    }
-                }
-            }
-            
         }
+        else
+        {
+            targetEnemy = enemies[0];
+            if (targetEnemy.currentHp <= 0)
+            {
+                if (Instance.enemies.Count > 1)
+                {
+                    targetEnemy = enemies[1];
+                }
+            }
+        }
+
+
         clickEnemy();
 
         foreach (Enemy enemy in enemies)
         {
             if (enemy.enemyHP != null)
             {
-                enemy.enemyHP.transform.position =
-                    Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
+                enemy.enemyHP.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
+                enemy.enemyTEXT.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(2, 1, 0));
+
             }
         }
+
         foreach (BossEnemy enemy in SummonedEnemy)
         {
             if (enemy.enemyHP != null)
             {
-                enemy.enemyHP.transform.position =
-                    Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
+                enemy.enemyHP.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
+                enemy.enemyTEXT.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(2, 1, 0));
             }
 
             if (SummonedEnemy.IndexOf(enemy) == 0)
             {
                 enemy.transform.position = new Vector3(-2.0f, 4.5f, 0);
             }
+
             if (SummonedEnemy.IndexOf(enemy) == 1)
             {
                 enemy.transform.position = new Vector3(2.0f, 4.5f, 0);
             }
         }
-        
+
     }
+
     Enemy.Status GetRandomStatus()
     {
         List<Enemy.Status> statuses = new List<Enemy.Status>() { Enemy.Status.Greenstat, Enemy.Status.Yellowstat, Enemy.Status.Bluestat };
@@ -216,8 +225,11 @@ public class EnemySpawner : MonoBehaviour
             enemy.status = enemyStatus; // Assign the random status to the enemy
             enemies.Add(enemy);
             Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
-            enemySlider.transform.SetSiblingIndex(1);
+            Text newEnemyText = Instantiate(enemyText, canvas.transform);
+            newEnemyText.transform.SetSiblingIndex(1);
+            enemySlider.transform.SetSiblingIndex(2);
             enemy.enemyHP = enemySlider;
+            enemy.enemyTEXT = newEnemyText;
         }
     }
     private void SpawnEnemy0405(int a)
@@ -259,8 +271,11 @@ public class EnemySpawner : MonoBehaviour
             enemy.status = enemyStatus; // Assign the random status to the enemy
             enemies.Add(enemy);
             Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
-            enemySlider.transform.SetSiblingIndex(1);
+            Text newEnemyText = Instantiate(enemyText, canvas.transform);
+            newEnemyText.transform.SetSiblingIndex(1);
+            enemySlider.transform.SetSiblingIndex(2);
             enemy.enemyHP = enemySlider;
+            enemy.enemyTEXT = newEnemyText;
         }
     }
 
@@ -272,10 +287,14 @@ public class EnemySpawner : MonoBehaviour
         GameObject newEnemyObject = null;
         newEnemyObject = Instantiate(BossEnemy, spawnPosition + offset, Quaternion.identity);
         BossEnemy enemy = newEnemyObject.GetComponent<BossEnemy>();
+        enemy.status = enemies[0].status;
         SummonedEnemy.Add(enemy);
         Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
-        enemySlider.transform.SetSiblingIndex(1);
+        Text newEnemyText = Instantiate(enemyText, canvas.transform);
+        newEnemyText.transform.SetSiblingIndex(1);
+        enemySlider.transform.SetSiblingIndex(2);
         enemy.enemyHP = enemySlider;
+        enemy.enemyTEXT = newEnemyText;
 
         enemyCount++; // 소환된 적 수 증가
 
@@ -311,7 +330,11 @@ public class EnemySpawner : MonoBehaviour
         }
 
         Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
+        Text newEnemyText = Instantiate(enemyText, canvas.transform);
+        newEnemyText.transform.SetSiblingIndex(1);
+        enemySlider.transform.SetSiblingIndex(2);
         bossMonster.enemyHP = enemySlider;
+        bossMonster.enemyTEXT = newEnemyText;
     }
     public void SpawnBoss()
     {
@@ -340,7 +363,11 @@ public class EnemySpawner : MonoBehaviour
         }
 
         Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
+        Text newEnemyText = Instantiate(enemyText, canvas.transform);
+        newEnemyText.transform.SetSiblingIndex(1);
+        enemySlider.transform.SetSiblingIndex(2);
         bossMonster.enemyHP = enemySlider;
+        bossMonster.enemyTEXT = newEnemyText;
     }
 
     public void EnemyDestroyed(Enemy enemy)
@@ -372,22 +399,22 @@ public class EnemySpawner : MonoBehaviour
                 {
                     if (enemy.isContainedPosition(clickPosition))
                     {
-
-                        if (targetEnemy == null)
+                        if (targetEnemy != null)
                         {
                             // 이전에 선택된 적의 크기 원상복귀
                             targetEnemy.transform.localScale /= 1.4f;
                         }
+                       
 
                         targetEnemy = enemy;
                         // 선택된 적의 크기를 20% 증가
                         targetEnemy.transform.localScale *= 1.4f;
-
+                        
                         enemies.Remove(enemy);
                         enemies.Insert(0, enemy);
+                        if (targetEnemy != null)
                         
-
-                        break;
+                            break;
                     }
                     
                 }
@@ -453,6 +480,7 @@ public class EnemySpawner : MonoBehaviour
 
         }
     }
+    
 
 
 }

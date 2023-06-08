@@ -9,7 +9,7 @@ public class BossEnemy : Enemy
    {
        MaxHp = 50;
        currentHp = MaxHp;
-       status = Status.nomal;
+       
    }
 
     // Update is called once per frame

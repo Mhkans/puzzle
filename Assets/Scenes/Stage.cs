@@ -57,6 +57,10 @@ public class Stage : MonoBehaviour
 
             if (BossMonster.isdead == true)
             {
+                Stage06.interactable = false;
+            }
+            else
+            {
                 Stage06.interactable = true;
             }
         }
