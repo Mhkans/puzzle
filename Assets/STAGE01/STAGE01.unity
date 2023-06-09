@@ -1178,7 +1178,7 @@ MonoBehaviour:
   stageSound02: {fileID: 8300000, guid: ce3aa7c72bf59ec4d9c0fb77fb8a0f22, type: 3}
   stageSound03: {fileID: 8300000, guid: 10ea0c6ecdfbe594d85161c221bce875, type: 3}
   enemySliderPrefab: {fileID: 6736228907411516920, guid: 7cab6e17714de144a97944992689c292, type: 3}
-  enemyText: {fileID: 143749895274184627, guid: ae3bbf526ae5ea64989876f5a2711663, type: 3}
+  enemyText: {fileID: 3948087337597838026, guid: ae3bbf526ae5ea64989876f5a2711663, type: 3}
   BenemyPrefab: {fileID: 4727416705211801522, guid: ba1a6170c0bca4d44a862949ffb9edcf, type: 3}
   GenemyPrefab: {fileID: 3824254282395313685, guid: c7c8b9ce6f565a04ab58b942a9f5708e, type: 3}
   YenemyPrefab: {fileID: 4663758578115603602, guid: 12109e9417000dc44aaca633f783f703, type: 3}

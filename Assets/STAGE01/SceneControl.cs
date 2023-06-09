@@ -103,7 +103,10 @@ public class SceneControl : MonoBehaviour {
 					this.block_root.enabled = false;
 					EnemySpawner.stage01clear = false;
 					EnemySpawner.stage02clear = false;
-
+					EnemySpawner.stage03clear = false;
+					EnemySpawner.stage04clear = false;
+					EnemySpawner.stage05clear = false;
+					BossMonster.isdead = false;
 					SceneManager.LoadScene("Clear");
 					next_step = STEP.NONE;
 					
@@ -113,6 +116,10 @@ public class SceneControl : MonoBehaviour {
 				case STEP.GAMEOVER:
 					EnemySpawner.stage01clear = false;
 					EnemySpawner.stage02clear = false;
+					EnemySpawner.stage03clear = false;
+					EnemySpawner.stage04clear = false;
+					EnemySpawner.stage05clear = false;
+					BossMonster.isdead = false;
 
 					SceneManager.LoadScene("Fail");
 

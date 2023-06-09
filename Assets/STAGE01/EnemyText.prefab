@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &143749895274184620
+--- !u!1 &7718601511179565177
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 143749895274184621}
-  - component: {fileID: 143749895274184624}
-  - component: {fileID: 143749895274184627}
-  - component: {fileID: 143749895274184626}
+  - component: {fileID: 8919599515399322508}
+  - component: {fileID: 5395072597970598307}
+  - component: {fileID: 3948087337597838026}
+  - component: {fileID: 3530821978507935356}
   m_Layer: 5
   m_Name: EnemyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &143749895274184621
+  m_IsActive: 1
+--- !u!224 &8919599515399322508
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 143749895274184620}
+  m_GameObject: {fileID: 7718601511179565177}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -35,24 +35,24 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 80, y: 15}
+  m_AnchoredPosition: {x: 960.65265, y: 960.38995}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &143749895274184624
+--- !u!222 &5395072597970598307
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 143749895274184620}
+  m_GameObject: {fileID: 7718601511179565177}
   m_CullTransparentMesh: 1
---- !u!114 &143749895274184627
+--- !u!114 &3948087337597838026
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 143749895274184620}
+  m_GameObject: {fileID: 7718601511179565177}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
@@ -79,16 +79,18 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC801\uC758 \uC815\uBCF4"
---- !u!114 &143749895274184626
+  m_Text: New Text
+--- !u!114 &3530821978507935356
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 143749895274184620}
+  m_GameObject: {fileID: 7718601511179565177}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc37fa82f42230e498e70d7e183df8fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyText: {fileID: 3948087337597838026}
+  enemy: {fileID: 0}

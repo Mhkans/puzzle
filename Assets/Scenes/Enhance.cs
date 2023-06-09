@@ -21,7 +21,7 @@ public class Enhance : MonoBehaviour
                            "\n현재 공격력 : 블럭당 " + 2 * Player.attCoefficient  +
                            "\n속성 공격력 : 3블럭일때 " + 2 * Player.attCoefficient*8  +
                            "\n\n속성 블럭을 길게 연결할수록 \n더 강해집니다\n" +
-                           "\n현재 회복력 : 블럭당" + 2 * Player.healCoefficient +
+                           "\n현재 회복력 : 핑크블럭당" + 2 * Player.healCoefficient +
                            "\n현재 방어력 : "  + Player.shield+ " "+
                            "\n현재 체력 : " + 100 * Player.hpCoefficient +
                            "\n머신건 장착 : " + (Reward.ismachinegun ? "YES" : "NO") +

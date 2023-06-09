@@ -81,15 +81,15 @@
      <Compile Include="Assets\STAGE01\ScoreCounter.cs" />
      <Compile Include="Assets\Scenes\STAGE02.cs" />
      <Compile Include="Assets\Reward\Reward.cs" />
+     <Compile Include="Assets\STAGE01\EnemyText.cs" />
      <Compile Include="Assets\Reward\button3.cs" />
      <Compile Include="Assets\Scenes\STAGE01.cs" />
      <Compile Include="Assets\STAGE01\BlockControl.cs" />
+     <Compile Include="Assets\STAGE01\EnemyInfo.cs" />
      <Compile Include="Assets\Scenes\STAGE04.cs" />
      <Compile Include="Assets\Scenes\Control.cs" />
      <Compile Include="Assets\STAGE01\MiniBoss.cs" />
      <Compile Include="Assets\Reward\button2.cs" />
-     <Compile Include="Assets\STAGE01\EnemyText.cs" />
-     <Compile Include="Assets\STAGE01\EnemyInfo.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

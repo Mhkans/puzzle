@@ -146,7 +146,6 @@ public class EnemySpawner : MonoBehaviour
             {
                 enemy.enemyHP.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
                 enemy.enemyTEXT.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(2, 1, 0));
-
             }
         }
 
@@ -156,6 +155,7 @@ public class EnemySpawner : MonoBehaviour
             {
                 enemy.enemyHP.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
                 enemy.enemyTEXT.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(2, 1, 0));
+
             }
 
             if (SummonedEnemy.IndexOf(enemy) == 0)
@@ -225,11 +225,11 @@ public class EnemySpawner : MonoBehaviour
             enemy.status = enemyStatus; // Assign the random status to the enemy
             enemies.Add(enemy);
             Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
-            Text newEnemyText = Instantiate(enemyText, canvas.transform);
-            newEnemyText.transform.SetSiblingIndex(1);
-            enemySlider.transform.SetSiblingIndex(2);
+            Text enemytext = Instantiate(enemyText, canvas.transform);
+            enemySlider.transform.SetSiblingIndex(1);
+            enemytext.transform.SetSiblingIndex(2);
             enemy.enemyHP = enemySlider;
-            enemy.enemyTEXT = newEnemyText;
+            enemy.enemyTEXT = enemytext;
         }
     }
     private void SpawnEnemy0405(int a)
@@ -271,11 +271,11 @@ public class EnemySpawner : MonoBehaviour
             enemy.status = enemyStatus; // Assign the random status to the enemy
             enemies.Add(enemy);
             Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
-            Text newEnemyText = Instantiate(enemyText, canvas.transform);
-            newEnemyText.transform.SetSiblingIndex(1);
-            enemySlider.transform.SetSiblingIndex(2);
+            Text enemytext = Instantiate(enemyText, canvas.transform);
+            enemySlider.transform.SetSiblingIndex(1);
+            enemytext.transform.SetSiblingIndex(2);
             enemy.enemyHP = enemySlider;
-            enemy.enemyTEXT = newEnemyText;
+            enemy.enemyTEXT = enemytext;
         }
     }
 
@@ -290,11 +290,11 @@ public class EnemySpawner : MonoBehaviour
         enemy.status = enemies[0].status;
         SummonedEnemy.Add(enemy);
         Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
-        Text newEnemyText = Instantiate(enemyText, canvas.transform);
-        newEnemyText.transform.SetSiblingIndex(1);
-        enemySlider.transform.SetSiblingIndex(2);
+        Text enemytext = Instantiate(enemyText, canvas.transform);
+        enemySlider.transform.SetSiblingIndex(1);
+        enemytext.transform.SetSiblingIndex(2);
         enemy.enemyHP = enemySlider;
-        enemy.enemyTEXT = newEnemyText;
+        enemy.enemyTEXT = enemytext;
 
         enemyCount++; // 소환된 적 수 증가
 
@@ -330,11 +330,11 @@ public class EnemySpawner : MonoBehaviour
         }
 
         Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
-        Text newEnemyText = Instantiate(enemyText, canvas.transform);
-        newEnemyText.transform.SetSiblingIndex(1);
-        enemySlider.transform.SetSiblingIndex(2);
+        enemySlider.transform.SetSiblingIndex(1);
         bossMonster.enemyHP = enemySlider;
-        bossMonster.enemyTEXT = newEnemyText;
+        Text enemytext = Instantiate(enemyText, canvas.transform);
+        enemytext.transform.SetSiblingIndex(2);
+        bossMonster.enemyTEXT = enemytext;
     }
     public void SpawnBoss()
     {
@@ -363,11 +363,12 @@ public class EnemySpawner : MonoBehaviour
         }
 
         Slider enemySlider = Instantiate(enemySliderPrefab, canvas.transform);
-        Text newEnemyText = Instantiate(enemyText, canvas.transform);
-        newEnemyText.transform.SetSiblingIndex(1);
-        enemySlider.transform.SetSiblingIndex(2);
+        enemySlider.transform.SetSiblingIndex(1);
         bossMonster.enemyHP = enemySlider;
-        bossMonster.enemyTEXT = newEnemyText;
+        Text enemytext = Instantiate(enemyText, canvas.transform);
+        enemytext.transform.SetSiblingIndex(2);
+        bossMonster.enemyTEXT = enemytext;
+        
     }
 
     public void EnemyDestroyed(Enemy enemy)
