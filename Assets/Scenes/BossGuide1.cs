@@ -10,7 +10,6 @@ public class BossGuide1 : MonoBehaviour
     public GameObject Guide5;
     public GameObject Guide6;
     public GameObject Guide7;
-    public GameObject Guide8;
     public GameObject Guide9;
 
     public void LoadUI()
@@ -25,6 +24,11 @@ public class BossGuide1 : MonoBehaviour
     public void LoadUI3()
     {
         Guide6.SetActive(true);
+    }
+
+    public void LoadUI4()
+    {
+        Guide7.SetActive(true);
     }
 
     public void LoadUI6()
