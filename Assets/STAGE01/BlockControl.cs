@@ -5,7 +5,7 @@ using System.Collections;
 // 블록에 관련된 정보를 다룬다.
 public class Block {
 	public static float COLLISION_SIZE = 1.0f; // 블록의 충돌 크기.
-	public static float VANISH_TIME = 0.5f; // 발화하고 사라지는 시간.
+	public static float VANISH_TIME = 0.3f; // 발화하고 사라지는 시간.
 	public struct iPosition { // 그리드에서의 좌표를 나타내는 구조체.
 		public int x; // X좌표.
 		public int y; // Y좌표.

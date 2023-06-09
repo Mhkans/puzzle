@@ -1509,7 +1509,7 @@ GameObject:
   - component: {fileID: 1179768603}
   - component: {fileID: 1179768605}
   - component: {fileID: 1179768606}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1630,6 +1630,10 @@ MonoBehaviour:
   GbossPrefab: {fileID: 3460884816229445572, guid: 28e1a03d979b59840b02e8782f9e61d7, type: 3}
   YbossPrefab: {fileID: 7659636100315397220, guid: e30a44470b069cd42bcc4214864e0c46, type: 3}
   BossEnemy: {fileID: 1914899238049436140, guid: abfc6206896ddda4092fbd85b25d04f0, type: 3}
+  background0102: {fileID: 4200464262688223597, guid: 1a9da5ac15d14cb49ac2247ace8c8a86, type: 3}
+  background03: {fileID: 3755028527600447019, guid: 78479d69f90dd394bb6a98400536377f, type: 3}
+  background0405: {fileID: 5047080723889245341, guid: fe06eabd209b0aa4d928965e54f6bf94, type: 3}
+  background06: {fileID: 8715184950477627713, guid: 60288cba0c95ebd49a1e55f3108e6fdf, type: 3}
   MaxEnemyNum: 3
   spawnPosition: {x: 0, y: 0, z: 0}
   enemies: []

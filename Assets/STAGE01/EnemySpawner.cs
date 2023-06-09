@@ -27,6 +27,11 @@ public class EnemySpawner : MonoBehaviour
     public GameObject GbossPrefab = null;
     public GameObject YbossPrefab = null;
     public GameObject BossEnemy = null;
+    public GameObject background0102 = null;
+    public GameObject background03 = null;
+    public GameObject background0405 = null;
+    public GameObject background06 = null;
+    private GameObject background;
     public int MaxEnemyNum; // 만드는 ENEMY의 수, 임시값
     public Vector3 spawnPosition = Vector3.zero; // 스폰 위치
     public static Enemy targetEnemy = null;
@@ -38,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
     public static bool stage04clear = false;
     public static bool stage05clear = false; 
     public Canvas canvas; // 새로운 Canvas
-    public static int stagecode = 6;
+    public static int stagecode = 3;
     private float elapsedTime = 0f; 
     public static int spawnInterval; 
     private int enemyCount = 0; 
@@ -54,16 +59,19 @@ public class EnemySpawner : MonoBehaviour
         switch (stagecode)
         {
             case 1:
+                background = Instantiate(background0102, spawnPosition + new Vector3(0,0,5.0f), Quaternion.identity);
                 audio.clip = stageSound01;
                 audio.Play();
                 MaxEnemyNum = 1;
                 break;
             case 2:
+                background = Instantiate(background0102, spawnPosition + new Vector3(0,0,5.0f), Quaternion.identity);
                 audio.clip = stageSound01;
                 audio.Play();
                 MaxEnemyNum = 2;
                 break;
             case 3:
+                background = Instantiate(background03, spawnPosition + new Vector3(0,0,5.0f), Quaternion.identity);
                 audio.clip = stageSound02;
                 audio.Play();
                 SpawnMiniBoss();
@@ -72,18 +80,21 @@ public class EnemySpawner : MonoBehaviour
                 MaxEnemyNum = 0;
                 break;
             case 4:
+                background = Instantiate(background0405, spawnPosition + new Vector3(0,0,3.0f), Quaternion.identity);
                 audio.clip = stageSound03;
                 audio.loop = true;
                 audio.Play();
                 MaxEnemyNum = 2;
                 break;
             case 5:
+                background = Instantiate(background0405, spawnPosition + new Vector3(0,0,3.0f), Quaternion.identity);
                 audio.clip = stageSound03;
                 audio.loop = true;
                 audio.Play();
                 MaxEnemyNum = 3;
                 break;
             case 6:
+                background = Instantiate(background06, spawnPosition + new Vector3(0,0,5.0f), Quaternion.identity);
                 audio.clip = stageSound02;
                 audio.Play();
                 SpawnBoss();
@@ -159,7 +170,7 @@ public class EnemySpawner : MonoBehaviour
             if (enemy.enemyHP != null)
             {
                 enemy.enemyHP.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
-                enemy.enemyTEXT.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1.2f, 0));
+                enemy.enemyTEXT.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0.3f, 1.0f, 0));
             }
         }
 
@@ -168,7 +179,7 @@ public class EnemySpawner : MonoBehaviour
             if (enemy.enemyHP != null)
             {
                 enemy.enemyHP.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
-                enemy.enemyTEXT.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1.2f, 0));
+                enemy.enemyTEXT.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0.3f, 1.0f, 0));
 
             }
 
@@ -320,7 +331,7 @@ public class EnemySpawner : MonoBehaviour
     }
     public void SpawnMiniBoss()
     {
-        Vector3 offset = new Vector3(0, 6.5f, 0);
+        Vector3 offset = new Vector3(0, 5.8f, 0);
         GameObject newBossObject = null;
         Enemy.Status enemyAttribute = GetRandomStatus();
 
@@ -353,7 +364,7 @@ public class EnemySpawner : MonoBehaviour
     }
     public void SpawnBoss()
     {
-        Vector3 offset = new Vector3(0, 6.5f, 0);
+        Vector3 offset = new Vector3(0, 6.3f, 0.5f);
         GameObject newBossObject = null;
         Enemy.Status enemyAttribute = GetRandomStatus();
 

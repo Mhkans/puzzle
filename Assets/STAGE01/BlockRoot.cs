@@ -4,8 +4,9 @@ using UnityEngine.UIElements;
 public class BlockRoot : MonoBehaviour {
 
 	private AudioSource audio;
-	
-
+	private float blockTriggerDelay = 1.0f; // 블록 발동 딜레이 시간
+	private float blockTriggerTimer = 0f; // 블록 발동 타이머
+	private bool isClicked = false;
 	public AudioClip sound;
 	public AudioClip bombSound;
 	public GameObject BlockPrefab = null; // 만들어야 할 블록의 Prefab.
@@ -31,7 +32,13 @@ public class BlockRoot : MonoBehaviour {
 
 
 	void Update() {
-		
+		blockTriggerTimer += Time.deltaTime;
+
+		if (blockTriggerTimer >= blockTriggerDelay)
+		{
+			isClicked = false;
+			blockTriggerTimer = 0f;
+		}
 		GameObject enemyObj = GameObject.FindWithTag("Enemy");
 		enemys = enemyObj.GetComponent<Enemy>();
 
@@ -42,763 +49,855 @@ public class BlockRoot : MonoBehaviour {
 		// 가져온 마우스 위치를 하나의 Vector2에 저장한다.
 		Vector2 mouse_position_xy =
 			new Vector2(mouse_position.x, mouse_position.y);
-		if(this.grabbed_block == null) { // 잡은 블록이 비어있으면.
-			if(!this.is_has_falling_block()) {
-				if(Input.GetMouseButtonDown(0)) { // 마우스 버튼이 눌렸다면.
+		if (this.grabbed_block == null)
+		{
+			// 잡은 블록이 비어있으면.
+			if (!this.is_has_falling_block())
+			{
+				if (Input.GetMouseButtonDown(0))
+				{
+					// 마우스 버튼이 눌렸다면.
 					// blocks 배열의 모든 요소를 차례로 처리한다.
-					foreach(BlockControl block in this.blocks)
+
+					foreach (BlockControl block in this.blocks)
 					{
 						int pinkcount = 0;
 						int bluecount = 0;
 						int greencount = 0;
 						int yellowcount = 0;
 						int blockcount = 0;
-						if(! block.isGrabbable()) { // 블록을 잡을 수 없다면.
+						if (!block.isGrabbable())
+						{
+							// 블록을 잡을 수 없다면.
 							continue; // 루프의 맨 앞으로 점프.
 						}
+
 						// 마우스 위치가 블록 영역 안에 없으면.
-						if(!block.isContainedPosition(mouse_position_xy)) {
+						if (!block.isContainedPosition(mouse_position_xy))
+						{
 							continue; // 루프의 맨 앞으로 점프.
 						}
 
 						if (block.color == Block.COLOR.SPBLOCK01)
 						{
-							audio.clip = sound;
-							audio.Play();
-							int lx = block.i_pos.x;
-							int rx = block.i_pos.x;
-							int dy = block.i_pos.y;
-							int uy = block.i_pos.y;
-							
-							// 블록의 왼쪽을 체크.
-							for (int x = lx - 1; x >= 0; x--)
+							if (!isClicked)
 							{
-								BlockControl nextBlock = this.blocks[x, block.i_pos.y];
-								if (nextBlock.step == Block.STEP.FALL || nextBlock.next_step == Block.STEP.FALL)
-								{
-									break; // 루프 탈출.
-								}
+								audio.clip = sound;
+								audio.Play();
+								int lx = block.i_pos.x;
+								int rx = block.i_pos.x;
+								int dy = block.i_pos.y;
+								int uy = block.i_pos.y;
 
-								if (nextBlock.step == Block.STEP.SLIDE || nextBlock.next_step == Block.STEP.SLIDE)
+								// 블록의 왼쪽을 체크.
+								for (int x = lx - 1; x >= 0; x--)
 								{
-									break; // 루프 탈출.
-								}
-
-								if (nextBlock.color == Block.COLOR.PINK)
-								{
-									pinkcount++;
-
-								}
-
-								if (nextBlock.color == Block.COLOR.BLUE)
-								{
-									bluecount++;
-
-								}
-								if (nextBlock.color == Block.COLOR.GREEN)
-								{
-									greencount++;
-
-								}
-								if (nextBlock.color == Block.COLOR.YELLOW)
-								{
-									yellowcount++;
-
-								}
-								if (nextBlock.color == Block.COLOR.SPBLOCK02)
-								{
-									foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+									BlockControl nextBlock = this.blocks[x, block.i_pos.y];
+									if (nextBlock.step == Block.STEP.FALL || nextBlock.next_step == Block.STEP.FALL)
 									{
-										enemy.currentHp -= 15;
-							
+										break; // 루프 탈출.
 									}
-									foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
+
+									if (nextBlock.step == Block.STEP.SLIDE || nextBlock.next_step == Block.STEP.SLIDE)
 									{
-										enemy.currentHp -= 15;
-							
+										break; // 루프 탈출.
 									}
-								}
 
-								if (nextBlock.color == Block.COLOR.SPBLOCK01)
-								{
-									int slx = x;
-									int srx = x;
-									int sdy = block.i_pos.y;
-									int suy = block.i_pos.y;
-
-									for (int sy = sdy - 1; sy >= 0; sy--)
+									if (nextBlock.color == Block.COLOR.PINK)
 									{
-										BlockControl snextBlock = this.blocks[x, sy];
-										if (snextBlock.step == Block.STEP.FALL || snextBlock.next_step == Block.STEP.FALL)
-										{
-											break; // 루프 탈출.
-										}
+										pinkcount++;
 
-										if (snextBlock.step == Block.STEP.SLIDE || snextBlock.next_step == Block.STEP.SLIDE)
-										{
-											break; // 루프 탈출.
-										}
+									}
 
-								
-										if (nextBlock.color == Block.COLOR.PINK)
-										{
-											pinkcount++;
+									if (nextBlock.color == Block.COLOR.BLUE)
+									{
+										bluecount++;
 
-										}
+									}
 
-										if (nextBlock.color == Block.COLOR.BLUE)
-										{
-											bluecount++;
+									if (nextBlock.color == Block.COLOR.GREEN)
+									{
+										greencount++;
 
-										}
-										if (nextBlock.color == Block.COLOR.GREEN)
-										{
-											greencount++;
+									}
 
-										}
-										if (nextBlock.color == Block.COLOR.YELLOW)
+									if (nextBlock.color == Block.COLOR.YELLOW)
+									{
+										yellowcount++;
+
+									}
+
+									if (nextBlock.color == Block.COLOR.SPBLOCK02)
+									{
+										foreach (Enemy enemy in EnemySpawner.Instance.enemies)
 										{
-											yellowcount++;
+											enemy.currentHp -= 15;
 
 										}
-										if (nextBlock.color == Block.COLOR.SPBLOCK02)
+
+										foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
 										{
-											foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+											enemy.currentHp -= 15;
+
+										}
+									}
+
+									if (nextBlock.color == Block.COLOR.SPBLOCK01)
+									{
+										int slx = x;
+										int srx = x;
+										int sdy = block.i_pos.y;
+										int suy = block.i_pos.y;
+
+										for (int sy = sdy - 1; sy >= 0; sy--)
+										{
+											BlockControl snextBlock = this.blocks[x, sy];
+											if (snextBlock.step == Block.STEP.FALL ||
+											    snextBlock.next_step == Block.STEP.FALL)
 											{
-												enemy.currentHp -= 15;
-							
+												break; // 루프 탈출.
 											}
-											foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
+
+											if (snextBlock.step == Block.STEP.SLIDE ||
+											    snextBlock.next_step == Block.STEP.SLIDE)
 											{
-												enemy.currentHp -= 15;
-							
+												break; // 루프 탈출.
 											}
+
+
+											if (nextBlock.color == Block.COLOR.PINK)
+											{
+												pinkcount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.BLUE)
+											{
+												bluecount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.GREEN)
+											{
+												greencount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.YELLOW)
+											{
+												yellowcount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.SPBLOCK02)
+											{
+												foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+												{
+													enemy.currentHp -= 15;
+
+												}
+
+												foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
+												{
+													enemy.currentHp -= 15;
+
+												}
+											}
+
+											else
+											{
+												blockcount++;
+											}
+
+											sdy = sy;
 										}
-									
-										else
+
+										// 블록의 위쪽을 체크.
+										for (int sy = suy + 1; sy < Block.BLOCK_NUM_Y; sy++)
 										{
-											blockcount++;
+											BlockControl snextBlock = this.blocks[x, sy];
+											if (snextBlock.step == Block.STEP.FALL ||
+											    snextBlock.next_step == Block.STEP.FALL)
+											{
+												break; // 루프 탈출.
+											}
+
+											if (snextBlock.step == Block.STEP.SLIDE ||
+											    snextBlock.next_step == Block.STEP.SLIDE)
+											{
+												break; // 루프 탈출.
+											}
+
+											if (nextBlock.color == Block.COLOR.PINK)
+											{
+												pinkcount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.BLUE)
+											{
+												bluecount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.GREEN)
+											{
+												greencount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.YELLOW)
+											{
+												yellowcount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.SPBLOCK02)
+											{
+												foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+												{
+													enemy.currentHp -= 15;
+
+												}
+
+												foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
+												{
+													enemy.currentHp -= 15;
+
+												}
+											}
+
+											else
+											{
+												blockcount++;
+											}
+
+											suy = sy;
 										}
-										sdy = sy;
+
+										for (int y = sdy; y <= suy; y++)
+										{
+											blocks[x, y].toVanishing();
+										}
+
+
 									}
 
-									// 블록의 위쪽을 체크.
-									for (int sy = suy + 1; sy< Block.BLOCK_NUM_Y; sy++)
+									else
 									{
-										BlockControl snextBlock = this.blocks[x, sy];
-										if (snextBlock.step == Block.STEP.FALL || snextBlock.next_step == Block.STEP.FALL)
-										{
-											break; // 루프 탈출.
-										}
-
-										if (snextBlock.step == Block.STEP.SLIDE || snextBlock.next_step == Block.STEP.SLIDE)
-										{
-											break; // 루프 탈출.
-										}
-
-										if (nextBlock.color == Block.COLOR.PINK)
-										{
-											pinkcount++;
-
-										}
-
-										if (nextBlock.color == Block.COLOR.BLUE)
-										{
-											bluecount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.GREEN)
-										{
-											greencount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.YELLOW)
-										{
-											yellowcount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.SPBLOCK02)
-										{
-											foreach (Enemy enemy in EnemySpawner.Instance.enemies)
-											{
-												enemy.currentHp -= 15;
-							
-											}
-											foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
-											{
-												enemy.currentHp -= 15;
-							
-											}
-										}
-									
-										else
-										{
-											blockcount++;
-										}
-										suy = sy;
-									}
-									for (int y = sdy; y <= suy; y++)
-									{
-										blocks[x, y].toVanishing();
+										blockcount++;
 									}
 
-									
+									lx = x;
+
 								}
 
-								else
+
+								// 블록의 오른쪽을 체크.
+								for (int x = rx + 1; x < Block.BLOCK_NUM_X; x++)
 								{
-									blockcount++;
+									BlockControl nextBlock = this.blocks[x, block.i_pos.y];
+									if (nextBlock.step == Block.STEP.FALL || nextBlock.next_step == Block.STEP.FALL)
+									{
+										break; // 루프 탈출.
+									}
+
+									if (nextBlock.step == Block.STEP.SLIDE || nextBlock.next_step == Block.STEP.SLIDE)
+									{
+										break; // 루프 탈출.
+									}
+
+
+									if (nextBlock.color == Block.COLOR.PINK)
+									{
+										pinkcount++;
+
+									}
+
+									if (nextBlock.color == Block.COLOR.BLUE)
+									{
+										bluecount++;
+
+									}
+
+									if (nextBlock.color == Block.COLOR.GREEN)
+									{
+										greencount++;
+
+									}
+
+									if (nextBlock.color == Block.COLOR.YELLOW)
+									{
+										yellowcount++;
+
+									}
+
+									if (nextBlock.color == Block.COLOR.SPBLOCK02)
+									{
+										foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+										{
+											enemy.currentHp -= 15;
+
+										}
+
+										foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
+										{
+											enemy.currentHp -= 15;
+
+										}
+									}
+
+									if (nextBlock.color == Block.COLOR.SPBLOCK01)
+									{
+										int slx = x;
+										int srx = x;
+										int sdy = block.i_pos.y;
+										int suy = block.i_pos.y;
+
+										for (int sy = sdy - 1; sy >= 0; sy--)
+										{
+											BlockControl snextBlock = this.blocks[x, sy];
+											if (snextBlock.step == Block.STEP.FALL ||
+											    snextBlock.next_step == Block.STEP.FALL)
+											{
+												break; // 루프 탈출.
+											}
+
+											if (snextBlock.step == Block.STEP.SLIDE ||
+											    snextBlock.next_step == Block.STEP.SLIDE)
+											{
+												break; // 루프 탈출.
+											}
+
+
+											if (nextBlock.color == Block.COLOR.PINK)
+											{
+												pinkcount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.BLUE)
+											{
+												bluecount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.GREEN)
+											{
+												greencount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.YELLOW)
+											{
+												yellowcount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.SPBLOCK02)
+											{
+												foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+												{
+													enemy.currentHp -= 15;
+
+												}
+
+												foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
+												{
+													enemy.currentHp -= 15;
+
+												}
+											}
+
+											else
+											{
+												blockcount++;
+											}
+
+											sdy = sy;
+										}
+
+										// 블록의 위쪽을 체크.
+										for (int sy = suy + 1; sy < Block.BLOCK_NUM_Y; sy++)
+										{
+											BlockControl snextBlock = this.blocks[x, sy];
+											if (snextBlock.step == Block.STEP.FALL ||
+											    snextBlock.next_step == Block.STEP.FALL)
+											{
+												break; // 루프 탈출.
+											}
+
+											if (snextBlock.step == Block.STEP.SLIDE ||
+											    snextBlock.next_step == Block.STEP.SLIDE)
+											{
+												break; // 루프 탈출.
+											}
+
+
+											if (nextBlock.color == Block.COLOR.PINK)
+											{
+												pinkcount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.BLUE)
+											{
+												bluecount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.GREEN)
+											{
+												greencount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.YELLOW)
+											{
+												yellowcount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.SPBLOCK02)
+											{
+												foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+												{
+													enemy.currentHp -= 15;
+
+												}
+
+												foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
+												{
+													enemy.currentHp -= 15;
+
+												}
+											}
+
+											suy = sy;
+										}
+
+										for (int y = sdy; y <= suy; y++)
+										{
+											blocks[x, y].toVanishing();
+										}
+
+									}
+									else
+									{
+										blockcount++;
+									}
+
+									rx = x;
 								}
-								lx = x;
-								
+
+								// 블록의 아래쪽을 체크.
+								for (int y = dy - 1; y >= 0; y--)
+								{
+									BlockControl nextBlock = this.blocks[block.i_pos.x, y];
+									if (nextBlock.step == Block.STEP.FALL || nextBlock.next_step == Block.STEP.FALL)
+									{
+										break; // 루프 탈출.
+									}
+
+									if (nextBlock.step == Block.STEP.SLIDE || nextBlock.next_step == Block.STEP.SLIDE)
+									{
+										break; // 루프 탈출.
+									}
+
+
+									if (nextBlock.color == Block.COLOR.PINK)
+									{
+										pinkcount++;
+
+									}
+
+									if (nextBlock.color == Block.COLOR.BLUE)
+									{
+										bluecount++;
+
+									}
+
+									if (nextBlock.color == Block.COLOR.GREEN)
+									{
+										greencount++;
+
+									}
+
+									if (nextBlock.color == Block.COLOR.YELLOW)
+									{
+										yellowcount++;
+
+									}
+
+									if (nextBlock.color == Block.COLOR.SPBLOCK02)
+									{
+										foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+										{
+											enemy.currentHp -= 15;
+
+										}
+
+										foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
+										{
+											enemy.currentHp -= 15;
+
+										}
+									}
+
+									if (nextBlock.color == Block.COLOR.SPBLOCK01)
+									{
+										int slx = block.i_pos.x;
+										int srx = block.i_pos.x;
+										int sdy = y;
+										int suy = y;
+										for (int sx = slx - 1; sx >= 0; sx--)
+										{
+											BlockControl snextBlock = this.blocks[sx, y];
+											if (snextBlock.step == Block.STEP.FALL ||
+											    snextBlock.next_step == Block.STEP.FALL)
+											{
+												break; // 루프 탈출.
+											}
+
+											if (snextBlock.step == Block.STEP.SLIDE ||
+											    snextBlock.next_step == Block.STEP.SLIDE)
+											{
+												break; // 루프 탈출.
+											}
+
+											if (nextBlock.color == Block.COLOR.PINK)
+											{
+												pinkcount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.BLUE)
+											{
+												bluecount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.GREEN)
+											{
+												greencount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.YELLOW)
+											{
+												yellowcount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.SPBLOCK02)
+											{
+												foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+												{
+													enemy.currentHp -= 15;
+
+												}
+
+												foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
+												{
+													enemy.currentHp -= 15;
+
+												}
+											}
+											else
+											{
+												blockcount++;
+											}
+
+											slx = sx;
+										}
+
+										for (int sx = srx + 1; sx < Block.BLOCK_NUM_X; sx++)
+										{
+											BlockControl snextBlock = this.blocks[sx, y];
+											if (snextBlock.step == Block.STEP.FALL ||
+											    snextBlock.next_step == Block.STEP.FALL)
+											{
+												break; // 루프 탈출.
+											}
+
+											if (snextBlock.step == Block.STEP.SLIDE ||
+											    snextBlock.next_step == Block.STEP.SLIDE)
+											{
+												break; // 루프 탈출.
+											}
+
+											if (nextBlock.color == Block.COLOR.PINK)
+											{
+												pinkcount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.BLUE)
+											{
+												bluecount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.GREEN)
+											{
+												greencount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.YELLOW)
+											{
+												yellowcount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.SPBLOCK02)
+											{
+												foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+												{
+													enemy.currentHp -= 15;
+
+												}
+
+												foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
+												{
+													enemy.currentHp -= 15;
+
+												}
+											}
+											else
+											{
+												blockcount++;
+											}
+
+											srx = sx;
+										}
+
+										for (int x = slx; x <= srx; x++)
+										{
+											// 완성된 블록을 발화 상태로.
+											this.blocks[x, y].toVanishing();
+										}
+									}
+									else
+									{
+										blockcount++;
+									}
+
+									dy = y;
+								}
+
+								// 블록의 위쪽을 체크.
+								for (int y = uy + 1; y < Block.BLOCK_NUM_Y; y++)
+								{
+									BlockControl nextBlock = this.blocks[block.i_pos.x, y];
+									if (nextBlock.step == Block.STEP.FALL || nextBlock.next_step == Block.STEP.FALL)
+									{
+										break; // 루프 탈출.
+									}
+
+									if (nextBlock.step == Block.STEP.SLIDE || nextBlock.next_step == Block.STEP.SLIDE)
+									{
+										break; // 루프 탈출.
+									}
+
+
+									if (nextBlock.color == Block.COLOR.PINK)
+									{
+										pinkcount++;
+
+									}
+
+									if (nextBlock.color == Block.COLOR.BLUE)
+									{
+										bluecount++;
+
+									}
+
+									if (nextBlock.color == Block.COLOR.GREEN)
+									{
+										greencount++;
+
+									}
+
+									if (nextBlock.color == Block.COLOR.YELLOW)
+									{
+										yellowcount++;
+
+									}
+
+									if (nextBlock.color == Block.COLOR.SPBLOCK02)
+									{
+										foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+										{
+											enemy.currentHp -= 15;
+
+										}
+
+										foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
+										{
+											enemy.currentHp -= 15;
+
+										}
+									}
+
+									if (nextBlock.color == Block.COLOR.SPBLOCK01)
+									{
+										int slx = block.i_pos.x;
+										int srx = block.i_pos.x;
+										int sdy = y;
+										int suy = y;
+										for (int sx = slx - 1; sx >= 0; sx--)
+										{
+											BlockControl snextBlock = this.blocks[sx, y];
+											if (snextBlock.step == Block.STEP.FALL ||
+											    snextBlock.next_step == Block.STEP.FALL)
+											{
+												break; // 루프 탈출.
+											}
+
+											if (snextBlock.step == Block.STEP.SLIDE ||
+											    snextBlock.next_step == Block.STEP.SLIDE)
+											{
+												break; // 루프 탈출.
+											}
+
+											if (nextBlock.color == Block.COLOR.PINK)
+											{
+												pinkcount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.BLUE)
+											{
+												bluecount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.GREEN)
+											{
+												greencount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.YELLOW)
+											{
+												yellowcount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.SPBLOCK02)
+											{
+												foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+												{
+													enemy.currentHp -= 15;
+
+												}
+
+												foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
+												{
+													enemy.currentHp -= 15;
+
+												}
+											}
+
+											slx = sx;
+										}
+
+										for (int sx = srx + 1; sx < Block.BLOCK_NUM_X; sx++)
+										{
+											BlockControl snextBlock = this.blocks[sx, y];
+											if (snextBlock.step == Block.STEP.FALL ||
+											    snextBlock.next_step == Block.STEP.FALL)
+											{
+												break; // 루프 탈출.
+											}
+
+											if (snextBlock.step == Block.STEP.SLIDE ||
+											    snextBlock.next_step == Block.STEP.SLIDE)
+											{
+												break; // 루프 탈출.
+											}
+
+											if (nextBlock.color == Block.COLOR.PINK)
+											{
+												pinkcount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.BLUE)
+											{
+												bluecount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.GREEN)
+											{
+												greencount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.YELLOW)
+											{
+												yellowcount++;
+
+											}
+
+											if (nextBlock.color == Block.COLOR.SPBLOCK02)
+											{
+												foreach (Enemy enemy in EnemySpawner.Instance.enemies)
+												{
+													enemy.currentHp -= 15;
+
+												}
+
+												foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
+												{
+													enemy.currentHp -= 15;
+
+												}
+											}
+
+											srx = sx;
+										}
+
+										for (int x = slx; x <= srx; x++)
+										{
+											// 완성된 블록을 발화 상태로.
+											this.blocks[x, y].toVanishing();
+										}
+									}
+
+									uy = y;
+								}
+
+								for (int x = lx; x <= rx; x++)
+								{
+									// 완성된 블록을 발화 상태로.
+									this.blocks[x, block.i_pos.y].toVanishing();
+								}
+
+								for (int y = dy; y <= uy; y++)
+								{
+									this.blocks[block.i_pos.x, y].toVanishing();
+								}
+
+								enemys.TakeDamage((greencount + bluecount + yellowcount) * DAMAGE);
+								player.Heal(pinkcount * 2);
+								isClicked = true;
 							}
 							
-
-							// 블록의 오른쪽을 체크.
-							for (int x = rx + 1; x < Block.BLOCK_NUM_X; x++)
-							{
-								BlockControl nextBlock = this.blocks[x, block.i_pos.y];
-								if (nextBlock.step == Block.STEP.FALL || nextBlock.next_step == Block.STEP.FALL)
-								{
-									break; // 루프 탈출.
-								}
-
-								if (nextBlock.step == Block.STEP.SLIDE || nextBlock.next_step == Block.STEP.SLIDE)
-								{
-									break; // 루프 탈출.
-								}
-
 								
-								if (nextBlock.color == Block.COLOR.PINK)
-								{
-									pinkcount++;
-
-								}
-
-								if (nextBlock.color == Block.COLOR.BLUE)
-								{
-									bluecount++;
-
-								}
-								if (nextBlock.color == Block.COLOR.GREEN)
-								{
-									greencount++;
-
-								}
-								if (nextBlock.color == Block.COLOR.YELLOW)
-								{
-									yellowcount++;
-
-								}
-								if (nextBlock.color == Block.COLOR.SPBLOCK02)
-								{
-									foreach (Enemy enemy in EnemySpawner.Instance.enemies)
-									{
-										enemy.currentHp -= 15;
 							
-									}
-									foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
-									{
-										enemy.currentHp -= 15;
-							
-									}
-								}
-
-								if (nextBlock.color == Block.COLOR.SPBLOCK01)
-								{
-									int slx = x;
-									int srx = x;
-									int sdy = block.i_pos.y;
-									int suy = block.i_pos.y;
-
-									for (int sy = sdy - 1; sy >= 0; sy--)
-									{
-										BlockControl snextBlock = this.blocks[x, sy];
-										if (snextBlock.step == Block.STEP.FALL || snextBlock.next_step == Block.STEP.FALL)
-										{
-											break; // 루프 탈출.
-										}
-
-										if (snextBlock.step == Block.STEP.SLIDE || snextBlock.next_step == Block.STEP.SLIDE)
-										{
-											break; // 루프 탈출.
-										}
-
-								
-										if (nextBlock.color == Block.COLOR.PINK)
-										{
-											pinkcount++;
-
-										}
-
-										if (nextBlock.color == Block.COLOR.BLUE)
-										{
-											bluecount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.GREEN)
-										{
-											greencount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.YELLOW)
-										{
-											yellowcount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.SPBLOCK02)
-										{
-											foreach (Enemy enemy in EnemySpawner.Instance.enemies)
-											{
-												enemy.currentHp -= 15;
-							
-											}
-											foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
-											{
-												enemy.currentHp -= 15;
-							
-											}
-										}
-									
-										else
-										{
-											blockcount++;
-										}
-										sdy = sy;
-									}
-
-									// 블록의 위쪽을 체크.
-									for (int sy = suy + 1; sy< Block.BLOCK_NUM_Y; sy++)
-									{
-										BlockControl snextBlock = this.blocks[x, sy];
-										if (snextBlock.step == Block.STEP.FALL || snextBlock.next_step == Block.STEP.FALL)
-										{
-											break; // 루프 탈출.
-										}
-
-										if (snextBlock.step == Block.STEP.SLIDE || snextBlock.next_step == Block.STEP.SLIDE)
-										{
-											break; // 루프 탈출.
-										}
-
-								
-										if (nextBlock.color == Block.COLOR.PINK)
-										{
-											pinkcount++;
-
-										}
-
-										if (nextBlock.color == Block.COLOR.BLUE)
-										{
-											bluecount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.GREEN)
-										{
-											greencount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.YELLOW)
-										{
-											yellowcount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.SPBLOCK02)
-										{
-											foreach (Enemy enemy in EnemySpawner.Instance.enemies)
-											{
-												enemy.currentHp -= 15;
-							
-											}
-											foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
-											{
-												enemy.currentHp -= 15;
-							
-											}
-										}
-									
-										suy = sy;
-									}
-									for (int y = sdy; y <= suy; y++)
-									{
-										blocks[x, y].toVanishing();
-									}
-
-								}
-								else
-								{
-									blockcount++;
-								}
-								rx = x;
-							}
-
-							// 블록의 아래쪽을 체크.
-							for (int y = dy - 1; y >= 0; y--)
-							{
-								BlockControl nextBlock = this.blocks[block.i_pos.x, y];
-								if (nextBlock.step == Block.STEP.FALL || nextBlock.next_step == Block.STEP.FALL)
-								{
-									break; // 루프 탈출.
-								}
-
-								if (nextBlock.step == Block.STEP.SLIDE || nextBlock.next_step == Block.STEP.SLIDE)
-								{
-									break; // 루프 탈출.
-								}
-
-								
-								if (nextBlock.color == Block.COLOR.PINK)
-								{
-									pinkcount++;
-
-								}
-
-								if (nextBlock.color == Block.COLOR.BLUE)
-								{
-									bluecount++;
-
-								}
-								if (nextBlock.color == Block.COLOR.GREEN)
-								{
-									greencount++;
-
-								}
-								if (nextBlock.color == Block.COLOR.YELLOW)
-								{
-									yellowcount++;
-
-								}
-								if (nextBlock.color == Block.COLOR.SPBLOCK02)
-								{
-									foreach (Enemy enemy in EnemySpawner.Instance.enemies)
-									{
-										enemy.currentHp -= 15;
-							
-									}
-									foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
-									{
-										enemy.currentHp -= 15;
-							
-									}
-								}
-
-								if (nextBlock.color == Block.COLOR.SPBLOCK01)
-								{
-									int slx = block.i_pos.x;
-									int srx = block.i_pos.x;
-									int sdy = y;
-									int suy = y;
-									for (int sx = slx - 1; sx >= 0; sx--)
-									{
-										BlockControl snextBlock = this.blocks[sx, y];
-										if (snextBlock.step == Block.STEP.FALL || snextBlock.next_step == Block.STEP.FALL)
-										{
-											break; // 루프 탈출.
-										}
-
-										if (snextBlock.step == Block.STEP.SLIDE ||
-										    snextBlock.next_step == Block.STEP.SLIDE)
-										{
-											break; // 루프 탈출.
-										}
-
-										if (nextBlock.color == Block.COLOR.PINK)
-										{
-											pinkcount++;
-
-										}
-
-										if (nextBlock.color == Block.COLOR.BLUE)
-										{
-											bluecount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.GREEN)
-										{
-											greencount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.YELLOW)
-										{
-											yellowcount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.SPBLOCK02)
-										{
-											foreach (Enemy enemy in EnemySpawner.Instance.enemies)
-											{
-												enemy.currentHp -= 15;
-							
-											}
-											foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
-											{
-												enemy.currentHp -= 15;
-							
-											}
-										}
-										else
-										{
-											blockcount++;
-										}
-										slx = sx;
-									}
-									for (int sx = srx + 1; sx < Block.BLOCK_NUM_X; sx++)
-									{
-										BlockControl snextBlock = this.blocks[sx, y];
-										if (snextBlock.step == Block.STEP.FALL || snextBlock.next_step == Block.STEP.FALL)
-										{
-											break; // 루프 탈출.
-										}
-
-										if (snextBlock.step == Block.STEP.SLIDE ||
-										    snextBlock.next_step == Block.STEP.SLIDE)
-										{
-											break; // 루프 탈출.
-										}
-
-										if (nextBlock.color == Block.COLOR.PINK)
-										{
-											pinkcount++;
-
-										}
-
-										if (nextBlock.color == Block.COLOR.BLUE)
-										{
-											bluecount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.GREEN)
-										{
-											greencount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.YELLOW)
-										{
-											yellowcount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.SPBLOCK02)
-										{
-											foreach (Enemy enemy in EnemySpawner.Instance.enemies)
-											{
-												enemy.currentHp -= 15;
-							
-											}
-											foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
-											{
-												enemy.currentHp -= 15;
-							
-											}
-										}
-										else
-										{
-											blockcount++;
-										}
-										srx = sx;
-									}
-									for (int x = slx; x <= srx; x++)
-									{
-										// 완성된 블록을 발화 상태로.
-										this.blocks[x, y].toVanishing();
-									}
-								}
-								else
-								{
-									blockcount++;
-								}
-								dy = y;
-							}
-
-							// 블록의 위쪽을 체크.
-							for (int y = uy + 1; y < Block.BLOCK_NUM_Y; y++)
-							{
-								BlockControl nextBlock = this.blocks[block.i_pos.x, y];
-								if (nextBlock.step == Block.STEP.FALL || nextBlock.next_step == Block.STEP.FALL)
-								{
-									break; // 루프 탈출.
-								}
-
-								if (nextBlock.step == Block.STEP.SLIDE || nextBlock.next_step == Block.STEP.SLIDE)
-								{
-									break; // 루프 탈출.
-								}
-
-								
-								if (nextBlock.color == Block.COLOR.PINK)
-								{
-									pinkcount++;
-
-								}
-
-								if (nextBlock.color == Block.COLOR.BLUE)
-								{
-									bluecount++;
-
-								}
-								if (nextBlock.color == Block.COLOR.GREEN)
-								{
-									greencount++;
-
-								}
-								if (nextBlock.color == Block.COLOR.YELLOW)
-								{
-									yellowcount++;
-
-								}
-								if (nextBlock.color == Block.COLOR.SPBLOCK02)
-								{
-									foreach (Enemy enemy in EnemySpawner.Instance.enemies)
-									{
-										enemy.currentHp -= 15;
-							
-									}
-									foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
-									{
-										enemy.currentHp -= 15;
-							
-									}
-								}
-								if (nextBlock.color == Block.COLOR.SPBLOCK01)
-								{
-									int slx = block.i_pos.x;
-									int srx = block.i_pos.x;
-									int sdy = y;
-									int suy = y;
-									for (int sx = slx - 1; sx >= 0; sx--)
-									{
-										BlockControl snextBlock = this.blocks[sx, y];
-										if (snextBlock.step == Block.STEP.FALL || snextBlock.next_step == Block.STEP.FALL)
-										{
-											break; // 루프 탈출.
-										}
-
-										if (snextBlock.step == Block.STEP.SLIDE ||
-										    snextBlock.next_step == Block.STEP.SLIDE)
-										{
-											break; // 루프 탈출.
-										}
-
-										if (nextBlock.color == Block.COLOR.PINK)
-										{
-											pinkcount++;
-
-										}
-
-										if (nextBlock.color == Block.COLOR.BLUE)
-										{
-											bluecount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.GREEN)
-										{
-											greencount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.YELLOW)
-										{
-											yellowcount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.SPBLOCK02)
-										{
-											foreach (Enemy enemy in EnemySpawner.Instance.enemies)
-											{
-												enemy.currentHp -= 15;
-							
-											}
-											foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
-											{
-												enemy.currentHp -= 15;
-							
-											}
-										}
-
-										slx = sx;
-									}
-									for (int sx = srx + 1; sx < Block.BLOCK_NUM_X; sx++)
-									{
-										BlockControl snextBlock = this.blocks[sx, y];
-										if (snextBlock.step == Block.STEP.FALL || snextBlock.next_step == Block.STEP.FALL)
-										{
-											break; // 루프 탈출.
-										}
-
-										if (snextBlock.step == Block.STEP.SLIDE ||
-										    snextBlock.next_step == Block.STEP.SLIDE)
-										{
-											break; // 루프 탈출.
-										}
-
-										if (nextBlock.color == Block.COLOR.PINK)
-										{
-											pinkcount++;
-
-										}
-
-										if (nextBlock.color == Block.COLOR.BLUE)
-										{
-											bluecount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.GREEN)
-										{
-											greencount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.YELLOW)
-										{
-											yellowcount++;
-
-										}
-										if (nextBlock.color == Block.COLOR.SPBLOCK02)
-										{
-											foreach (Enemy enemy in EnemySpawner.Instance.enemies)
-											{
-												enemy.currentHp -= 15;
-							
-											}
-											foreach (BossEnemy enemy in EnemySpawner.Instance.SummonedEnemy)
-											{
-												enemy.currentHp -= 15;
-							
-											}
-										}
-
-										srx = sx;
-									}
-									for (int x = slx; x <= srx; x++)
-									{
-										// 완성된 블록을 발화 상태로.
-										this.blocks[x, y].toVanishing();
-									}
-								}
-
-								uy = y;
-							}
-
-							for (int x = lx; x <= rx; x++)
-							{
-								// 완성된 블록을 발화 상태로.
-								this.blocks[x, block.i_pos.y].toVanishing();
-							}
-
-							for (int y = dy; y <= uy; y++)
-							{
-								this.blocks[block.i_pos.x, y].toVanishing();
-							}
-							
-							enemys.TakeDamage((greencount+bluecount+yellowcount)*DAMAGE);
-							player.Heal(pinkcount*2);
 						}
 
 						// 처리 중인 블록을 grabbed_block에 등록.
-						
+
 						this.grabbed_block = block;
 						// 잡았을 때의 처리를 실행.
 						this.grabbed_block.beginGrab();
 						break;
 					}
-					
+
 				}
 			}
 		} else { // 잡은 블록이 비어있지 않으면.
