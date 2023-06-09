@@ -16,6 +16,7 @@ public class BossEnemy : Enemy
     void Update()
     {
         handleHP();
+        handleText();
         if (currentHp < 1)
         {
             Die();

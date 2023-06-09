@@ -38,7 +38,7 @@ public class EnemySpawner : MonoBehaviour
     public static bool stage04clear = false;
     public static bool stage05clear = false; 
     public Canvas canvas; // 새로운 Canvas
-    public static int stagecode = 5;
+    public static int stagecode = 6;
     private float elapsedTime = 0f; 
     public static int spawnInterval; 
     private int enemyCount = 0; 
@@ -137,15 +137,29 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-
-        clickEnemy();
+        switch (stagecode)
+        {
+            case 1:
+                clickEnemy();
+                break;
+            case 2:
+                clickEnemy();   
+                break;
+            case 4:
+                clickEnemy();
+                break;
+            case 5:
+                clickEnemy();
+                break;
+        }
+        
 
         foreach (Enemy enemy in enemies)
         {
             if (enemy.enemyHP != null)
             {
                 enemy.enemyHP.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
-                enemy.enemyTEXT.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(2, 1, 0));
+                enemy.enemyTEXT.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1.2f, 0));
             }
         }
 
@@ -154,7 +168,7 @@ public class EnemySpawner : MonoBehaviour
             if (enemy.enemyHP != null)
             {
                 enemy.enemyHP.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1, 0));
-                enemy.enemyTEXT.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(2, 1, 0));
+                enemy.enemyTEXT.transform.position = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0, 1.2f, 0));
 
             }
 
@@ -276,6 +290,7 @@ public class EnemySpawner : MonoBehaviour
             enemytext.transform.SetSiblingIndex(2);
             enemy.enemyHP = enemySlider;
             enemy.enemyTEXT = enemytext;
+            
         }
     }
 

@@ -1,0 +1,2 @@
+C:\Users\Minsoo\Documents\GitHub\puzzle\obj\Debug\Assembly-CSharp.csproj.AssemblyReference.cache
+C:\Users\Minsoo\Documents\GitHub\puzzle\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache

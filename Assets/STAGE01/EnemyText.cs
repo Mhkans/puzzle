@@ -12,15 +12,10 @@ public class EnemyText : MonoBehaviour
         enemy = FindObjectOfType<Enemy>();
         enemyText = GetComponent<Text>(); // Text 컴포넌트 할당 추가
         enemyText.fontSize = 20;
+        enemyText.fontStyle = FontStyle.Bold;
         enemyText.color = Color.white;
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (enemy != null)
-        {
-            enemyText.text = "남은 체력: " + enemy.currentHp;
-        }
-    }
+    
 }

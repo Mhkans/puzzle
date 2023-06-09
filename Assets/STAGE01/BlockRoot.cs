@@ -842,36 +842,6 @@ public class BlockRoot : MonoBehaviour {
 			// 아무것도 하지 않는다.
 			// 낙하 중도 슬라이드 중도 아니면.
 		} else {
-			/*int ignite_count = 0;
-
-			// Iterate through all the blocks within the grid
-			foreach (BlockControl block in this.blocks)
-			{
-				if (!block.isIdle())
-				{
-					continue;
-				}
-
-				// Check if the block is the one clicked with the left mouse button
-				if (Input.GetMouseButtonDown(0))
-				{
-					// Check for connections if the block is the correct one
-					if (this.checkConnection(block))
-					{
-						ignite_count++;
-						if (block.color == Block.COLOR.SPBLOCK02)
-						{
-							audio.clip = bombSound;
-							audio.Play();
-						}
-						else
-						{
-							audio.clip = sound;
-							audio.Play();
-						}
-					}
-				}
-			}*/
 			int ignite_count = 0;
 
 			if (Input.GetMouseButtonDown(0))

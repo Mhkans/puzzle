@@ -19,7 +19,6 @@ public class Enemy: MonoBehaviour
     private float attackTime;
     public float term;
     public int damage; // 5초마다 player에게 주는 데미지
-    public GameObject statusObject = null;
     public virtual void Start()
     {
         MaxHp = 200;
@@ -40,6 +39,7 @@ public class Enemy: MonoBehaviour
         }
 
         handleHP();
+        handleText();
         if (currentHp < 1)
         {
             Die();
@@ -56,6 +56,11 @@ public class Enemy: MonoBehaviour
     public void handleHP()
     {
        enemyHP.value = (float)currentHp / (float)MaxHp;
+    }
+
+    public void handleText()
+    {
+        enemyTEXT.text = "남은 체력: "+ currentHp;
     }
    
    
@@ -128,7 +133,7 @@ public class Enemy: MonoBehaviour
         EnemySpawner.Instance.EnemyDestroyed(this);
         EnemySpawner.Instance.BossEnemyDestored(this);
         Destroy(enemyHP.gameObject);
-        Destroy(statusObject);
+        Destroy(enemyTEXT.gameObject);
     }
     public virtual void Attack()
     {
