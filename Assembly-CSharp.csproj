@@ -72,8 +72,10 @@
      <Compile Include="Assets\Scenes\FailTItle.cs" />
      <Compile Include="Assets\Scenes\Stage.cs" />
      <Compile Include="Assets\Scenes\Guide.cs" />
+     <Compile Include="Assets\STAGE01\background.cs" />
      <Compile Include="Assets\STAGE01\Enemy.cs" />
      <Compile Include="Assets\Reward\button1.cs" />
+     <Compile Include="Assets\Reward\RewardSound.cs" />
      <Compile Include="Assets\Scenes\Title2.cs" />
      <Compile Include="Assets\Scenes\STAGE03.cs" />
      <Compile Include="Assets\Scenes\BossGuide.cs" />
@@ -91,7 +93,6 @@
      <Compile Include="Assets\Scenes\Control.cs" />
      <Compile Include="Assets\STAGE01\MiniBoss.cs" />
      <Compile Include="Assets\Reward\button2.cs" />
-     <Compile Include="Assets\STAGE01\background.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

@@ -43,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
     public static bool stage04clear = false;
     public static bool stage05clear = false; 
     public Canvas canvas; // 새로운 Canvas
-    public static int stagecode = 3;
+    public static int stagecode = 6;
     private float elapsedTime = 0f; 
     public static int spawnInterval; 
     private int enemyCount = 0; 
@@ -439,9 +439,7 @@ public class EnemySpawner : MonoBehaviour
                         
                         enemies.Remove(enemy);
                         enemies.Insert(0, enemy);
-                        if (targetEnemy != null)
                         
-                            break;
                     }
                     
                 }

@@ -8,12 +8,13 @@ public class BossMonster : Enemy
     public override void Start()
     {
         base.Start();
-        MaxHp = 800;
+        MaxHp = 2000;
         currentHp = MaxHp;
         term = 4.0f;
         damage = 10;
     }
-
+    
+    
     public override void Attack()
     {
         StartCoroutine(BossAttackCoroutine());

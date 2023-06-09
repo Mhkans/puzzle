@@ -8,7 +8,7 @@ public class HeavyEnemy : Enemy
     public override void Start()
     {
         base.Start();
-        MaxHp = 500;
+        MaxHp = 700;
         currentHp = MaxHp;
         term = 9.5f;
         damage = 10;

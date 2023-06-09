@@ -60,7 +60,8 @@ public class Enemy: MonoBehaviour
 
     public void handleText()
     {
-        enemyTEXT.text = "남은 체력: "+ currentHp;
+        enemyTEXT.text = "남은 체력: "+ currentHp.ToString("F0");
+        
     }
    
    
