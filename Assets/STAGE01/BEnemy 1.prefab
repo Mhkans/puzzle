@@ -109,13 +109,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfcf372b213877b4cbaf8dc24b06e44a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyTEXT: {fileID: 0}
   enemyHP: {fileID: 0}
   MaxHp: 0
   currentHp: 0
   status: 0
   term: 0
   damage: 0
-  statusObject: {fileID: 0}
 --- !u!1001 &3990460294520318524
 PrefabInstance:
   m_ObjectHideFlags: 0
