@@ -107,6 +107,12 @@ public class SceneControl : MonoBehaviour {
 					EnemySpawner.stage04clear = false;
 					EnemySpawner.stage05clear = false;
 					BossMonster.isdead = false;
+					Player.attCoefficient = 1.0f;
+					Player.healCoefficient = 1.0f;
+					Player.hpCoefficient = 1.0f;
+					Player.shield = 0;
+					Reward.ismachinegun = false;
+					Reward.isadditionalblow = false;
 					SceneManager.LoadScene("Clear");
 					next_step = STEP.NONE;
 					
