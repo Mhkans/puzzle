@@ -3428,9 +3428,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2142330628}
-        m_TargetAssemblyTypeName: STAGE04, Assembly-CSharp
-        m_MethodName: OnbuttonClick4
+      - m_Target: {fileID: 2074926041}
+        m_TargetAssemblyTypeName: BossGuide1, Assembly-CSharp
+        m_MethodName: LoadUI4
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
